@@ -4,13 +4,777 @@
   "buildCommand": "node scripts/build-public-preview.cjs",
   "outputDirectory": "public-preview",
   "cleanUrls": true,
-  "headers": [{
-    "source": "/(.*)",
-    "headers": [
-      {"key":"Content-Security-Policy","value":"default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'"},
-      {"key":"X-Robots-Tag","value":"noindex, nofollow"},
-      {"key":"X-Content-Type-Options","value":"nosniff"},
-      {"key":"Referrer-Policy","value":"no-referrer"}
-    ]
-  }]
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'none'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "no-referrer"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "tipping-point"
+        }
+      ],
+      "destination": "/create/index__q_f3d0e44581"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "ricochet-rally"
+        }
+      ],
+      "destination": "/create/index__q_1518100d6e"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "spiral-shatter"
+        }
+      ],
+      "destination": "/create/index__q_69dc58c86f"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "ribbon-fold"
+        }
+      ],
+      "destination": "/create/index__q_a20897e9b4"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "fold-groove"
+        }
+      ],
+      "destination": "/create/index__q_c9fa84fee3"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "fold-fractal"
+        }
+      ],
+      "destination": "/create/index__q_8a685eacb1"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "formula-towers"
+        }
+      ],
+      "destination": "/create/index__q_4e608ad23d"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "shape-merger"
+        }
+      ],
+      "destination": "/create/index__q_bd512a34f7"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "crush-machine"
+        }
+      ],
+      "destination": "/create/index__q_804355d634"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "stair-sonata"
+        }
+      ],
+      "destination": "/create/index__q_13595c538e"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "hive-burst"
+        }
+      ],
+      "destination": "/create/index__q_7e45f116e4"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "sync-fountain"
+        }
+      ],
+      "destination": "/create/index__q_4413675341"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "phase-loop"
+        }
+      ],
+      "destination": "/create/index__q_b6c43397be"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "star-beats"
+        }
+      ],
+      "destination": "/create/index__q_29a1f4ecfe"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "every-bounce"
+        }
+      ],
+      "destination": "/create/index__q_bb777e0967"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "digit-duel"
+        }
+      ],
+      "destination": "/create/index__q_457c8eb8ca"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "wobble-stack"
+        }
+      ],
+      "destination": "/create/index__q_742a2b4720"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "line-arena"
+        }
+      ],
+      "destination": "/create/index__q_e2c27404fc"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "roll-hopper"
+        }
+      ],
+      "destination": "/create/index__q_2b9ec20d51"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "pressure-clash"
+        }
+      ],
+      "destination": "/create/index__q_35224b09cb"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "eureka-lab"
+        }
+      ],
+      "destination": "/create/index__q_59b2cb52b2"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "melody-bounce"
+        }
+      ],
+      "destination": "/create/index__q_a2d0e78064"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "shatter-stack"
+        }
+      ],
+      "destination": "/create/index__q_2cf104a3d4"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "perfect-swish"
+        }
+      ],
+      "destination": "/create/index__q_446ac99ea7"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "chomp-tank"
+        }
+      ],
+      "destination": "/create/index__q_9d45176285"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "pocket-slam"
+        }
+      ],
+      "destination": "/create/index__q_f72fff4093"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "marble-machine"
+        }
+      ],
+      "destination": "/create/index__q_5cb643aa00"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "glass-gauntlet"
+        }
+      ],
+      "destination": "/create/index__q_60e46b6674"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "chaos-cutter"
+        }
+      ],
+      "destination": "/create/index__q_ac28e1f70f"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "blob-escape"
+        }
+      ],
+      "destination": "/create/index__q_d48c9959bd"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "ball-slide"
+        }
+      ],
+      "destination": "/create/index__q_1b2a132239"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "flag-atlas"
+        }
+      ],
+      "destination": "/create/index__q_d91f092c58"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "sort-spectrum"
+        }
+      ],
+      "destination": "/create/index__q_66b76f520d"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "algo-arena"
+        }
+      ],
+      "destination": "/create/index__q_d7d75231e6"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "rising-tide"
+        }
+      ],
+      "destination": "/create/index__q_bf22937b78"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "pulse-bloom"
+        }
+      ],
+      "destination": "/create/index__q_2504b0bcee"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "spin-loop"
+        }
+      ],
+      "destination": "/create/index__q_79e373d05f"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "chime-chamber"
+        }
+      ],
+      "destination": "/create/index__q_ff98f6a2e0"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "brawl-royale"
+        }
+      ],
+      "destination": "/create/index__q_0a5b6fb32d"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "brick-build"
+        }
+      ],
+      "destination": "/create/index__q_61ebf4a3f2"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "neon-doubler"
+        }
+      ],
+      "destination": "/create/index__q_6f2ade0d31"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "stick-race"
+        }
+      ],
+      "destination": "/create/index__q_587fa3c4f2"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "silhouette-fill"
+        }
+      ],
+      "destination": "/create/index__q_ee04fcca69"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "ring-escape"
+        }
+      ],
+      "destination": "/create/index__q_aa997e37a8"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "field-plough"
+        }
+      ],
+      "destination": "/create/index__q_a43604800f"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "iso-ball-wave"
+        }
+      ],
+      "destination": "/create/index__q_9fa72df53b"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "polygon-arena"
+        }
+      ],
+      "destination": "/create/index__q_ec1567b262"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "bounce-fill"
+        }
+      ],
+      "destination": "/create/index__q_1b65142c19"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "corner-wheel"
+        }
+      ],
+      "destination": "/create/index__q_e3433d3f94"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "pistol-duel"
+        }
+      ],
+      "destination": "/create/index__q_df01af0417"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "blueprint-builder"
+        }
+      ],
+      "destination": "/create/index__q_7a88353568"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "beat-ball"
+        }
+      ],
+      "destination": "/create/index__q_8239fe5087"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "bouncing-ball-arena"
+        }
+      ],
+      "destination": "/create/index__q_17189af7c1"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "voxel-builder"
+        }
+      ],
+      "destination": "/create/index__q_f0fdc25025"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "egg-simulation"
+        }
+      ],
+      "destination": "/create/index__q_f52fee740b"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "ball-barrier-race"
+        }
+      ],
+      "destination": "/create/index__q_c5680ed234"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "marble-race"
+        }
+      ],
+      "destination": "/create/index__q_dcde87b9ff"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "fruit-merge"
+        }
+      ],
+      "destination": "/create/index__q_95c623238b"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "musical-path"
+        }
+      ],
+      "destination": "/create/index__q_7b2e9f4103"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "tiny-trials"
+        }
+      ],
+      "destination": "/create/index__q_b77c7ccad7"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "gate-rush"
+        }
+      ],
+      "destination": "/create/index__q_b3f27c45b4"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "note-dial"
+        }
+      ],
+      "destination": "/create/index__q_501549cbe3"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "orbit-notes"
+        }
+      ],
+      "destination": "/create/index__q_567b835b58"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "score-sparks"
+        }
+      ],
+      "destination": "/create/index__q_4e2dceb478"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "bounce-jukebox"
+        }
+      ],
+      "destination": "/create/index__q_6a65732c3a"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "piano-rain"
+        }
+      ],
+      "destination": "/create/index__q_fcca36c62e"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "beat-press"
+        }
+      ],
+      "destination": "/create/index__q_78835c70b5"
+    },
+    {
+      "source": "/create",
+      "has": [
+        {
+          "type": "query",
+          "key": "game",
+          "value": "bounce-chute"
+        }
+      ],
+      "destination": "/create/index__q_18ccbd58a4"
+    }
+  ]
 }
