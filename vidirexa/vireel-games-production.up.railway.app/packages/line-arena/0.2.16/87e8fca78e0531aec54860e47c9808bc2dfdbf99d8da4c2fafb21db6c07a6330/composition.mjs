@@ -1,0 +1,1 @@
+export const SAFE_AREA=Object.freeze({x:120,y:160,width:840,height:1280,canvasWidth:1080,canvasHeight:1920});export function beginComposition(e){e.save()}export function endComposition(e){e.restore()}

@@ -1,0 +1,1 @@
+const n=200,p=500,i=100,t={application:"/api/partner/application",spots:"/api/partner/spots",adminList:"/api/admin/partner-applications",adminDecision:a=>`/api/admin/partner-applications/${encodeURIComponent(a)}/decision`,adminPayouts:"/api/admin/partner-payouts",adminPayout:a=>`/api/admin/partner-payouts/${encodeURIComponent(a)}`};export{i as P,n as a,p as b,t as p};

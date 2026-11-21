@@ -1,0 +1,5 @@
+const audio=import("https://vireel-games-production.up.railway.app/packages/piano-rain/0.1.4/33670d7424044f2eaa329e0d2fdc8f3820be68ed39b76be90006c640fdb840a3/audio.mjs");let running=null;
+self.onmessage=async e=>{const {id,job}=e.data;if(running)running.aborted=true;const signal={aborted:false};running=signal;
+try{const {synthesize}=await audio,pcm=await synthesize(job,{signal});if(running===signal)running=null;if(!pcm)self.postMessage({id,pcm:null});else self.postMessage({id,pcm:{left:pcm.left,right:pcm.right,sampleRate:pcm.sampleRate}},[pcm.left.buffer,pcm.right.buffer]);}
+catch(error){if(running===signal)running=null;self.postMessage(signal.aborted?{id,cancelled:true}:{id,failed:String(error&&error.message||error)});}};
+audio.then(()=>self.postMessage({ready:true}),error=>self.postMessage({broken:String(error&&error.message||error)}));

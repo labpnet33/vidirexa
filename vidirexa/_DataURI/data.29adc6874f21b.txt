@@ -1,0 +1,1 @@
+import("https://vireel-games-production.up.railway.app/packages/beat-press/0.1.7/7535c81dd898cba1b418461fd07fdd9fda0bbd0f0d2093d57ea58b1e8079b334/quick.mjs").then(m=>m.serve(self),e=>self.postMessage({failed:String(e&&e.message||e)}));

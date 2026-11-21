@@ -1,0 +1,1 @@
+const t="vidirexa:recording-completed",d="vidirexa:recording-downloaded";function n(e,o){if(!(typeof window>"u"||typeof CustomEvent>"u"))try{window.dispatchEvent(new CustomEvent(e,{detail:{id:o}}))}catch{}}const i=e=>n(t,e),c=e=>n(d,e);export{t as R,d as a,i as b,c as n};

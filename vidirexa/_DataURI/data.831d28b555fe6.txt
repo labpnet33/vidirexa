@@ -1,0 +1,1 @@
+const early=[];self.onmessage=e=>early.push(e);import("https://vireel-games-production.up.railway.app/packages/fruit-merge/0.0.37/5832f29d5a71efb6b98e7043fa714c4f5ddd5949accc24095059f8732deefb3a/adapter.js").then(m=>{m.runOutcomeWorker(self);for(const e of early)self.onmessage(e);},()=>postMessage({id:0,type:'fatal'}));

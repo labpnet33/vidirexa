@@ -1,0 +1,1 @@
+export const SAFE_NATIVE=Object.freeze({x:120,y:160,w:840,h:1280});export function composition(o,e){return{safe:{x:o/9,y:e/12,w:o*7/9,h:e*2/3},scale:o/720,scaleY:e/1280,view:{x:0,y:0,w:o,h:e}}}export function composeBounds(o,e,c){const{scale:n,scaleY:s}=composition(e,c);return{x:o.x*n,y:o.y*s,w:o.w*n,h:o.h*s}}

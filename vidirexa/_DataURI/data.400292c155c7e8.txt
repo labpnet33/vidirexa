@@ -1,0 +1,1 @@
+import("https://vireel-games-production.up.railway.app/packages/marble-race/0.14.28/8d4845acc5c6d82f2338225c6d419fb010592a4e032a5c67b7a3c6433a7fc1fc/sim-worker.mjs").catch(e=>postMessage({type:'boot-error',message:String(e?.message??e)}));

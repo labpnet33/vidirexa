@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vidirexa"><!-- Vidirexa brand candidate (not wired into the site). Clean vector redraw of the AI-generated brand-kit PNGs. Palette: #02031B #0C0432 #FEFDFD #ED18FD #A641FC #1E76FD #00E5FD. -->
+<defs><linearGradient id="frim" gradientUnits="userSpaceOnUse" x1="2" y1="14" x2="62" y2="50"><stop offset="0" stop-color="#ED18FD"/><stop offset=".35" stop-color="#A641FC"/><stop offset=".7" stop-color="#1E76FD"/><stop offset="1" stop-color="#00E5FD"/></linearGradient><linearGradient id="fflow" gradientUnits="userSpaceOnUse" x1="210" y1="330" x2="410" y2="200"><stop offset="0" stop-color="#FEFDFD"/><stop offset=".32" stop-color="#FEFDFD"/><stop offset=".47" stop-color="#E9A0FB"/><stop offset=".62" stop-color="#A641FC"/><stop offset=".8" stop-color="#1E76FD"/><stop offset="1" stop-color="#00E5FD"/></linearGradient></defs>
+<rect x="2.25" y="2.25" width="59.5" height="59.5" rx="15" fill="#02031B" stroke="url(#frim)" stroke-width="4.5"/>
+<g transform="translate(32 32) scale(.142) translate(-262 -256)"><g>
+  <path d="M234 372C255 372 268 360 278 344L316 278C322 268 330 264 342 259L392 236C412 227 412 205 392 196L336 168C318 159 300 162 290 178L250 295Z" fill="url(#fflow)"/>
+  <path d="M149 171 234 338" stroke="#FEFDFD" stroke-width="68" stroke-linecap="round" fill="none"/>
+  <path d="M332 196 362 213 332 230Z" fill="#FEFDFD" stroke="#FEFDFD" stroke-width="10" stroke-linejoin="round"/>
+</g></g>
+</svg>

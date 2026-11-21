@@ -1,0 +1,1 @@
+import("https://vireel-games-production.up.railway.app/packages/fold-groove/0.1.4/f04d2a37dcc6ea1b83f025f8b6de23e6cadb89dfa22df964abf21a353f64acf1/quick.mjs").then(m=>m.serve(self),e=>self.postMessage({failed:String(e&&e.message||e)}));

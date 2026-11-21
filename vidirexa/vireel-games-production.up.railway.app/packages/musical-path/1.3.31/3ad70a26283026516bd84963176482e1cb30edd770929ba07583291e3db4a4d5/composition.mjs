@@ -1,0 +1,1 @@
+export function safeZone(e,n){return{x:e*120/1080,y:n*160/1920,width:e*840/1080,height:n*1280/1920}}export function sceneLayout(e,n){return{safe:safeZone(e,n),scale:e/720,x:0,y:0,width:e,height:n}}export function beginComposition(e,n){const{width:o,height:t}=e.canvas;return e.save(),e.scale(o/720,t/1280),sceneLayout(o,t)}

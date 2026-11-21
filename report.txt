@@ -1,0 +1,20 @@
+Webcloner public website capture
+==============================
+Requested URL: https://vidirexa.com/
+Pages visited (total): 184
+Pages visited (this run): 144
+Remaining queued pages: 0
+Resources saved (total): 526
+Bytes saved (total): 29.44 MiB
+Robots exclusions (this run): 525
+Page/asset errors: 19
+Output: /home/ubuntu/webcloner/captures/vidirexa.com-2026-11-21T18-34-00-623Z
+Resume: use the same --out directory with --resume.
+
+Limitations:
+- Public HTTP pages and browser-loaded resources only.
+- Server-side source code and databases cannot be downloaded by a browser.
+- Account-only/paid content, credentials, protected resources and bypasses are excluded.
+- Offline hosting is not guaranteed. Rebuild backend routes and APIs independently.
+- Some lazy-loaded assets require user interaction and will not appear.
+- Respect site licenses, copyright, robots.txt and Terms of Service.

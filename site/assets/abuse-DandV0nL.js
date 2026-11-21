@@ -1,0 +1,1 @@
+const a="vdx_bid",e="vdx_fp",o=/^[A-Za-z0-9_-]{22}$/,_=/^1\.[A-Za-z0-9_-]{22}$/,s="Bonus videos are available to one account per device. Your daily free videos are not affected.";export{a as A,s as B,o as a,_ as b,e as c};

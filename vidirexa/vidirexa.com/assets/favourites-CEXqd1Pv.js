@@ -1,0 +1,1 @@
+const e={list:"/api/favourites",merge:"/api/favourites/merge",item:a=>`/api/favourites/${encodeURIComponent(a)}`},o=/^[a-z][a-z0-9-]{2,49}$/,t=300,s=["favourite_add","favourite_remove","favourites_tab_open"];export{s as F,o as a,t as b,e as c};

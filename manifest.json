@@ -1,0 +1,4225 @@
+{
+  "source": "https://vidirexa.com/",
+  "createdAt": "2026-11-21T19:47:10.363Z",
+  "limits": {
+    "maxPages": 500,
+    "maxDepth": 8,
+    "maxAssets": 20000,
+    "maxTotalMB": 5000,
+    "maxFileMB": 250
+  },
+  "totalBytes": 30868377,
+  "assetsSaved": 526,
+  "pagesVisited": 184,
+  "robotsDisallowed": 525,
+  "assets": [
+    {
+      "url": "https://vidirexa.com/",
+      "local": "site/index.html",
+      "bytes": 112930,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create",
+      "local": "site/create/index.html",
+      "bytes": 263231,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games",
+      "local": "site/games/index.html",
+      "bytes": 106601,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing",
+      "local": "site/pricing/index.html",
+      "bytes": 66538,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/faq",
+      "local": "site/faq/index.html",
+      "bytes": 48926,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/about",
+      "local": "site/about/index.html",
+      "bytes": 38997,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/terms",
+      "local": "site/terms/index.html",
+      "bytes": 43007,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/privacy-policy",
+      "local": "site/privacy-policy/index.html",
+      "bytes": 76640,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/get-paid",
+      "local": "site/get-paid/index.html",
+      "bytes": 46427,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/marble-race-video-maker",
+      "local": "site/marble-race-video-maker/index.html",
+      "bytes": 52820,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/ball-battle-simulator",
+      "local": "site/ball-battle-simulator/index.html",
+      "bytes": 51435,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/midi-visualizer",
+      "local": "site/midi-visualizer/index.html",
+      "bytes": 58112,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/bouncing-ball-video-maker",
+      "local": "site/bouncing-ball-video-maker/index.html",
+      "bytes": 59057,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/math-simulation-video-maker",
+      "local": "site/math-simulation-video-maker/index.html",
+      "bytes": 47477,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/asmr-video-maker",
+      "local": "site/asmr-video-maker/index.html",
+      "bytes": 51219,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/piano-visualizer",
+      "local": "site/piano-visualizer/index.html",
+      "bytes": 47518,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/polyrhythm-visualizer",
+      "local": "site/polyrhythm-visualizer/index.html",
+      "bytes": 46360,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/glass-shatter-video-maker",
+      "local": "site/glass-shatter-video-maker/index.html",
+      "bytes": 46223,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/physics-simulation-video-maker",
+      "local": "site/physics-simulation-video-maker/index.html",
+      "bytes": 51397,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/merge-video-maker",
+      "local": "site/merge-video-maker/index.html",
+      "bytes": 45208,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/satisfying-video-maker",
+      "local": "site/satisfying-video-maker/index.html",
+      "bytes": 115367,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides",
+      "local": "site/guides/index.html",
+      "bytes": 43278,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/how-to-make-satisfying-videos",
+      "local": "site/guides/how-to-make-satisfying-videos/index.html",
+      "bytes": 50109,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/video-length-and-loops",
+      "local": "site/guides/video-length-and-loops/index.html",
+      "bytes": 41837,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/how-to-make-a-marble-race-video",
+      "local": "site/guides/how-to-make-a-marble-race-video/index.html",
+      "bytes": 48331,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/how-to-make-a-piano-visualizer-video",
+      "local": "site/guides/how-to-make-a-piano-visualizer-video/index.html",
+      "bytes": 45600,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/how-to-make-a-physics-simulation-video",
+      "local": "site/guides/how-to-make-a-physics-simulation-video/index.html",
+      "bytes": 46972,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/customize-colors-and-text",
+      "local": "site/guides/customize-colors-and-text/index.html",
+      "bytes": 50051,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/post-vertical-videos-to-tiktok-reels-shorts",
+      "local": "site/guides/post-vertical-videos-to-tiktok-reels-shorts/index.html",
+      "bytes": 45727,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/grow-with-satisfying-content",
+      "local": "site/guides/grow-with-satisfying-content/index.html",
+      "bytes": 45709,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/how-to-make-music-sync-videos",
+      "local": "site/guides/how-to-make-music-sync-videos/index.html",
+      "bytes": 48440,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/guides/watermark-free-vs-paid",
+      "local": "site/guides/watermark-free-vs-paid/index.html",
+      "bytes": 37291,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/tipping-point",
+      "local": "site/games/tipping-point/index.html",
+      "bytes": 45867,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/ricochet-rally",
+      "local": "site/games/ricochet-rally/index.html",
+      "bytes": 47087,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/spiral-shatter",
+      "local": "site/games/spiral-shatter/index.html",
+      "bytes": 45099,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/ribbon-fold",
+      "local": "site/games/ribbon-fold/index.html",
+      "bytes": 39931,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/fold-groove",
+      "local": "site/games/fold-groove/index.html",
+      "bytes": 44753,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/fold-fractal",
+      "local": "site/games/fold-fractal/index.html",
+      "bytes": 45917,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/formula-towers",
+      "local": "site/games/formula-towers/index.html",
+      "bytes": 45106,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/shape-merger",
+      "local": "site/games/shape-merger/index.html",
+      "bytes": 46373,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/theme-init.js",
+      "local": "site/theme-init.js",
+      "bytes": 1002,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/favicon-vidirexa.svg",
+      "local": "site/favicon-vidirexa.svg",
+      "bytes": 1492,
+      "type": "image/svg+xml",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/index-JP3CJ4D2.js",
+      "local": "site/assets/index-JP3CJ4D2.js",
+      "bytes": 312976,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2",
+      "local": "site/assets/dm-sans-latin-wght-normal-Xz1IZZA0.woff2",
+      "bytes": 36932,
+      "type": "font/woff2",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+      "local": "site/assets/manrope-latin-wght-normal-DHIcAJRg.woff2",
+      "bytes": 24836,
+      "type": "font/woff2",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/index-XS8phOuf.css",
+      "local": "site/assets/index-XS8phOuf.css",
+      "bytes": 152744,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/brand/apple-touch-icon-vidirexa.png",
+      "local": "site/brand/apple-touch-icon-vidirexa.png",
+      "bytes": 32676,
+      "type": "image/png",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/default.jpg?v=39be661b30e8",
+      "local": "site/og/vidirexa/default__q_5bce29b054.jpg",
+      "bytes": 71668,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/brand/vidirexa-icon-512.png",
+      "local": "site/brand/vidirexa-icon-512.png",
+      "bytes": 121553,
+      "type": "image/png",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeGames-DgTCN2nP.js",
+      "local": "site/assets/HomeGames-DgTCN2nP.js",
+      "bytes": 2081,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GameLinks-CXr-TWoz.js",
+      "local": "site/assets/GameLinks-CXr-TWoz.js",
+      "bytes": 8316,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/favourites-CEXqd1Pv.js",
+      "local": "site/assets/favourites-CEXqd1Pv.js",
+      "bytes": 245,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GrowthActivation-CjZMKO-y.js",
+      "local": "site/assets/GrowthActivation-CjZMKO-y.js",
+      "bytes": 1736,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/growth-0vluCrCh.js",
+      "local": "site/assets/growth-0vluCrCh.js",
+      "bytes": 810,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/RecordingsBadge-D7AJ2Z2T.js",
+      "local": "site/assets/RecordingsBadge-D7AJ2Z2T.js",
+      "bytes": 4886,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/events-Dp3OO_bK.js",
+      "local": "site/assets/events-Dp3OO_bK.js",
+      "bytes": 273,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/RecordingsBadge-ke629cih.css",
+      "local": "site/assets/RecordingsBadge-ke629cih.css",
+      "bytes": 2047,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/InAppHandoffHint-9seYpsp3.js",
+      "local": "site/assets/InAppHandoffHint-9seYpsp3.js",
+      "bytes": 3490,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/recordingGuard-C3jm2jp-.js",
+      "local": "site/assets/recordingGuard-C3jm2jp-.js",
+      "bytes": 4085,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/handoff-C_YwBTOv.js",
+      "local": "site/assets/handoff-C_YwBTOv.js",
+      "bytes": 4112,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/globe-BmJHDeY-.js",
+      "local": "site/assets/globe-BmJHDeY-.js",
+      "bytes": 411,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/x-OK8xMmTK.js",
+      "local": "site/assets/x-OK8xMmTK.js",
+      "bytes": 323,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/ResumeRecordingBanner-DLX3eMY2.js",
+      "local": "site/assets/ResumeRecordingBanner-DLX3eMY2.js",
+      "bytes": 7870,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/resume-Ck2Lpao8.js",
+      "local": "site/assets/resume-Ck2Lpao8.js",
+      "bytes": 56859,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/store-KRzg0_ee.js",
+      "local": "site/assets/store-KRzg0_ee.js",
+      "bytes": 5631,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/resume-Bj2sFNdQ.css",
+      "local": "site/assets/resume-Bj2sFNdQ.css",
+      "bytes": 1175,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeSteps-CGxtbKHq.js",
+      "local": "site/assets/HomeSteps-CGxtbKHq.js",
+      "bytes": 8548,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/useReveal-DsI2SKso.js",
+      "local": "site/assets/useReveal-DsI2SKso.js",
+      "bytes": 430,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/referrals-Crx5rO4k.js",
+      "local": "site/assets/referrals-Crx5rO4k.js",
+      "bytes": 47,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/sliders-horizontal-L-UJUUui.js",
+      "local": "site/assets/sliders-horizontal-L-UJUUui.js",
+      "bytes": 753,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/trending-up-Bf-5lMks.js",
+      "local": "site/assets/trending-up-Bf-5lMks.js",
+      "bytes": 373,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/gift-CggSg1T4.js",
+      "local": "site/assets/gift-CggSg1T4.js",
+      "bytes": 525,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/check-BM-6TrBU.js",
+      "local": "site/assets/check-BM-6TrBU.js",
+      "bytes": 288,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/sparkles-DXkNU03I.js",
+      "local": "site/assets/sparkles-DXkNU03I.js",
+      "bytes": 677,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/eye-xvaheQ3j.js",
+      "local": "site/assets/eye-xvaheQ3j.js",
+      "bytes": 420,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeSteps-CvIRbGeR.css",
+      "local": "site/assets/HomeSteps-CvIRbGeR.css",
+      "bytes": 17311,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeBrand-B_dPSrJk.js",
+      "local": "site/assets/HomeBrand-B_dPSrJk.js",
+      "bytes": 3142,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/seo-epR2S_i4.js",
+      "local": "site/assets/seo-epR2S_i4.js",
+      "bytes": 77951,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/plans-C9C6uQb6.js",
+      "local": "site/assets/plans-C9C6uQb6.js",
+      "bytes": 1000,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeBrand-EItPRnoX.css",
+      "local": "site/assets/HomeBrand-EItPRnoX.css",
+      "bytes": 5932,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeReferral-65sOFaqy.js",
+      "local": "site/assets/HomeReferral-65sOFaqy.js",
+      "bytes": 2177,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/wallet-CqEs8zhv.js",
+      "local": "site/assets/wallet-CqEs8zhv.js",
+      "bytes": 455,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/HomeReferral-DPjYZZLJ.css",
+      "local": "site/assets/HomeReferral-DPjYZZLJ.css",
+      "bytes": 3822,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/AdBanner-D8A6HtrR.js",
+      "local": "site/assets/AdBanner-D8A6HtrR.js",
+      "bytes": 2696,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/ads-DEJAyWwd.js",
+      "local": "site/assets/ads-DEJAyWwd.js",
+      "bytes": 3117,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/ads-BbNRW6dP.css",
+      "local": "site/assets/ads-BbNRW6dP.css",
+      "bytes": 2549,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/SupportChat-DD-wTaQN.js",
+      "local": "site/assets/SupportChat-DD-wTaQN.js",
+      "bytes": 19414,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/mail-BkN8Z-pI.js",
+      "local": "site/assets/mail-BkN8Z-pI.js",
+      "bytes": 384,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/film-BR1hivMI.js",
+      "local": "site/assets/film-BR1hivMI.js",
+      "bytes": 576,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/arrow-up-right-zX8uH7NJ.js",
+      "local": "site/assets/arrow-up-right-zX8uH7NJ.js",
+      "bytes": 334,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/chevron-right-Dgt14Fqo.js",
+      "local": "site/assets/chevron-right-Dgt14Fqo.js",
+      "bytes": 298,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/arrow-up-CrAQu55r.js",
+      "local": "site/assets/arrow-up-CrAQu55r.js",
+      "bytes": 330,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/SupportChat-DAYjmGBT.css",
+      "local": "site/assets/SupportChat-DAYjmGBT.css",
+      "bytes": 11015,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/CouponOffers--ZRCpXUc.js",
+      "local": "site/assets/CouponOffers--ZRCpXUc.js",
+      "bytes": 4965,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/coupon-offers-Dg1HcSCs.css",
+      "local": "site/assets/coupon-offers-Dg1HcSCs.css",
+      "bytes": 3108,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GuestReclaimPrompt-DDXjFnzn.js",
+      "local": "site/assets/GuestReclaimPrompt-DDXjFnzn.js",
+      "bytes": 3607,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/guestVault-DfQ5Z1be.js",
+      "local": "site/assets/guestVault-DfQ5Z1be.js",
+      "bytes": 14360,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/one-tap-CMHAjgiC.js",
+      "local": "site/assets/one-tap-CMHAjgiC.js",
+      "bytes": 3111,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/guest-reclaim-Bd6od5dg.js",
+      "local": "site/assets/guest-reclaim-Bd6od5dg.js",
+      "bytes": 557,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/guest-reclaim-z_Bp32RM.css",
+      "local": "site/assets/guest-reclaim-z_Bp32RM.css",
+      "bytes": 3274,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/ConsentBanner-Ch7lrSU8.js",
+      "local": "site/assets/ConsentBanner-Ch7lrSU8.js",
+      "bytes": 2073,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/analytics--Skgq6GT.css",
+      "local": "site/assets/analytics--Skgq6GT.css",
+      "bytes": 35321,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/OneTapAmbient-6eV1MPDV.js",
+      "local": "site/assets/OneTapAmbient-6eV1MPDV.js",
+      "bytes": 4424,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/FreeCaps-DbR5MYBb.js",
+      "local": "site/assets/FreeCaps-DbR5MYBb.js",
+      "bytes": 30043,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/free-caps-DVsBEUPk.js",
+      "local": "site/assets/free-caps-DVsBEUPk.js",
+      "bytes": 942,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/bridge-OdRp7_V1.js",
+      "local": "site/assets/bridge-OdRp7_V1.js",
+      "bytes": 1547,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/bell-o_gcTk-b.js",
+      "local": "site/assets/bell-o_gcTk-b.js",
+      "bytes": 459,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/bell-ring-CevJPZZO.js",
+      "local": "site/assets/bell-ring-CevJPZZO.js",
+      "bytes": 565,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/video-BeW1hh1t.js",
+      "local": "site/assets/video-BeW1hh1t.js",
+      "bytes": 417,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/hourglass-CP0eXPVu.js",
+      "local": "site/assets/hourglass-CP0eXPVu.js",
+      "bytes": 529,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/clock-Cj8bjH0a.js",
+      "local": "site/assets/clock-Cj8bjH0a.js",
+      "bytes": 347,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/device-signals-Caxbzcql.js",
+      "local": "site/assets/device-signals-Caxbzcql.js",
+      "bytes": 2396,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/abuse-DandV0nL.js",
+      "local": "site/assets/abuse-DandV0nL.js",
+      "bytes": 223,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/brand/vidirexa-mark.svg",
+      "local": "site/brand/vidirexa-mark.svg",
+      "bytes": 2817,
+      "type": "image/svg+xml",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ribbon-fold-ccdd54b7ab57.webp?v=ccdd54b7ab57",
+      "local": "site/previews/ribbon-fold-ccdd54b7ab57__q_94d2b1f9d2.webp",
+      "bytes": 10120,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ribbon-fold-2e21d5f70ae8.mp4?v=2e21d5f70ae8",
+      "local": "site/previews/ribbon-fold-2e21d5f70ae8__q_99d475511d.mp4",
+      "bytes": 358057,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/formula-towers-2f0748b9f433.mp4?v=2f0748b9f433",
+      "local": "site/previews/formula-towers-2f0748b9f433__q_1264c4c584.mp4",
+      "bytes": 297906,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/formula-towers-db5bcf14c8b1.webp?v=db5bcf14c8b1",
+      "local": "site/previews/formula-towers-db5bcf14c8b1__q_19d14bcdea.webp",
+      "bytes": 18922,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fold-groove-fb8877dba4b7.webp?v=fb8877dba4b7",
+      "local": "site/previews/fold-groove-fb8877dba4b7__q_385194c8da.webp",
+      "bytes": 17712,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fold-groove-1022a3802dce.mp4?v=1022a3802dce",
+      "local": "site/previews/fold-groove-1022a3802dce__q_ed57ebf57e.mp4",
+      "bytes": 285282,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/shape-merger-29e8eff6a597.mp4?v=29e8eff6a597",
+      "local": "site/previews/shape-merger-29e8eff6a597__q_e84213196a.mp4",
+      "bytes": 325224,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/shape-merger-c2f31011155c.webp?v=c2f31011155c",
+      "local": "site/previews/shape-merger-c2f31011155c__q_a46c5a225e.webp",
+      "bytes": 23678,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/spiral-shatter-6475525e2d3a.webp?v=6475525e2d3a",
+      "local": "site/previews/spiral-shatter-6475525e2d3a__q_5147a3f23e.webp",
+      "bytes": 28654,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/spiral-shatter-3a88c92fdac4.mp4?v=3a88c92fdac4",
+      "local": "site/previews/spiral-shatter-3a88c92fdac4__q_dc35f67678.mp4",
+      "bytes": 337204,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fold-fractal-62eba3b8b43c.webp?v=62eba3b8b43c",
+      "local": "site/previews/fold-fractal-62eba3b8b43c__q_b7200591de.webp",
+      "bytes": 8380,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fold-fractal-1da98dd3d7b4.mp4?v=1da98dd3d7b4",
+      "local": "site/previews/fold-fractal-1da98dd3d7b4__q_115fc040dc.mp4",
+      "bytes": 281807,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/beat-press-ee58ed1dd863.webp?v=ee58ed1dd863",
+      "local": "site/previews/beat-press-ee58ed1dd863__q_7ac3dff182.webp",
+      "bytes": 12332,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/line-arena-16e3597afdb8.webp?v=16e3597afdb8",
+      "local": "site/previews/line-arena-16e3597afdb8__q_91bc1abe4f.webp",
+      "bytes": 24850,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/tipping-point-cdeef46f5eca.webp?v=cdeef46f5eca",
+      "local": "site/previews/tipping-point-cdeef46f5eca__q_c2d22a0033.webp",
+      "bytes": 11366,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ricochet-rally-356f74aa4bbd.webp?v=356f74aa4bbd",
+      "local": "site/previews/ricochet-rally-356f74aa4bbd__q_eec2ec9f94.webp",
+      "bytes": 17646,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/musical-path-283c52395fc1.webp?v=283c52395fc1",
+      "local": "site/previews/musical-path-283c52395fc1__q_5dcce6657b.webp",
+      "bytes": 6080,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fruit-merge-74d4b2b2aafe.webp?v=74d4b2b2aafe",
+      "local": "site/previews/fruit-merge-74d4b2b2aafe__q_fbb2cdee42.webp",
+      "bytes": 13998,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/marble-race-9f1d3aa730a4.webp?v=9f1d3aa730a4",
+      "local": "site/previews/marble-race-9f1d3aa730a4__q_05c5cdb182.webp",
+      "bytes": 14964,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Studio-BzYpotAs.js",
+      "local": "site/assets/Studio-BzYpotAs.js",
+      "bytes": 67733,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/RewardedBonusButton-OwyQJWF7.js",
+      "local": "site/assets/RewardedBonusButton-OwyQJWF7.js",
+      "bytes": 1063,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/tier-lock-B8YOxB1k.js",
+      "local": "site/assets/tier-lock-B8YOxB1k.js",
+      "bytes": 1474,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/monetization-uV912tK9.js",
+      "local": "site/assets/monetization-uV912tK9.js",
+      "bytes": 1013,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/entry-offers-YyILwI3o.js",
+      "local": "site/assets/entry-offers-YyILwI3o.js",
+      "bytes": 2305,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/entry-offers-CQNHy-zj.css",
+      "local": "site/assets/entry-offers-CQNHy-zj.css",
+      "bytes": 2992,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/gauge-QRMGWv18.js",
+      "local": "site/assets/gauge-QRMGWv18.js",
+      "bytes": 345,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/analytics-ClXwo7KR.js",
+      "local": "site/assets/analytics-ClXwo7KR.js",
+      "bytes": 3032,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/share-CNCUlRAd.js",
+      "local": "site/assets/share-CNCUlRAd.js",
+      "bytes": 2889,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/schemas-LqNWZ2gI.js",
+      "local": "site/assets/schemas-LqNWZ2gI.js",
+      "bytes": 91791,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/smartphone-BHd5mh03.js",
+      "local": "site/assets/smartphone-BHd5mh03.js",
+      "bytes": 366,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/refresh-cw-CmH-Q25X.js",
+      "local": "site/assets/refresh-cw-CmH-Q25X.js",
+      "bytes": 489,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Account-DHEoX3EB.js",
+      "local": "site/assets/Account-DHEoX3EB.js",
+      "bytes": 41095,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/download-D-P1zWDA.js",
+      "local": "site/assets/download-D-P1zWDA.js",
+      "bytes": 431,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/index-CVVYI2sN.js",
+      "local": "site/assets/index-CVVYI2sN.js",
+      "bytes": 18760,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/copy-cAJ34vRU.js",
+      "local": "site/assets/copy-cAJ34vRU.js",
+      "bytes": 400,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/link-2-C2hQnmTK.js",
+      "local": "site/assets/link-2-C2hQnmTK.js",
+      "bytes": 410,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/index-a0BiIKPr.css",
+      "local": "site/assets/index-a0BiIKPr.css",
+      "bytes": 19914,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/eye-off-LFq1xIZa.js",
+      "local": "site/assets/eye-off-LFq1xIZa.js",
+      "bytes": 598,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/trash-2-BA3_5gmj.js",
+      "local": "site/assets/trash-2-BA3_5gmj.js",
+      "bytes": 526,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/external-link-D8Ct18tM.js",
+      "local": "site/assets/external-link-D8Ct18tM.js",
+      "bytes": 419,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/support-CzJfC7do.js",
+      "local": "site/assets/support-CzJfC7do.js",
+      "bytes": 513,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/messages-kunK9EVR.js",
+      "local": "site/assets/messages-kunK9EVR.js",
+      "bytes": 476,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/messages-DHpp2f1K.css",
+      "local": "site/assets/messages-DHpp2f1K.css",
+      "bytes": 4241,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Account-xf8XGZBh.css",
+      "local": "site/assets/Account-xf8XGZBh.css",
+      "bytes": 10902,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/post-it-Z-NBNqj3.js",
+      "local": "site/assets/post-it-Z-NBNqj3.js",
+      "bytes": 9183,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/send-aMrI7QxQ.js",
+      "local": "site/assets/send-aMrI7QxQ.js",
+      "bytes": 459,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/post-it-DOam72zB.css",
+      "local": "site/assets/post-it-DOam72zB.css",
+      "bytes": 3579,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/arrow-left-CNbRqgF3.js",
+      "local": "site/assets/arrow-left-CNbRqgF3.js",
+      "bytes": 333,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/maximize-2-Cqv6dJ2b.js",
+      "local": "site/assets/maximize-2-Cqv6dJ2b.js",
+      "bytes": 467,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Studio-cXZWhb29.css",
+      "local": "site/assets/Studio-cXZWhb29.css",
+      "bytes": 3688,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/crush-machine-06e7afa23176.webp?v=06e7afa23176",
+      "local": "site/previews/crush-machine-06e7afa23176__q_858442514b.webp",
+      "bytes": 20358,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/stair-sonata-b4815214a560.webp?v=b4815214a560",
+      "local": "site/previews/stair-sonata-b4815214a560__q_73f1dcd54c.webp",
+      "bytes": 15204,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/hive-burst-14418231905f.webp?v=14418231905f",
+      "local": "site/previews/hive-burst-14418231905f__q_9bddc4d7c7.webp",
+      "bytes": 30026,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/sync-fountain-3bf6dfa88c54.webp?v=3bf6dfa88c54",
+      "local": "site/previews/sync-fountain-3bf6dfa88c54__q_268719c41b.webp",
+      "bytes": 7104,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/phase-loop-14f07f122e5b.webp?v=14f07f122e5b",
+      "local": "site/previews/phase-loop-14f07f122e5b__q_482f781b29.webp",
+      "bytes": 10398,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/star-beats-9174db638238.webp?v=9174db638238",
+      "local": "site/previews/star-beats-9174db638238__q_6aca444ab3.webp",
+      "bytes": 37440,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/every-bounce-098f0e05fac5.webp?v=098f0e05fac5",
+      "local": "site/previews/every-bounce-098f0e05fac5__q_4a079a50a7.webp",
+      "bytes": 38958,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/digit-duel-83fed5e33eb2.webp?v=83fed5e33eb2",
+      "local": "site/previews/digit-duel-83fed5e33eb2__q_8ba63314b5.webp",
+      "bytes": 15322,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/wobble-stack-4140a10eb733.webp?v=4140a10eb733",
+      "local": "site/previews/wobble-stack-4140a10eb733__q_811024b1f2.webp",
+      "bytes": 14580,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/roll-hopper-aa539f880225.webp?v=aa539f880225",
+      "local": "site/previews/roll-hopper-aa539f880225__q_c93716924f.webp",
+      "bytes": 14684,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pressure-clash-18dce7e1b7be.webp?v=18dce7e1b7be",
+      "local": "site/previews/pressure-clash-18dce7e1b7be__q_0be574eae9.webp",
+      "bytes": 39542,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/eureka-lab-28aaf9565be4.webp?v=28aaf9565be4",
+      "local": "site/previews/eureka-lab-28aaf9565be4__q_7ed4b7ec72.webp",
+      "bytes": 18796,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/melody-bounce-56acd0ef63f7.webp?v=56acd0ef63f7",
+      "local": "site/previews/melody-bounce-56acd0ef63f7__q_5d2846d747.webp",
+      "bytes": 11336,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/shatter-stack-1e737fe57a99.webp?v=1e737fe57a99",
+      "local": "site/previews/shatter-stack-1e737fe57a99__q_44ef03433d.webp",
+      "bytes": 22428,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/perfect-swish-670e5bb63e8d.webp?v=670e5bb63e8d",
+      "local": "site/previews/perfect-swish-670e5bb63e8d__q_6cb4dbd59e.webp",
+      "bytes": 9688,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chomp-tank-6840dff55333.webp?v=6840dff55333",
+      "local": "site/previews/chomp-tank-6840dff55333__q_fcf96c62e0.webp",
+      "bytes": 33290,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pocket-slam-b960ade66958.webp?v=b960ade66958",
+      "local": "site/previews/pocket-slam-b960ade66958__q_796d625d96.webp",
+      "bytes": 16776,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/marble-machine-9913115441b6.webp?v=9913115441b6",
+      "local": "site/previews/marble-machine-9913115441b6__q_9d74fc1ca3.webp",
+      "bytes": 15502,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/glass-gauntlet-034b00c4ff30.webp?v=034b00c4ff30",
+      "local": "site/previews/glass-gauntlet-034b00c4ff30__q_d261f6eb4a.webp",
+      "bytes": 17974,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chaos-cutter-9c0e2b3a61c0.webp?v=9c0e2b3a61c0",
+      "local": "site/previews/chaos-cutter-9c0e2b3a61c0__q_07bb6c7629.webp",
+      "bytes": 7122,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/blob-escape-1b0ca4d62d16.webp?v=1b0ca4d62d16",
+      "local": "site/previews/blob-escape-1b0ca4d62d16__q_92d8902768.webp",
+      "bytes": 5220,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ball-slide-8d8a281f7ccb.webp?v=8d8a281f7ccb",
+      "local": "site/previews/ball-slide-8d8a281f7ccb__q_ab100e119a.webp",
+      "bytes": 17076,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/flag-atlas-acaf7c949679.webp?v=acaf7c949679",
+      "local": "site/previews/flag-atlas-acaf7c949679__q_c19852aecd.webp",
+      "bytes": 22280,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/sort-spectrum-42118703eb7a.webp?v=42118703eb7a",
+      "local": "site/previews/sort-spectrum-42118703eb7a__q_fb750f78a5.webp",
+      "bytes": 28756,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/algo-arena-eb383a96df95.webp?v=eb383a96df95",
+      "local": "site/previews/algo-arena-eb383a96df95__q_60e1794b27.webp",
+      "bytes": 13230,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/rising-tide-696aa7236d3f.webp?v=696aa7236d3f",
+      "local": "site/previews/rising-tide-696aa7236d3f__q_297b87d1ec.webp",
+      "bytes": 18846,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pulse-bloom-56324643f1c5.webp?v=56324643f1c5",
+      "local": "site/previews/pulse-bloom-56324643f1c5__q_9a8e6dd1a8.webp",
+      "bytes": 13842,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/spin-loop-cf6ffb1f5d92.webp?v=cf6ffb1f5d92",
+      "local": "site/previews/spin-loop-cf6ffb1f5d92__q_4ad1a97807.webp",
+      "bytes": 17562,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chime-chamber-bcb37f83325b.webp?v=bcb37f83325b",
+      "local": "site/previews/chime-chamber-bcb37f83325b__q_ddfe5c5236.webp",
+      "bytes": 16980,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/brawl-royale-6e99a44d9788.webp?v=6e99a44d9788",
+      "local": "site/previews/brawl-royale-6e99a44d9788__q_a293d76174.webp",
+      "bytes": 14828,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/brick-build-ce2598156a4c.webp?v=ce2598156a4c",
+      "local": "site/previews/brick-build-ce2598156a4c__q_c35fbd517b.webp",
+      "bytes": 4786,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/neon-doubler-f10ec9ebf3f4.webp?v=f10ec9ebf3f4",
+      "local": "site/previews/neon-doubler-f10ec9ebf3f4__q_ad7c62f429.webp",
+      "bytes": 10482,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/stick-race-4ffdd06f4700.webp?v=4ffdd06f4700",
+      "local": "site/previews/stick-race-4ffdd06f4700__q_10b4abe66e.webp",
+      "bytes": 15804,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/silhouette-fill-d5f6db386cb6.webp?v=d5f6db386cb6",
+      "local": "site/previews/silhouette-fill-d5f6db386cb6__q_39601a02cc.webp",
+      "bytes": 7204,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ring-escape-277a2357a521.webp?v=277a2357a521",
+      "local": "site/previews/ring-escape-277a2357a521__q_ed24fcf2c4.webp",
+      "bytes": 26326,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/field-plough-8b626e55dbfe.webp?v=8b626e55dbfe",
+      "local": "site/previews/field-plough-8b626e55dbfe__q_defccd8cb9.webp",
+      "bytes": 12642,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/iso-ball-wave-0cf67016116f.webp?v=0cf67016116f",
+      "local": "site/previews/iso-ball-wave-0cf67016116f__q_76cd4f2547.webp",
+      "bytes": 20598,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/polygon-arena-b57512d3373c.webp?v=b57512d3373c",
+      "local": "site/previews/polygon-arena-b57512d3373c__q_9c0e01cd7e.webp",
+      "bytes": 36272,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-fill-842265913717.webp?v=842265913717",
+      "local": "site/previews/bounce-fill-842265913717__q_9352311cae.webp",
+      "bytes": 20496,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/corner-wheel-2f17a390d3dc.webp?v=2f17a390d3dc",
+      "local": "site/previews/corner-wheel-2f17a390d3dc__q_f976fa1dbe.webp",
+      "bytes": 11060,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pistol-duel-9f917a7506ad.webp?v=9f917a7506ad",
+      "local": "site/previews/pistol-duel-9f917a7506ad__q_d1db74e927.webp",
+      "bytes": 8252,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/blueprint-builder-f82cf04cf4e0.webp?v=f82cf04cf4e0",
+      "local": "site/previews/blueprint-builder-f82cf04cf4e0__q_5bd51e89be.webp",
+      "bytes": 23084,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/beat-ball-84b9cc3a1653.webp?v=84b9cc3a1653",
+      "local": "site/previews/beat-ball-84b9cc3a1653__q_0cebafaf6a.webp",
+      "bytes": 11522,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bouncing-ball-arena-ca4788aa8130.webp?v=ca4788aa8130",
+      "local": "site/previews/bouncing-ball-arena-ca4788aa8130__q_da679abded.webp",
+      "bytes": 14718,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/voxel-builder-796ae1991268.webp?v=796ae1991268",
+      "local": "site/previews/voxel-builder-796ae1991268__q_f4e62a63e2.webp",
+      "bytes": 33530,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/egg-simulation-c13d1203ce20.webp?v=c13d1203ce20",
+      "local": "site/previews/egg-simulation-c13d1203ce20__q_98e71c981b.webp",
+      "bytes": 9532,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ball-barrier-race-f5c3037b40fd.webp?v=f5c3037b40fd",
+      "local": "site/previews/ball-barrier-race-f5c3037b40fd__q_3b22623c5a.webp",
+      "bytes": 12510,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/tiny-trials-3bb587a5e580.webp?v=3bb587a5e580",
+      "local": "site/previews/tiny-trials-3bb587a5e580__q_80222df7e6.webp",
+      "bytes": 17620,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/gate-rush-82718bd6a34c.webp?v=82718bd6a34c",
+      "local": "site/previews/gate-rush-82718bd6a34c__q_70897611d8.webp",
+      "bytes": 6784,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/note-dial-7650b85dd01f.webp?v=7650b85dd01f",
+      "local": "site/previews/note-dial-7650b85dd01f__q_017e5b3428.webp",
+      "bytes": 5944,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/orbit-notes-455d687ab16f.webp?v=455d687ab16f",
+      "local": "site/previews/orbit-notes-455d687ab16f__q_7daccb5194.webp",
+      "bytes": 16996,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/score-sparks-0a9177609421.webp?v=0a9177609421",
+      "local": "site/previews/score-sparks-0a9177609421__q_1213bdf5b1.webp",
+      "bytes": 10892,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-jukebox-f8a21dc111e4.webp?v=f8a21dc111e4",
+      "local": "site/previews/bounce-jukebox-f8a21dc111e4__q_2ad7c65987.webp",
+      "bytes": 17936,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/piano-rain-841151b9b9cd.webp?v=841151b9b9cd",
+      "local": "site/previews/piano-rain-841151b9b9cd__q_39ce69612e.webp",
+      "bytes": 20204,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-chute-922b24e07602.webp?v=922b24e07602",
+      "local": "site/previews/bounce-chute-922b24e07602__q_e08afcac77.webp",
+      "bytes": 17588,
+      "type": "image/webp",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GameLanding-B3qK7j6K.js",
+      "local": "site/assets/GameLanding-B3qK7j6K.js",
+      "bytes": 9844,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/game-landing-BmHVhZW8.js",
+      "local": "site/assets/game-landing-BmHVhZW8.js",
+      "bytes": 33991,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/game-landing-C-WfHE5h.css",
+      "local": "site/assets/game-landing-C-WfHE5h.css",
+      "bytes": 4186,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/pricing.jpg?v=f432ff119ac8",
+      "local": "site/og/vidirexa/pricing__q_40d8ee049c.jpg",
+      "bytes": 68741,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Pricing-BXs8-Wjt.js",
+      "local": "site/assets/Pricing-BXs8-Wjt.js",
+      "bytes": 26149,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/PricingFAQ-CffYlfiH.js",
+      "local": "site/assets/PricingFAQ-CffYlfiH.js",
+      "bytes": 397,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/tipping-point-529399e38929.mp4?v=529399e38929",
+      "local": "site/previews/tipping-point-529399e38929__q_9f0d3027c9.mp4",
+      "bytes": 240768,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/SupportPage-BlC2Z_6w.js",
+      "local": "site/assets/SupportPage-BlC2Z_6w.js",
+      "bytes": 1809,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/About-DAdoNBF9.js",
+      "local": "site/assets/About-DAdoNBF9.js",
+      "bytes": 1482,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GetPaid-Dxngeej7.js",
+      "local": "site/assets/GetPaid-Dxngeej7.js",
+      "bytes": 18831,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/get-paid-BoqWodab.js",
+      "local": "site/assets/get-paid-BoqWodab.js",
+      "bytes": 371,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/get-paid-CVeEEby0.css",
+      "local": "site/assets/get-paid-CVeEEby0.css",
+      "bytes": 13889,
+      "type": "text/css",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/marble-race.jpg?v=53f690889cae",
+      "local": "site/og/vidirexa/marble-race__q_d2d287651f.jpg",
+      "bytes": 63216,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/brawl-royale.jpg?v=1be3c37d4456",
+      "local": "site/og/vidirexa/brawl-royale__q_97a323f21b.jpg",
+      "bytes": 59846,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/melody-bounce.jpg?v=ea4f4890235b",
+      "local": "site/og/vidirexa/melody-bounce__q_985cb9b10c.jpg",
+      "bytes": 48128,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/shape-merger.jpg?v=c9c5359b6679",
+      "local": "site/og/vidirexa/shape-merger__q_4836d6513e.jpg",
+      "bytes": 55042,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/sort-spectrum.jpg?v=296562ad7d44",
+      "local": "site/og/vidirexa/sort-spectrum__q_a54e59340d.jpg",
+      "bytes": 57271,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/brick-build.jpg?v=2f20d44a8584",
+      "local": "site/og/vidirexa/brick-build__q_71bfdca859.jpg",
+      "bytes": 39940,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/piano-rain.jpg?v=d62bd2bbb95c",
+      "local": "site/og/vidirexa/piano-rain__q_59505d7fd5.jpg",
+      "bytes": 36007,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/sync-fountain.jpg?v=668a82e68d51",
+      "local": "site/og/vidirexa/sync-fountain__q_84f130072c.jpg",
+      "bytes": 13721,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/spiral-shatter.jpg?v=01f751fbdce6",
+      "local": "site/og/vidirexa/spiral-shatter__q_fea52586fb.jpg",
+      "bytes": 34807,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/wobble-stack.jpg?v=e506346e238d",
+      "local": "site/og/vidirexa/wobble-stack__q_9acdcadb8b.jpg",
+      "bytes": 33645,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/fruit-merge.jpg?v=43c24a19e5ba",
+      "local": "site/og/vidirexa/fruit-merge__q_0520931e46.jpg",
+      "bytes": 52888,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/GuidePages-CBqlLhTU.js",
+      "local": "site/assets/GuidePages-CBqlLhTU.js",
+      "bytes": 30673,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/spin-loop.jpg?v=e7657f940795",
+      "local": "site/og/vidirexa/spin-loop__q_871ec90868.jpg",
+      "bytes": 43457,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/roll-hopper.jpg?v=426141d1c8df",
+      "local": "site/og/vidirexa/roll-hopper__q_3c70209a00.jpg",
+      "bytes": 61452,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/iso-ball-wave.jpg?v=e329466f1cb3",
+      "local": "site/og/vidirexa/iso-ball-wave__q_ad8d736d12.jpg",
+      "bytes": 55870,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/line-arena.jpg?v=cb70bcff03fa",
+      "local": "site/og/vidirexa/line-arena__q_538a341ebb.jpg",
+      "bytes": 56122,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/flag-atlas.jpg?v=3d606c01ed2d",
+      "local": "site/og/vidirexa/flag-atlas__q_349c70a4c6.jpg",
+      "bytes": 60716,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/musical-path.jpg?v=d765fbbd2963",
+      "local": "site/og/vidirexa/musical-path__q_14ed7cd2be.jpg",
+      "bytes": 50274,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/tipping-point.jpg?v=fa5648a1f26f",
+      "local": "site/og/vidirexa/tipping-point__q_dfd53da617.jpg",
+      "bytes": 17569,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/ricochet-rally.jpg?v=9e4de37a176f",
+      "local": "site/og/vidirexa/ricochet-rally__q_f2d20edd18.jpg",
+      "bytes": 42964,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ricochet-rally-2b56aace63cb.mp4?v=2b56aace63cb",
+      "local": "site/previews/ricochet-rally-2b56aace63cb__q_e55b1e43b4.mp4",
+      "bytes": 88419,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/ribbon-fold.jpg?v=9e16067f10f3",
+      "local": "site/og/vidirexa/ribbon-fold__q_c39d8651e3.jpg",
+      "bytes": 24574,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/fold-groove.jpg?v=474c000511c0",
+      "local": "site/og/vidirexa/fold-groove__q_258af77ac4.jpg",
+      "bytes": 34009,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/fold-fractal.jpg?v=88e27ef00bc0",
+      "local": "site/og/vidirexa/fold-fractal__q_4229a2f838.jpg",
+      "bytes": 23430,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/formula-towers.jpg?v=d914985ecb63",
+      "local": "site/og/vidirexa/formula-towers__q_a714fe9da2.jpg",
+      "bytes": 29586,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/games/crush-machine",
+      "local": "site/games/crush-machine/index.html",
+      "bytes": 46610,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/stair-sonata",
+      "local": "site/games/stair-sonata/index.html",
+      "bytes": 45621,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/hive-burst",
+      "local": "site/games/hive-burst/index.html",
+      "bytes": 46045,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/sync-fountain",
+      "local": "site/games/sync-fountain/index.html",
+      "bytes": 45453,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/phase-loop",
+      "local": "site/games/phase-loop/index.html",
+      "bytes": 44663,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/star-beats",
+      "local": "site/games/star-beats/index.html",
+      "bytes": 39724,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/every-bounce",
+      "local": "site/games/every-bounce/index.html",
+      "bytes": 46497,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/digit-duel",
+      "local": "site/games/digit-duel/index.html",
+      "bytes": 39997,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/wobble-stack",
+      "local": "site/games/wobble-stack/index.html",
+      "bytes": 40845,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/line-arena",
+      "local": "site/games/line-arena/index.html",
+      "bytes": 46198,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/roll-hopper",
+      "local": "site/games/roll-hopper/index.html",
+      "bytes": 40579,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/pressure-clash",
+      "local": "site/games/pressure-clash/index.html",
+      "bytes": 44755,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/eureka-lab",
+      "local": "site/games/eureka-lab/index.html",
+      "bytes": 45684,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/melody-bounce",
+      "local": "site/games/melody-bounce/index.html",
+      "bytes": 45933,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/shatter-stack",
+      "local": "site/games/shatter-stack/index.html",
+      "bytes": 44459,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/perfect-swish",
+      "local": "site/games/perfect-swish/index.html",
+      "bytes": 45752,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/chomp-tank",
+      "local": "site/games/chomp-tank/index.html",
+      "bytes": 45875,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/pocket-slam",
+      "local": "site/games/pocket-slam/index.html",
+      "bytes": 45356,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/marble-machine",
+      "local": "site/games/marble-machine/index.html",
+      "bytes": 47028,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/glass-gauntlet",
+      "local": "site/games/glass-gauntlet/index.html",
+      "bytes": 44926,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/chaos-cutter",
+      "local": "site/games/chaos-cutter/index.html",
+      "bytes": 41888,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/blob-escape",
+      "local": "site/games/blob-escape/index.html",
+      "bytes": 45877,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/ball-slide",
+      "local": "site/games/ball-slide/index.html",
+      "bytes": 46130,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/flag-atlas",
+      "local": "site/games/flag-atlas/index.html",
+      "bytes": 44864,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/sort-spectrum",
+      "local": "site/games/sort-spectrum/index.html",
+      "bytes": 44708,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/algo-arena",
+      "local": "site/games/algo-arena/index.html",
+      "bytes": 43499,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/rising-tide",
+      "local": "site/games/rising-tide/index.html",
+      "bytes": 39904,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/pulse-bloom",
+      "local": "site/games/pulse-bloom/index.html",
+      "bytes": 46666,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/spin-loop",
+      "local": "site/games/spin-loop/index.html",
+      "bytes": 46380,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/chime-chamber",
+      "local": "site/games/chime-chamber/index.html",
+      "bytes": 45718,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/brawl-royale",
+      "local": "site/games/brawl-royale/index.html",
+      "bytes": 39572,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/brick-build",
+      "local": "site/games/brick-build/index.html",
+      "bytes": 45667,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/neon-doubler",
+      "local": "site/games/neon-doubler/index.html",
+      "bytes": 46950,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/stick-race",
+      "local": "site/games/stick-race/index.html",
+      "bytes": 40805,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/silhouette-fill",
+      "local": "site/games/silhouette-fill/index.html",
+      "bytes": 46868,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/ring-escape",
+      "local": "site/games/ring-escape/index.html",
+      "bytes": 46154,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/field-plough",
+      "local": "site/games/field-plough/index.html",
+      "bytes": 44943,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/iso-ball-wave",
+      "local": "site/games/iso-ball-wave/index.html",
+      "bytes": 45662,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/polygon-arena",
+      "local": "site/games/polygon-arena/index.html",
+      "bytes": 44033,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/bounce-fill",
+      "local": "site/games/bounce-fill/index.html",
+      "bytes": 45378,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/corner-wheel",
+      "local": "site/games/corner-wheel/index.html",
+      "bytes": 40281,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/pistol-duel",
+      "local": "site/games/pistol-duel/index.html",
+      "bytes": 43415,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/blueprint-builder",
+      "local": "site/games/blueprint-builder/index.html",
+      "bytes": 39354,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/beat-ball",
+      "local": "site/games/beat-ball/index.html",
+      "bytes": 44377,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/bouncing-ball-arena",
+      "local": "site/games/bouncing-ball-arena/index.html",
+      "bytes": 43581,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/voxel-builder",
+      "local": "site/games/voxel-builder/index.html",
+      "bytes": 43644,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/egg-simulation",
+      "local": "site/games/egg-simulation/index.html",
+      "bytes": 45187,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/ball-barrier-race",
+      "local": "site/games/ball-barrier-race/index.html",
+      "bytes": 45192,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/marble-race",
+      "local": "site/games/marble-race/index.html",
+      "bytes": 46238,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/fruit-merge",
+      "local": "site/games/fruit-merge/index.html",
+      "bytes": 39151,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/musical-path",
+      "local": "site/games/musical-path/index.html",
+      "bytes": 40175,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/tiny-trials",
+      "local": "site/games/tiny-trials/index.html",
+      "bytes": 45654,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/gate-rush",
+      "local": "site/games/gate-rush/index.html",
+      "bytes": 45865,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/note-dial",
+      "local": "site/games/note-dial/index.html",
+      "bytes": 44659,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/orbit-notes",
+      "local": "site/games/orbit-notes/index.html",
+      "bytes": 44561,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/score-sparks",
+      "local": "site/games/score-sparks/index.html",
+      "bytes": 45333,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/bounce-jukebox",
+      "local": "site/games/bounce-jukebox/index.html",
+      "bytes": 45974,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/piano-rain",
+      "local": "site/games/piano-rain/index.html",
+      "bytes": 40022,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/beat-press",
+      "local": "site/games/beat-press/index.html",
+      "bytes": 44539,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/games/bounce-chute",
+      "local": "site/games/bounce-chute/index.html",
+      "bytes": 44472,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/referrals",
+      "local": "site/referrals/index.html",
+      "bytes": 42692,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/privacy",
+      "local": "site/privacy/index.html",
+      "bytes": 34119,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=tipping-point",
+      "local": "site/create/index__q_f3d0e44581.html",
+      "bytes": 45409,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=ricochet-rally",
+      "local": "site/create/index__q_1518100d6e.html",
+      "bytes": 46655,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=spiral-shatter",
+      "local": "site/create/index__q_69dc58c86f.html",
+      "bytes": 46312,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=ribbon-fold",
+      "local": "site/create/index__q_a20897e9b4.html",
+      "bytes": 46359,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=fold-groove",
+      "local": "site/create/index__q_c9fa84fee3.html",
+      "bytes": 45306,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=fold-fractal",
+      "local": "site/create/index__q_8a685eacb1.html",
+      "bytes": 45243,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=formula-towers",
+      "local": "site/create/index__q_4e608ad23d.html",
+      "bytes": 45366,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=shape-merger",
+      "local": "site/create/index__q_bd512a34f7.html",
+      "bytes": 46056,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=crush-machine",
+      "local": "site/create/index__q_804355d634.html",
+      "bytes": 44828,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=stair-sonata",
+      "local": "site/create/index__q_13595c538e.html",
+      "bytes": 45327,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=hive-burst",
+      "local": "site/create/index__q_7e45f116e4.html",
+      "bytes": 46317,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=sync-fountain",
+      "local": "site/create/index__q_4413675341.html",
+      "bytes": 44761,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=phase-loop",
+      "local": "site/create/index__q_b6c43397be.html",
+      "bytes": 45285,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=star-beats",
+      "local": "site/create/index__q_29a1f4ecfe.html",
+      "bytes": 46320,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=every-bounce",
+      "local": "site/create/index__q_bb777e0967.html",
+      "bytes": 44826,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=digit-duel",
+      "local": "site/create/index__q_457c8eb8ca.html",
+      "bytes": 44734,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=wobble-stack",
+      "local": "site/create/index__q_742a2b4720.html",
+      "bytes": 44793,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=line-arena",
+      "local": "site/create/index__q_e2c27404fc.html",
+      "bytes": 46396,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=roll-hopper",
+      "local": "site/create/index__q_2b9ec20d51.html",
+      "bytes": 45065,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=pressure-clash",
+      "local": "site/create/index__q_35224b09cb.html",
+      "bytes": 46461,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=eureka-lab",
+      "local": "site/create/index__q_59b2cb52b2.html",
+      "bytes": 44660,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=melody-bounce",
+      "local": "site/create/index__q_a2d0e78064.html",
+      "bytes": 44490,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=shatter-stack",
+      "local": "site/create/index__q_2cf104a3d4.html",
+      "bytes": 46316,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=perfect-swish",
+      "local": "site/create/index__q_446ac99ea7.html",
+      "bytes": 46165,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=chomp-tank",
+      "local": "site/create/index__q_9d45176285.html",
+      "bytes": 46275,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=pocket-slam",
+      "local": "site/create/index__q_f72fff4093.html",
+      "bytes": 44401,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=marble-machine",
+      "local": "site/create/index__q_5cb643aa00.html",
+      "bytes": 44599,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=glass-gauntlet",
+      "local": "site/create/index__q_60e46b6674.html",
+      "bytes": 45208,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=chaos-cutter",
+      "local": "site/create/index__q_ac28e1f70f.html",
+      "bytes": 44545,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=blob-escape",
+      "local": "site/create/index__q_d48c9959bd.html",
+      "bytes": 45061,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=ball-slide",
+      "local": "site/create/index__q_1b2a132239.html",
+      "bytes": 43976,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=flag-atlas",
+      "local": "site/create/index__q_d91f092c58.html",
+      "bytes": 45260,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=sort-spectrum",
+      "local": "site/create/index__q_66b76f520d.html",
+      "bytes": 45027,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=algo-arena",
+      "local": "site/create/index__q_d7d75231e6.html",
+      "bytes": 44981,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=rising-tide",
+      "local": "site/create/index__q_bf22937b78.html",
+      "bytes": 45336,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=pulse-bloom",
+      "local": "site/create/index__q_2504b0bcee.html",
+      "bytes": 44485,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=spin-loop",
+      "local": "site/create/index__q_79e373d05f.html",
+      "bytes": 44572,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=chime-chamber",
+      "local": "site/create/index__q_ff98f6a2e0.html",
+      "bytes": 45109,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=brawl-royale",
+      "local": "site/create/index__q_0a5b6fb32d.html",
+      "bytes": 44751,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=brick-build",
+      "local": "site/create/index__q_61ebf4a3f2.html",
+      "bytes": 45311,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=neon-doubler",
+      "local": "site/create/index__q_6f2ade0d31.html",
+      "bytes": 44593,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=stick-race",
+      "local": "site/create/index__q_587fa3c4f2.html",
+      "bytes": 45178,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=silhouette-fill",
+      "local": "site/create/index__q_ee04fcca69.html",
+      "bytes": 44495,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=ring-escape",
+      "local": "site/create/index__q_aa997e37a8.html",
+      "bytes": 44545,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=field-plough",
+      "local": "site/create/index__q_a43604800f.html",
+      "bytes": 44485,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=iso-ball-wave",
+      "local": "site/create/index__q_9fa72df53b.html",
+      "bytes": 45031,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=polygon-arena",
+      "local": "site/create/index__q_ec1567b262.html",
+      "bytes": 44905,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=bounce-fill",
+      "local": "site/create/index__q_1b65142c19.html",
+      "bytes": 44681,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=corner-wheel",
+      "local": "site/create/index__q_e3433d3f94.html",
+      "bytes": 44459,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=pistol-duel",
+      "local": "site/create/index__q_df01af0417.html",
+      "bytes": 44555,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=blueprint-builder",
+      "local": "site/create/index__q_7a88353568.html",
+      "bytes": 44959,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=beat-ball",
+      "local": "site/create/index__q_8239fe5087.html",
+      "bytes": 44760,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=bouncing-ball-arena",
+      "local": "site/create/index__q_17189af7c1.html",
+      "bytes": 44579,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=voxel-builder",
+      "local": "site/create/index__q_f0fdc25025.html",
+      "bytes": 44322,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=egg-simulation",
+      "local": "site/create/index__q_f52fee740b.html",
+      "bytes": 44617,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=ball-barrier-race",
+      "local": "site/create/index__q_c5680ed234.html",
+      "bytes": 45225,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=marble-race",
+      "local": "site/create/index__q_dcde87b9ff.html",
+      "bytes": 44774,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=fruit-merge",
+      "local": "site/create/index__q_95c623238b.html",
+      "bytes": 46274,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=musical-path",
+      "local": "site/create/index__q_7b2e9f4103.html",
+      "bytes": 44466,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=tiny-trials",
+      "local": "site/create/index__q_b77c7ccad7.html",
+      "bytes": 45196,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=gate-rush",
+      "local": "site/create/index__q_b3f27c45b4.html",
+      "bytes": 45234,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=note-dial",
+      "local": "site/create/index__q_501549cbe3.html",
+      "bytes": 45022,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=orbit-notes",
+      "local": "site/create/index__q_567b835b58.html",
+      "bytes": 45006,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=score-sparks",
+      "local": "site/create/index__q_4e2dceb478.html",
+      "bytes": 45270,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=bounce-jukebox",
+      "local": "site/create/index__q_6a65732c3a.html",
+      "bytes": 44758,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=piano-rain",
+      "local": "site/create/index__q_fcca36c62e.html",
+      "bytes": 46430,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=beat-press",
+      "local": "site/create/index__q_78835c70b5.html",
+      "bytes": 46226,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/create?game=bounce-chute",
+      "local": "site/create/index__q_18ccbd58a4.html",
+      "bytes": 44899,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=ricochet-rally",
+      "local": "site/pricing/index__q_e92d45c5f6.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=spiral-shatter",
+      "local": "site/pricing/index__q_019520a428.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=ribbon-fold",
+      "local": "site/pricing/index__q_ae2a72aad8.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=shape-merger",
+      "local": "site/pricing/index__q_748075ad63.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=hive-burst",
+      "local": "site/pricing/index__q_3db4b5afaa.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=star-beats",
+      "local": "site/pricing/index__q_5d76c8648a.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=line-arena",
+      "local": "site/pricing/index__q_c8306a1f87.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=pressure-clash",
+      "local": "site/pricing/index__q_4c70045d66.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=shatter-stack",
+      "local": "site/pricing/index__q_164986635f.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=perfect-swish",
+      "local": "site/pricing/index__q_31ecfd233d.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=chomp-tank",
+      "local": "site/pricing/index__q_ce38288bb4.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=fruit-merge",
+      "local": "site/pricing/index__q_a98cf7f68f.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=piano-rain",
+      "local": "site/pricing/index__q_4eda6b75e5.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/pricing?plan=pro&from=cap&game=beat-press",
+      "local": "site/pricing/index__q_1a487f1881.html",
+      "bytes": 66548,
+      "type": "text/html",
+      "status": 200,
+      "via": "hydrated-dom"
+    },
+    {
+      "url": "https://vidirexa.com/assets/index-BrwcjjzI.js",
+      "local": "site/assets/index-BrwcjjzI.js",
+      "bytes": 43694,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/email-assets/vidirexa-logo.png",
+      "local": "site/email-assets/vidirexa-logo.png",
+      "bytes": 33527,
+      "type": "image/png",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/favicon.svg",
+      "local": "site/favicon.svg",
+      "bytes": 358,
+      "type": "image/svg+xml",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/seo-route-head-CCxXB0uC.js",
+      "local": "site/assets/seo-route-head-CCxXB0uC.js",
+      "bytes": 2222,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/ToolsWorkspace-DcmB7vKK.js",
+      "local": "site/assets/ToolsWorkspace-DcmB7vKK.js",
+      "bytes": 56670,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/AdminPartners-BBdcM-GL.js",
+      "local": "site/assets/AdminPartners-BBdcM-GL.js",
+      "bytes": 5460,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/NotificationBell-DnF4Cx9d.js",
+      "local": "site/assets/NotificationBell-DnF4Cx9d.js",
+      "bytes": 7793,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/NotificationsPage-D7hy5JRw.js",
+      "local": "site/assets/NotificationsPage-D7hy5JRw.js",
+      "bytes": 5501,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/MessagesPage-BRIrpWsi.js",
+      "local": "site/assets/MessagesPage-BRIrpWsi.js",
+      "bytes": 5011,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/Recordings-Bc9zFzgM.js",
+      "local": "site/assets/Recordings-Bc9zFzgM.js",
+      "bytes": 11082,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/PrivacyNotice-CWOpkCzc.js",
+      "local": "site/assets/PrivacyNotice-CWOpkCzc.js",
+      "bytes": 48325,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/TermsNotice-BGmVLxNX.js",
+      "local": "site/assets/TermsNotice-BGmVLxNX.js",
+      "bytes": 10884,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/AnalyticsConsent-DfUxVnMY.js",
+      "local": "site/assets/AnalyticsConsent-DfUxVnMY.js",
+      "bytes": 1293,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/AdminAnalytics-DX20phpc.js",
+      "local": "site/assets/AdminAnalytics-DX20phpc.js",
+      "bytes": 128725,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/SaleBanner-kAVRLNCw.js",
+      "local": "site/assets/SaleBanner-kAVRLNCw.js",
+      "bytes": 2029,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/dm-sans-latin-ext-wght-normal-BOFOeGcA.woff2",
+      "local": "site/assets/dm-sans-latin-ext-wght-normal-BOFOeGcA.woff2",
+      "bytes": 18228,
+      "type": "font/woff2",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2",
+      "local": "site/assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2",
+      "bytes": 15120,
+      "type": "font/woff2",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/fp-worker-DbOeqEiH.js",
+      "local": "site/assets/fp-worker-DbOeqEiH.js",
+      "bytes": 1498,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/WatermarkOffer-BTRJ83A1.js",
+      "local": "site/assets/WatermarkOffer-BTRJ83A1.js",
+      "bytes": 2386,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/MusicalPathStudio-D2DbhAGi.js",
+      "local": "site/assets/MusicalPathStudio-D2DbhAGi.js",
+      "bytes": 1571,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/assets/NativePricingPage-BXtyudDM.js",
+      "local": "site/assets/NativePricingPage-BXtyudDM.js",
+      "bytes": 6102,
+      "type": "text/javascript",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/crush-machine.jpg?v=83d895916256",
+      "local": "site/og/vidirexa/crush-machine__q_78f8db3f89.jpg",
+      "bytes": 30659,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/crush-machine-2384a76e32bf.mp4?v=2384a76e32bf",
+      "local": "site/previews/crush-machine-2384a76e32bf__q_3690ed2a2d.mp4",
+      "bytes": 296734,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/stair-sonata.jpg?v=3d5d1a62709b",
+      "local": "site/og/vidirexa/stair-sonata__q_76105dd9c5.jpg",
+      "bytes": 33862,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/stair-sonata-1b95de150946.mp4?v=1b95de150946",
+      "local": "site/previews/stair-sonata-1b95de150946__q_6fa1aff5e5.mp4",
+      "bytes": 258961,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/hive-burst.jpg?v=70c08b464b33",
+      "local": "site/og/vidirexa/hive-burst__q_60817f8451.jpg",
+      "bytes": 41166,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/hive-burst-1e3cacd9d47a.mp4?v=1e3cacd9d47a",
+      "local": "site/previews/hive-burst-1e3cacd9d47a__q_c5ac4c98ea.mp4",
+      "bytes": 297899,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/sync-fountain-a74b5d18974e.mp4?v=a74b5d18974e",
+      "local": "site/previews/sync-fountain-a74b5d18974e__q_79a451af95.mp4",
+      "bytes": 157089,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/phase-loop.jpg?v=170aa9973f19",
+      "local": "site/og/vidirexa/phase-loop__q_5a0bf14076.jpg",
+      "bytes": 16399,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/phase-loop-59a992767cfd.mp4?v=59a992767cfd",
+      "local": "site/previews/phase-loop-59a992767cfd__q_6d2e410deb.mp4",
+      "bytes": 236290,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/star-beats.jpg?v=e5785ed4bf62",
+      "local": "site/og/vidirexa/star-beats__q_2e32dfb92a.jpg",
+      "bytes": 40253,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/star-beats-0d308ae32760.mp4?v=0d308ae32760",
+      "local": "site/previews/star-beats-0d308ae32760__q_92c81a06a7.mp4",
+      "bytes": 277815,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/every-bounce.jpg?v=c02b68311b3b",
+      "local": "site/og/vidirexa/every-bounce__q_2cc72891ba.jpg",
+      "bytes": 50566,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/every-bounce-f59cc5b6cec8.mp4?v=f59cc5b6cec8",
+      "local": "site/previews/every-bounce-f59cc5b6cec8__q_5faab1e788.mp4",
+      "bytes": 104446,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/digit-duel.jpg?v=3e6f101f4e62",
+      "local": "site/og/vidirexa/digit-duel__q_93eb43a4a9.jpg",
+      "bytes": 29179,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/digit-duel-d011d1d058f5.mp4?v=d011d1d058f5",
+      "local": "site/previews/digit-duel-d011d1d058f5__q_136b453eaf.mp4",
+      "bytes": 48258,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/wobble-stack-588df3ba0ecc.mp4?v=588df3ba0ecc",
+      "local": "site/previews/wobble-stack-588df3ba0ecc__q_5a0d9fb3ef.mp4",
+      "bytes": 268575,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/line-arena-e15683990e41.mp4?v=e15683990e41",
+      "local": "site/previews/line-arena-e15683990e41__q_ed68beb20c.mp4",
+      "bytes": 270506,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/roll-hopper-5c3c0b5ce86c.mp4?v=5c3c0b5ce86c",
+      "local": "site/previews/roll-hopper-5c3c0b5ce86c__q_469a8f3d6d.mp4",
+      "bytes": 191687,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/pressure-clash.jpg?v=d3aae6f5f18e",
+      "local": "site/og/vidirexa/pressure-clash__q_f6cd4fbc1e.jpg",
+      "bytes": 89044,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pressure-clash-f113b6185dfc.mp4?v=f113b6185dfc",
+      "local": "site/previews/pressure-clash-f113b6185dfc__q_c2fd6ffff3.mp4",
+      "bytes": 297715,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/eureka-lab.jpg?v=83ecc8d3c763",
+      "local": "site/og/vidirexa/eureka-lab__q_89ca3da0a7.jpg",
+      "bytes": 53392,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/eureka-lab-764d12b23809.mp4?v=764d12b23809",
+      "local": "site/previews/eureka-lab-764d12b23809__q_5d5f9d814e.mp4",
+      "bytes": 172299,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/melody-bounce-1e3f713d17eb.mp4?v=1e3f713d17eb",
+      "local": "site/previews/melody-bounce-1e3f713d17eb__q_cb1299d62f.mp4",
+      "bytes": 263130,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/shatter-stack.jpg?v=a7d6dc851c82",
+      "local": "site/og/vidirexa/shatter-stack__q_2caab264bc.jpg",
+      "bytes": 75090,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/shatter-stack-087def7e2875.mp4?v=087def7e2875",
+      "local": "site/previews/shatter-stack-087def7e2875__q_e641623593.mp4",
+      "bytes": 298751,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/perfect-swish.jpg?v=6eb48f37cec5",
+      "local": "site/og/vidirexa/perfect-swish__q_94af9c3e82.jpg",
+      "bytes": 57975,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/perfect-swish-322cd6b02303.mp4?v=322cd6b02303",
+      "local": "site/previews/perfect-swish-322cd6b02303__q_f8fc7bb18b.mp4",
+      "bytes": 183119,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/chomp-tank.jpg?v=35e752554f09",
+      "local": "site/og/vidirexa/chomp-tank__q_3fd27ce3ec.jpg",
+      "bytes": 74496,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chomp-tank-c8bcbc83c551.mp4?v=c8bcbc83c551",
+      "local": "site/previews/chomp-tank-c8bcbc83c551__q_011327d608.mp4",
+      "bytes": 297059,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/pocket-slam.jpg?v=c1820db1eb40",
+      "local": "site/og/vidirexa/pocket-slam__q_770e9a104b.jpg",
+      "bytes": 64966,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pocket-slam-d0f536666340.mp4?v=d0f536666340",
+      "local": "site/previews/pocket-slam-d0f536666340__q_78cd201aeb.mp4",
+      "bytes": 296536,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/marble-machine.jpg?v=e24338093dea",
+      "local": "site/og/vidirexa/marble-machine__q_b33dcc38fe.jpg",
+      "bytes": 57182,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/marble-machine-7c75ab7ec2a5.mp4?v=7c75ab7ec2a5",
+      "local": "site/previews/marble-machine-7c75ab7ec2a5__q_44f0a16c0a.mp4",
+      "bytes": 150924,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/glass-gauntlet.jpg?v=37cd6b5112b9",
+      "local": "site/og/vidirexa/glass-gauntlet__q_83e36fb212.jpg",
+      "bytes": 60030,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/glass-gauntlet-5b61fdff00a7.mp4?v=5b61fdff00a7",
+      "local": "site/previews/glass-gauntlet-5b61fdff00a7__q_e977115fc1.mp4",
+      "bytes": 215246,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/chaos-cutter.jpg?v=1829327ad060",
+      "local": "site/og/vidirexa/chaos-cutter__q_ea781fd35e.jpg",
+      "bytes": 53619,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chaos-cutter-6cdf4e87b6fc.mp4?v=6cdf4e87b6fc",
+      "local": "site/previews/chaos-cutter-6cdf4e87b6fc__q_d24535fe76.mp4",
+      "bytes": 337730,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/blob-escape.jpg?v=b9af822809f6",
+      "local": "site/og/vidirexa/blob-escape__q_303f1cc735.jpg",
+      "bytes": 50709,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/blob-escape-bf04b0185e26.mp4?v=bf04b0185e26",
+      "local": "site/previews/blob-escape-bf04b0185e26__q_946f322cb1.mp4",
+      "bytes": 92979,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/ball-slide.jpg?v=a7436ca59570",
+      "local": "site/og/vidirexa/ball-slide__q_6e06d36f45.jpg",
+      "bytes": 58826,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ball-slide-da2d2ac28ef9.mp4?v=da2d2ac28ef9",
+      "local": "site/previews/ball-slide-da2d2ac28ef9__q_b4f2364ed1.mp4",
+      "bytes": 175419,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/flag-atlas-c022734df1a7.mp4?v=c022734df1a7",
+      "local": "site/previews/flag-atlas-c022734df1a7__q_78279e2ead.mp4",
+      "bytes": 112249,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/sort-spectrum-5b82500e906c.mp4?v=5b82500e906c",
+      "local": "site/previews/sort-spectrum-5b82500e906c__q_49f04f7b1d.mp4",
+      "bytes": 252821,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/algo-arena.jpg?v=ed248651fab3",
+      "local": "site/og/vidirexa/algo-arena__q_594b0b2a14.jpg",
+      "bytes": 51292,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/algo-arena-093ff025679c.mp4?v=093ff025679c",
+      "local": "site/previews/algo-arena-093ff025679c__q_21c3abf395.mp4",
+      "bytes": 123151,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/rising-tide.jpg?v=5995a40048f8",
+      "local": "site/og/vidirexa/rising-tide__q_d5563fbb8d.jpg",
+      "bytes": 62584,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/rising-tide-57f9bf15bbb8.mp4?v=57f9bf15bbb8",
+      "local": "site/previews/rising-tide-57f9bf15bbb8__q_cfe1905253.mp4",
+      "bytes": 298048,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/pulse-bloom.jpg?v=b99315a5eaf1",
+      "local": "site/og/vidirexa/pulse-bloom__q_fbb26b0a73.jpg",
+      "bytes": 56534,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pulse-bloom-0abd12d35fa0.mp4?v=0abd12d35fa0",
+      "local": "site/previews/pulse-bloom-0abd12d35fa0__q_cc181c4fda.mp4",
+      "bytes": 357553,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/spin-loop-5588d3eddb64.mp4?v=5588d3eddb64",
+      "local": "site/previews/spin-loop-5588d3eddb64__q_c1bfec2472.mp4",
+      "bytes": 356982,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/chime-chamber.jpg?v=dbe54fb3865d",
+      "local": "site/og/vidirexa/chime-chamber__q_cdaa165527.jpg",
+      "bytes": 56582,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/chime-chamber-f49cfde6446f.mp4?v=f49cfde6446f",
+      "local": "site/previews/chime-chamber-f49cfde6446f__q_aa488e3d2c.mp4",
+      "bytes": 179602,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/brawl-royale-d9171eaeb9a0.mp4?v=d9171eaeb9a0",
+      "local": "site/previews/brawl-royale-d9171eaeb9a0__q_74c321f58d.mp4",
+      "bytes": 113211,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/brick-build-30b47b4f232c.mp4?v=30b47b4f232c",
+      "local": "site/previews/brick-build-30b47b4f232c__q_3213251e02.mp4",
+      "bytes": 61079,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/neon-doubler.jpg?v=b104c4c6d8b0",
+      "local": "site/og/vidirexa/neon-doubler__q_9506d66348.jpg",
+      "bytes": 53670,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/neon-doubler-3a664f7161a6.mp4?v=3a664f7161a6",
+      "local": "site/previews/neon-doubler-3a664f7161a6__q_c315cb661a.mp4",
+      "bytes": 84537,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/stick-race.jpg?v=55b2059cc217",
+      "local": "site/og/vidirexa/stick-race__q_42a0a96b00.jpg",
+      "bytes": 62866,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/stick-race-4afacb75a15d.mp4?v=4afacb75a15d",
+      "local": "site/previews/stick-race-4afacb75a15d__q_5e8290c3ed.mp4",
+      "bytes": 297920,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/silhouette-fill.jpg?v=83246c31ddaa",
+      "local": "site/og/vidirexa/silhouette-fill__q_30c807f8b8.jpg",
+      "bytes": 56253,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/silhouette-fill-942a7b541700.mp4?v=942a7b541700",
+      "local": "site/previews/silhouette-fill-942a7b541700__q_6499afd2ae.mp4",
+      "bytes": 272639,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/ring-escape.jpg?v=2b14d201ee32",
+      "local": "site/og/vidirexa/ring-escape__q_db40839791.jpg",
+      "bytes": 63357,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ring-escape-fe46fe7eeadd.mp4?v=fe46fe7eeadd",
+      "local": "site/previews/ring-escape-fe46fe7eeadd__q_66d54254a7.mp4",
+      "bytes": 357507,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/field-plough.jpg?v=e774cc559e4a",
+      "local": "site/og/vidirexa/field-plough__q_de7311b38f.jpg",
+      "bytes": 56685,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/field-plough-e1c469d03702.mp4?v=e1c469d03702",
+      "local": "site/previews/field-plough-e1c469d03702__q_c8efd09e5b.mp4",
+      "bytes": 240397,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/iso-ball-wave-5934dfc94e51.mp4?v=5934dfc94e51",
+      "local": "site/previews/iso-ball-wave-5934dfc94e51__q_cc6741208e.mp4",
+      "bytes": 298270,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/polygon-arena.jpg?v=44f9a6ed54aa",
+      "local": "site/og/vidirexa/polygon-arena__q_831da7cde3.jpg",
+      "bytes": 81427,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/polygon-arena-495ebbb2ee4d.mp4?v=495ebbb2ee4d",
+      "local": "site/previews/polygon-arena-495ebbb2ee4d__q_f3fd04e1c2.mp4",
+      "bytes": 99987,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/bounce-fill.jpg?v=f29505f52c4b",
+      "local": "site/og/vidirexa/bounce-fill__q_ef21e8e24c.jpg",
+      "bytes": 60879,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-fill-2f0a00fd8c14.mp4?v=2f0a00fd8c14",
+      "local": "site/previews/bounce-fill-2f0a00fd8c14__q_4c6f7d3590.mp4",
+      "bytes": 101032,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/corner-wheel.jpg?v=1963b7d2f465",
+      "local": "site/og/vidirexa/corner-wheel__q_af55e9ed00.jpg",
+      "bytes": 50961,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/corner-wheel-844ca001be31.mp4?v=844ca001be31",
+      "local": "site/previews/corner-wheel-844ca001be31__q_37cae8361e.mp4",
+      "bytes": 115473,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/pistol-duel.jpg?v=41d47321ffa9",
+      "local": "site/og/vidirexa/pistol-duel__q_4678baa8f5.jpg",
+      "bytes": 48634,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/pistol-duel-870a8970ccd5.mp4?v=870a8970ccd5",
+      "local": "site/previews/pistol-duel-870a8970ccd5__q_91a1353435.mp4",
+      "bytes": 173753,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/blueprint-builder.jpg?v=ccd6d7550577",
+      "local": "site/og/vidirexa/blueprint-builder__q_cc620ab9d2.jpg",
+      "bytes": 75175,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/blueprint-builder-139505e42da5.mp4?v=139505e42da5",
+      "local": "site/previews/blueprint-builder-139505e42da5__q_87c33fa551.mp4",
+      "bytes": 293342,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/beat-ball.jpg?v=4679a887d19c",
+      "local": "site/og/vidirexa/beat-ball__q_59fbaebcec.jpg",
+      "bytes": 50028,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/beat-ball-f08762144b58.mp4?v=f08762144b58",
+      "local": "site/previews/beat-ball-f08762144b58__q_544a7e8d95.mp4",
+      "bytes": 158207,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/bouncing-ball-arena.jpg?v=664017b6fa7f",
+      "local": "site/og/vidirexa/bouncing-ball-arena__q_e01abdb897.jpg",
+      "bytes": 57117,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bouncing-ball-arena-04bd766043b3.mp4?v=04bd766043b3",
+      "local": "site/previews/bouncing-ball-arena-04bd766043b3__q_864ba890c0.mp4",
+      "bytes": 225723,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/voxel-builder.jpg?v=af50aaf37a7b",
+      "local": "site/og/vidirexa/voxel-builder__q_5083730c2f.jpg",
+      "bytes": 66002,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/voxel-builder-de17b5bde3f2.mp4?v=de17b5bde3f2",
+      "local": "site/previews/voxel-builder-de17b5bde3f2__q_977d3094f2.mp4",
+      "bytes": 350744,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/egg-simulation.jpg?v=817ccc45dc96",
+      "local": "site/og/vidirexa/egg-simulation__q_0ad7056e19.jpg",
+      "bytes": 61701,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/egg-simulation-266f511339e4.mp4?v=266f511339e4",
+      "local": "site/previews/egg-simulation-266f511339e4__q_7c1f616e71.mp4",
+      "bytes": 125039,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/ball-barrier-race.jpg?v=0d0cc24a0ab8",
+      "local": "site/og/vidirexa/ball-barrier-race__q_9096d91b3e.jpg",
+      "bytes": 57863,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/ball-barrier-race-0d6b23fd38ae.mp4?v=0d6b23fd38ae",
+      "local": "site/previews/ball-barrier-race-0d6b23fd38ae__q_f71078fd99.mp4",
+      "bytes": 92449,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/marble-race-c98801aa1e53.mp4?v=c98801aa1e53",
+      "local": "site/previews/marble-race-c98801aa1e53__q_7fedd60cc0.mp4",
+      "bytes": 297860,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/fruit-merge-f02fe78628cf.mp4?v=f02fe78628cf",
+      "local": "site/previews/fruit-merge-f02fe78628cf__q_0f69118c00.mp4",
+      "bytes": 228464,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/musical-path-267d098dea22.mp4?v=267d098dea22",
+      "local": "site/previews/musical-path-267d098dea22__q_91fa16ab65.mp4",
+      "bytes": 109637,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/tiny-trials.jpg?v=e5638c3789b5",
+      "local": "site/og/vidirexa/tiny-trials__q_ba19e99cff.jpg",
+      "bytes": 60559,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/tiny-trials-27d2b610ccbe.mp4?v=27d2b610ccbe",
+      "local": "site/previews/tiny-trials-27d2b610ccbe__q_8157c24a92.mp4",
+      "bytes": 100260,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/gate-rush.jpg?v=5e3cce8f1c20",
+      "local": "site/og/vidirexa/gate-rush__q_97d0ab6042.jpg",
+      "bytes": 50625,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/gate-rush-65d660297075.mp4?v=65d660297075",
+      "local": "site/previews/gate-rush-65d660297075__q_3c9f3e29cd.mp4",
+      "bytes": 19168,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/note-dial.jpg?v=ec4e0bb9f20c",
+      "local": "site/og/vidirexa/note-dial__q_eb26bd61dd.jpg",
+      "bytes": 13983,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/note-dial-6b5539d9b77d.mp4?v=6b5539d9b77d",
+      "local": "site/previews/note-dial-6b5539d9b77d__q_b9ea460a68.mp4",
+      "bytes": 45029,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/orbit-notes.jpg?v=b6329c723494",
+      "local": "site/og/vidirexa/orbit-notes__q_4a4898d5c5.jpg",
+      "bytes": 27113,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/orbit-notes-93e8077897c4.mp4?v=93e8077897c4",
+      "local": "site/previews/orbit-notes-93e8077897c4__q_bcd7efdc4f.mp4",
+      "bytes": 291529,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/score-sparks.jpg?v=16cab77ab2b5",
+      "local": "site/og/vidirexa/score-sparks__q_b5dcc7aacf.jpg",
+      "bytes": 23313,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/score-sparks-4bd9ba16c7dc.mp4?v=4bd9ba16c7dc",
+      "local": "site/previews/score-sparks-4bd9ba16c7dc__q_102a88b15e.mp4",
+      "bytes": 296734,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/bounce-jukebox.jpg?v=bccedeafe5a4",
+      "local": "site/og/vidirexa/bounce-jukebox__q_0ceb01435e.jpg",
+      "bytes": 25957,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-jukebox-7575ed2f80b3.mp4?v=7575ed2f80b3",
+      "local": "site/previews/bounce-jukebox-7575ed2f80b3__q_562fab11ae.mp4",
+      "bytes": 330803,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/piano-rain-ab97ed669440.mp4?v=ab97ed669440",
+      "local": "site/previews/piano-rain-ab97ed669440__q_fc146d37f0.mp4",
+      "bytes": 357862,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/beat-press.jpg?v=4991f581ba3e",
+      "local": "site/og/vidirexa/beat-press__q_faa41ef0f1.jpg",
+      "bytes": 29467,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/beat-press-43fbe1adccf8.mp4?v=43fbe1adccf8",
+      "local": "site/previews/beat-press-43fbe1adccf8__q_2ad1c1a1b0.mp4",
+      "bytes": 297406,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/og/vidirexa/bounce-chute.jpg?v=f294c8e31c98",
+      "local": "site/og/vidirexa/bounce-chute__q_8ac7ac641b.jpg",
+      "bytes": 69293,
+      "type": "image/jpeg",
+      "status": 200,
+      "via": "static-reference"
+    },
+    {
+      "url": "https://vidirexa.com/previews/bounce-chute-f114555709fe.mp4?v=f114555709fe",
+      "local": "site/previews/bounce-chute-f114555709fe__q_1a530444e3.mp4",
+      "bytes": 295889,
+      "type": "video/mp4",
+      "status": 200,
+      "via": "static-reference"
+    }
+  ]
+}
