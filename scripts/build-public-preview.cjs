@@ -9,7 +9,7 @@ function walk(dir,rel=''){for(const d of fs.readdirSync(dir,{withFileTypes:true}
 const map=new Map();
 if(fs.existsSync('manifest.json')){for(const r of JSON.parse(fs.readFileSync('manifest.json','utf8')).assets||[]){if(typeof r.local==='string'&&r.local.startsWith('site/')&&assets.has(r.local.slice(5))&&typeof r.url==='string'){try{map.set(new URL(r.url).href,r.local.slice(5))}catch{}}}}
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-const label='<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Read-only website archive — not the original service. <a href="/" style="color:#c7e8ff">Home</a> · <a href="/games" style="color:#c7e8ff">Games</a> · <a href="/create" style="color:#c7e8ff">Create catalogue</a> · <a href="/guides" style="color:#c7e8ff">Guides</a> · <a href="/pricing" style="color:#c7e8ff">Archived pricing</a>. Account, checkout and original simulation services are unavailable.</div>';
+const label='<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Guest browsing — no account required. Read-only website archive, not the original service. <a href="/" style="color:#c7e8ff">Home</a> · <a href="/games" style="color:#c7e8ff">Games</a> · <a href="/create" style="color:#c7e8ff">Create catalogue</a> · <a href="/guides" style="color:#c7e8ff">Guides</a> · <a href="/pricing" style="color:#c7e8ff">Archived pricing</a>. Original account, checkout and simulation services are unavailable.</div>';
 function resolve(raw,route){try{return new URL(raw.replace(/&amp;/g,'&'),'https://vidirexa.com'+route)}catch{return null}}
 function asset(raw,route){if(/^data:image\//i.test(raw))return raw;const u=resolve(raw,route);if(!u)return null;if(map.has(u.href))return '/'+map.get(u.href);if(u.origin==='https://vidirexa.com'&&assets.has(u.pathname.slice(1)))return u.pathname;return null}
 function link(raw,route){if(raw.startsWith('#'))return raw;const u=resolve(raw,route);if(!u||u.origin!=='https://vidirexa.com')return null;const p=u.pathname.replace(/\/index\.html$/,'/').replace(/\/$/,'')||'/';if(pages.has(p))return p+u.hash;return asset(raw,route)}
@@ -20,6 +20,7 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,'')
 .replace(/<meta\b[^>]*http-equiv\s*=\s*["']?refresh[^>]*>/gi,'')
 .replace(/<link\b[^>]*\brel\s*=\s*["'](?:preconnect|preload|modulepreload|dns-prefetch|prefetch|canonical)["'][^>]*>/gi,'')
+.replace(/<a\b[^>]*\bhref\s*=\s*(["'])(?:https:\/\/vidirexa\.com)?\/(?:account|login|signin|signup|recordings)(?:[/?#][^"']*)?\1[^>]*>[\s\S]*?<\/a\s*>/gi,'')
 .replace(/<a\b[^>]*>/gi,t=>t.replace(/\s+href\s*=\s*(["'])(.*?)\1/gi,(_,q,v)=>{const dest=link(v,base);return dest?' href="'+esc(dest)+'"':' aria-disabled="true"'}))
 .replace(/<(img|source|video|audio)\b[^>]*>/gi,t=>t.replace(/\s+(src|poster)\s*=\s*(["'])(.*?)\2/gi,(_,attr,q,v)=>{const dest=asset(v,base);return dest?' '+attr+'="'+esc(dest)+'"':''}).replace(/\s+srcset\s*=\s*(["'])(.*?)\1/gi,''))
 .replace(/<link\b[^>]*>/gi,t=>t.replace(/\s+href\s*=\s*(["'])(.*?)\1/gi,(_,q,v)=>{const dest=asset(v,base);return dest?' href="'+esc(dest)+'"':''}))
