@@ -41,7 +41,8 @@ function asset(raw,route){if(/^data:image\//i.test(raw))return raw;const u=resol
 function link(raw,route){if(raw.startsWith('#'))return raw;const u=resolve(raw,route);if(!u||u.origin!=='https://vidirexa.com')return null;const p=u.pathname.replace(/\/index\.html$/,'/').replace(/\/$/,'')||'/';if(p==='/create'&&u.searchParams.has('game')){const game=u.searchParams.get('game');if(studioRoutes.has(game))return studioRoutes.get(game)+u.hash;return null}if(pages.has(p))return p+u.hash;return asset(raw,route)}
 function put(file,content){const p=path.join(out,file);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,content)}
 for(const [route,src] of pages){let h=fs.readFileSync(src,'utf8');const base=route.startsWith('/create/index__q_')?'/create/':route==='/'?'/':route+'/';
-h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*>/gi,'')
+h=h.replace(/<section\b[^>]*\bclass="fc-timer[^"]*"[^>]*>[\s\S]*?<\/section>/gi,'')
+ .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*>/gi,'')
 .replace(/<(iframe|object|embed|form)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,'').replace(/<(iframe|object|embed|form|base)\b[^>]*>/gi,'')
 .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,'')
 .replace(/<meta\b[^>]*http-equiv\s*=\s*["']?refresh[^>]*>/gi,'')
