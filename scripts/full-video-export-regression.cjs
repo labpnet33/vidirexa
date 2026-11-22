@@ -146,7 +146,7 @@ async function main(){
  const origin='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required']});
  try{
-  for(const example of cases.filter(x=>!process.env.FULL_EXPORT_FILTER||x.id===process.env.FULL_EXPORT_FILTER)){
+  for(const example of cases.filter(x=>!process.env.FULL_EXPORT_FILTER||x.id===process.env.FULL_EXPORT_FILTER||x.id.startsWith(process.env.FULL_EXPORT_FILTER+'-'))){
    const item={id:example.id,game:example.game,status:'failed'};
    report.cases.push(item);
    let page;
