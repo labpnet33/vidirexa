@@ -74,54 +74,80 @@ async function verifyWindows(browser,base,game,viewport){
   return {game,viewport:viewport.width+'x'+viewport.height,iframeHeight:Math.round(initial.height),scrolled:Math.round(after.scroll),previewTop:Math.round(after.preview.top),canvasBottom:Math.round(after.canvas.bottom),previewBottom:Math.round(after.preview.bottom)};
  }finally{await page.close()}
 }
-async function verifyAndroid(browser,base){
- const game='shape-merger',route=routes.get(game);
- const page=await browser.newPage({viewport:{width:390,height:844},userAgent:androidUA,isMobile:true,hasTouch:true,deviceScaleFactor:2});
+async function verifyAndroid(browser,base,game='shape-merger',width=390){
+ const route=routes.get(game);assert(route,'No game route for Android test',game);
+ const page=await browser.newPage({viewport:{width,height:844},userAgent:androidUA,isMobile:true,hasTouch:true,deviceScaleFactor:2});
  try{
   await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:30000});
-  const handle=await page.waitForSelector('iframe[data-vidirexa-studio-frame]',{timeout:18000});
-  const frame=await handle.contentFrame();assert(frame,'Android studio missing');
+  const handle=await page.waitForSelector('iframe[data-vidirexa-studio-frame]',{timeout:20000});
+  const frame=await handle.contentFrame();assert(frame,'Android game studio iframe missing');
   await frame.waitForFunction(()=>!!document.querySelector('#studio canvas'),null,{timeout:35000});
-  await page.waitForTimeout(200);
-  const outer=await handle.evaluate(el=>({inlineHeight:el.style.height,height:el.getBoundingClientRect().height}));
-  assert(outer.inlineHeight.includes('100dvh'),'Android viewport-bound editor not installed',outer);
-  assert(outer.height>=520&&outer.height<=860,'Android studio viewport-sized iframe expected',outer);
-  const initial=await frame.evaluate(()=>({
-   windowsClass:document.documentElement.classList.contains('vidirexa-windows-desktop'),
-   previewStyle:getComputedStyle(document.querySelector('.v-preview')).position,
-   innerHeight:window.innerHeight
-  }));
-  assert(!initial.windowsClass&&initial.previewStyle==='static','Windows desktop styles leaked into Android',initial);
+  await page.waitForFunction(()=>document.documentElement.classList.contains('vidirexa-android-studio'),null,{timeout:15000});
+  const outer=await page.evaluate(()=>{
+   const frame=document.querySelector('iframe[data-vidirexa-studio-frame]');
+   const box=frame.getBoundingClientRect();
+   const toolbar=document.querySelector('.vidirexa-android-studio-toolbar');
+   return {
+    frame:{top:box.top,left:box.left,right:box.right,bottom:box.bottom,width:box.width,height:box.height},
+    navCount:document.querySelectorAll('nav.mobile-bottom-nav').length,
+    navVisible:!!document.querySelector('nav.mobile-bottom-nav:not([hidden])'),
+    backHref:toolbar?.querySelector('a')?.getAttribute('href'),
+    backRect:toolbar?.getBoundingClientRect().toJSON(),
+    bodyOverflow:getComputedStyle(document.body).overflowY,
+    htmlOverflow:getComputedStyle(document.documentElement).overflowY,
+    framePosition:getComputedStyle(frame).position,
+    parentScroll:window.scrollY
+   };
+  });
+  assert(outer.navCount===0&&!outer.navVisible,'Home/Create bottom navigation still present',outer);
+  assert(outer.backHref==='/create'&&outer.backRect?.height>=40,'Accessible back-to-games link missing',outer);
+  assert(outer.framePosition==='fixed','Android game editor still scrolls with outer document',outer);
+  assert(Math.abs(outer.frame.top-44)<3&&Math.abs(outer.frame.bottom-844)<4,'Studio does not fill the Android viewport',outer);
+  assert(outer.frame.width>=width-2,'Game iframe does not fit the Android width',outer);
+  const initial=await frame.evaluate(()=>({windowsStyle:document.documentElement.classList.contains('vidirexa-windows-desktop'),previewPosition:getComputedStyle(document.querySelector('.v-preview')).position}));
+  assert(!initial.windowsStyle&&initial.previewPosition==='static','Android studio inherited Windows-only layout',initial);
   await frame.locator('#studio [data-step="1"]').first().tap({timeout:20000});
-  await frame.waitForTimeout(500);
-  const content=await frame.evaluate(()=>document.documentElement.scrollHeight);
-  assert(content>initial.innerHeight+250,'Settings panel must scroll inside Android iframe',{content,initial});
-  await frame.evaluate(()=>window.scrollTo({top:Math.min(document.documentElement.scrollHeight-window.innerHeight-200,1300),behavior:'instant'}));
-  await frame.waitForTimeout(650);
-  const result=await frame.evaluate(()=>{
+  await frame.waitForTimeout(350);
+  await page.evaluate(()=>window.scrollTo(0,1100));
+  const outerY=await page.evaluate(()=>scrollY);
+  assert(outerY===0,'Android outer page scrolled and displaced the preview',{outerY});
+  const full=await frame.evaluate(()=>({content:document.documentElement.scrollHeight,view:innerHeight}));
+  assert(full.content>full.view+350,'Settings form should scroll inside full-screen studio',full);
+  await frame.evaluate(()=>window.scrollTo({top:Math.min(1300,document.documentElement.scrollHeight-innerHeight-180),behavior:'instant'}));
+  await frame.waitForTimeout(600);
+  const float=await frame.evaluate(()=>{
    const phone=document.querySelector('.v-phone');
    const canvas=phone?.querySelector('canvas');
    const bar=phone?.querySelector('.v-mini-bar');
-   const collapsed=document.querySelector('.v-mini-tab');
+   const tab=document.querySelector('.v-mini-tab');
    return {
-    scroll:window.scrollY,
-    innerHeight:window.innerHeight,
-    innerWidth:window.innerWidth,
+    scroll:scrollY,innerWidth,innerHeight,
     floating:phone?.classList.contains('v-float'),
     minimized:phone?.classList.contains('v-mini-collapsed'),
-    canvas:canvas?.getBoundingClientRect().toJSON(),
     phone:phone?.getBoundingClientRect().toJSON(),
-    barVisible:bar?getComputedStyle(bar).display!=='none':false,
-    restoreVisible:collapsed?!collapsed.hidden:false
+    canvas:canvas?.getBoundingClientRect().toJSON(),
+    controls:bar?.getBoundingClientRect().toJSON(),
+    restore:tab&&!tab.hidden
    };
   });
-  assert(result.scroll>350,'Android iframe did not scroll through settings',result);
-  assert(result.floating||result.restoreVisible,'No persistent Android preview after scrolling',result);
-  if(result.floating&&!result.minimized){
-   assert(result.canvas&&result.canvas.top>=-3&&result.canvas.bottom<=result.innerHeight+3,'Android preview canvas clipped',result);
-   assert(result.phone&&result.phone.width>=95&&result.phone.right<=result.innerWidth+5,'Floating preview outside mobile viewport',result);
+  assert(float.scroll>350,'The Android game settings did not scroll',float);
+  assert(float.floating||float.restore,'No persistent Android mini-preview after scrolling',float);
+  if(float.floating&&!float.minimized){
+   assert(float.canvas&&float.canvas.top>=-3&&float.canvas.bottom<=float.innerHeight+3,'Floating preview is clipped after scrolling',float);
+   assert(float.phone&&float.phone.left>=-3&&float.phone.right<=float.innerWidth+3,'Floating preview is outside Android screen',float);
   }
-  return {game,viewport:'390x844',frameHeight:Math.round(outer.height),settingsScroll:Math.round(result.scroll),floating:result.floating,previewTop:Math.round(result.canvas?.top??-1),previewBottom:Math.round(result.canvas?.bottom??-1),restoreVisible:result.restoreVisible};
+  return {game,width,frameHeight:Math.round(outer.frame.height),navCount:outer.navCount,outerScroll:outerY,settingsScroll:Math.round(float.scroll),floating:float.floating,previewTop:Math.round(float.canvas?.top??-1),previewBottom:Math.round(float.canvas?.bottom??-1)};
+ }finally{await page.close()}
+}
+async function verifyAndroidCatalogueNav(browser,base){
+ const page=await browser.newPage({viewport:{width:390,height:844},userAgent:androidUA,isMobile:true,hasTouch:true});
+ try{
+  await page.goto(base+'/create/',{waitUntil:'domcontentloaded',timeout:20000});
+  await page.waitForFunction(()=>document.documentElement.classList.contains('vidirexa-android'),null,{timeout:15000});
+  const state=await page.evaluate(()=>({bottomNav:document.querySelectorAll('nav.mobile-bottom-nav').length,gameLinks:document.querySelectorAll('.game-tile-shell>a.game-choice').length}));
+  assert(state.bottomNav===0,'Android Create catalogue still has the Home/Create bar',state);
+  assert(state.gameLinks===68,'Removing Android bar damaged native game cards',state);
+  return state;
  }finally{await page.close()}
 }
 async function main(){
@@ -133,7 +159,10 @@ async function main(){
    ['Windows Shape Merger 1280x900',()=>verifyWindows(browser,base,'shape-merger',{width:1280,height:900})],
    ['Windows Shape Merger 1366x768',()=>verifyWindows(browser,base,'shape-merger',{width:1366,height:768})],
    ['Windows Crush Machine 1280x900',()=>verifyWindows(browser,base,'crush-machine',{width:1280,height:900})],
-   ['Android persistent mini preview 390x844',()=>verifyAndroid(browser,base)]
+   ['Android Shape Merger persistent preview 390x844',()=>verifyAndroid(browser,base,'shape-merger',390)],
+   ['Android Shape Merger narrow preview 360x844',()=>verifyAndroid(browser,base,'shape-merger',360)],
+   ['Android Crush Machine persistent preview 390x844',()=>verifyAndroid(browser,base,'crush-machine',390)],
+   ['Android Create catalogue removes bottom bar',()=>verifyAndroidCatalogueNav(browser,base)]
   ]){
    try{const details=await fn();report.checks.push({type,details});console.log('PASS Windows preview '+type+' '+JSON.stringify(details))}
    catch(err){report.failures.push({type,error:String(err.message||err).slice(0,1800)});console.error('FAIL Windows preview '+type+' '+String(err.message||err).slice(0,1800))}
