@@ -118,6 +118,7 @@ async function main(){
  base='http://127.0.0.1:'+serve.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  await testCatalogue();
+ if(process.env.GAME_CATALOGUE_ONLY==='1'){console.log('Catalogue-only click regression passed.');return;}
  let rows=audit.results.filter(r=>r.status==='bundled');
  const filter=new Set((process.env.GAME_FILTER||'').split(',').map(x=>x.trim()).filter(Boolean));
  if(filter.size)rows=rows.filter(r=>filter.has(r.game));
