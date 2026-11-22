@@ -1,0 +1,51 @@
+name: Mobile browser responsiveness
+
+on:
+  push:
+    branches:
+      - optimize/mobile-browser-experience
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-browser-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mobile-responsive:
+    name: Mobile layout and touch navigation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Install Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Build mobile-optimized recovery
+        run: |
+          node scripts/build-public-preview.cjs
+          node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
+      - name: Test mobile viewports and studio controls
+        run: node scripts/mobile-browser-regression.cjs
+      - name: Upload mobile regression details
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-browser-regression
+          path: public-preview/mobile-browser-audit.json
+          if-no-files-found: ignore

@@ -1,0 +1,64 @@
+name: MIDI upload and synchronization regression
+
+on:
+  push:
+    branches:
+      - optimize/mobile-browser-experience
+    paths:
+      - scripts/midi-sync-regression.cjs
+      - scripts/enable-captured-games.cjs
+      - .github/workflows/midi-sync.yml
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: midi-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  midi-sync:
+    name: MIDI imports and synchronized gameplay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Install Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Build recovered engine packages
+        run: |
+          node scripts/build-public-preview.cjs
+          node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
+      - name: Test all MIDI-aware engines and audio timing
+        run: node scripts/midi-sync-regression.cjs
+      - name: Verify a completed custom-MIDI game recording and note-onset timing
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          FULL_EXPORT_FILTER=custom-midi-melody-bounce node scripts/full-video-export-regression.cjs
+      - name: Store MIDI synchronization audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: midi-sync-audit
+          path: |
+            public-preview/midi-sync-audit.json
+            public-preview/export-regression/full-video-export-report.json
+          if-no-files-found: ignore
