@@ -21,8 +21,18 @@ function visit(dir){
  }
 }
 visit(root);
-if(blocked.length)throw Error('HTML pages still block search indexing: '+blocked.slice(0,15).join(', '));
+// Preserve explicit, page-specific directives from the captured source.
+// Privacy Preferences and Referrals were deliberately marked noindex,follow;
+// this audit only removes site-wide blocking of otherwise indexable pages.
+const intentionallyExcluded=new Set(['privacy/index.html','referrals/index.html']);
+const unexpected=blocked.filter(rel=>{
+ if(!intentionallyExcluded.has(rel))return true;
+ const source=path.join('site',rel);
+ return !fs.existsSync(source)||!/<meta\b[^>]*name=["']robots["'][^>]*content=["']noindex,\s*follow["']/i.test(fs.readFileSync(source,'utf8'));
+});
+if(unexpected.length)throw Error('Unexpected HTML indexing blockers: '+unexpected.slice(0,15).join(', '));
+
 if(!checked||!fs.existsSync(path.join(root,'create/index.html'))||!fs.existsSync(path.join(root,'index.html')))throw Error('Expected public HTML pages missing');
 const notFound=fs.readFileSync(path.join(root,'404.html'),'utf8');
 if(!/<meta\b[^>]*name="robots"[^>]*content="noindex"/i.test(notFound))throw Error('404 should remain noindex');
-console.log('Search indexing check PASSED: '+checked+' public pages, crawlable robots.txt, no global X-Robots-Tag; 404 excluded.');
+console.log('Search indexing check PASSED: '+checked+' public pages, robots.txt crawlable; '+blocked.length+' preserved source-specific noindex pages; 404 excluded.');
