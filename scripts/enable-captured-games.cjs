@@ -53,6 +53,7 @@ function bootScript(title,url){
  const lines=[
   'const status=document.getElementById("runtime-status");',
   'const root=document.getElementById("studio");',
+  'if(/Windows/i.test(navigator.userAgentData?.platform||navigator.platform||navigator.userAgent||"")&&window.matchMedia("(min-width:801px) and (pointer:fine)").matches)document.documentElement.classList.add("vidirexa-windows-desktop");',
   'const fail=(e)=>{status.dataset.error="true";status.replaceChildren();const p=document.createElement("p");p.textContent="Could not start '+title.replace(/"/g,'')+': "+String(e?.message??e??"Unknown error").slice(0,450);const a=document.createElement("a");a.href="'+base+'/index.html";a.textContent="Try the captured engine directly";a.target="_top";status.append(p,a);};',
   'window.addEventListener("error",e=>fail(e.error||e.message));',
   'window.addEventListener("unhandledrejection",e=>fail(e.reason));',
@@ -210,6 +211,7 @@ for(const [game,route] of gameRoute){
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
   fs.appendFileSync(cssFile,'\n'+fs.readFileSync(path.join(root,'scripts/mobile-studio.css'),'utf8')+'\n');
+  fs.appendFileSync(cssFile,'\n'+fs.readFileSync(path.join(root,'scripts/windows-studio.css'),'utf8')+'\n');
   row.cleanPreview=true;
   fs.writeFileSync(path.join(target,'bootstrap.mjs'),bootScript(game,runtime.pathname));
   let html=fs.readFileSync(published,'utf8');
@@ -235,7 +237,7 @@ for(const [game,route] of gameRoute){
   if(!anchor.test(html))throw Error('Studio page layout cannot embed the game');
   html=html.replace(anchor,note+frame+'</div><aside class="published-studio-details"');
   if(!html.includes('srcdoc=')||html.includes('Unlock with Creator'))throw Error('Captured studio replacement failed');
-  html=html.replace('</body>','<script type="module" src="/assets/vidirexa-mobile-frame.mjs"></script></body>');
+  html=html.replace('</body>','<script type="module" src="/assets/vidirexa-mobile-frame.mjs"></script><script type="module" src="/assets/vidirexa-windows-frame.mjs"></script></body>');
   fs.writeFileSync(published,html);
   row.status='bundled';row.reason='Static engine captured; browser playback not yet tested';
   row.runtime=runtime.pathname;row.moduleFiles=fs.readdirSync(baseDir,{recursive:true}).filter(x=>/\.(mjs|js)$/.test(x)).length;
@@ -244,6 +246,7 @@ for(const [game,route] of gameRoute){
 }
 // Parent frame listener, shared by recovered game pages only.
 fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,'assets/vidirexa-mobile-frame.mjs'));
+fs.copyFileSync(path.join(root,'scripts/windows-studio-frame.mjs'),path.join(out,'assets/vidirexa-windows-frame.mjs'));
 // Restore catalogue navigation. Captured pages used JS-bound <button> cards,
 // but the archive build removes script handlers and disables button pointer events.
 // Native anchor links work without JavaScript and reach the existing studio routes.
