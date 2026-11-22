@@ -1,5 +1,5 @@
 /* Only applies to Windows desktop browsers; nothing here affects Android. */
-@media (min-width: 801px) and (pointer: fine) {
+@media (pointer: fine) {
  html.vidirexa-windows-desktop {
   overflow-x: clip;
   overflow-y: auto;
