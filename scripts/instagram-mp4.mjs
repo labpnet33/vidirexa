@@ -3,6 +3,7 @@
 // No server upload or dependency on the network. Original game adapter intact.
 // MP4 muxing: mp4-muxer v5.2.2 by Vanilagy (MIT license in vendor folder).
 import {Muxer,ArrayBufferTarget} from './mp4-muxer-5.2.2.min.mjs';
+import {verifyInstagramMp4} from './mp4-duration-validation.mjs';
 import {outputSurface,aborted,validateAdapter,validateAudio} from './capture.mjs';
 
 const FPS=60;
@@ -18,7 +19,7 @@ const SIZES=[
 const sleep=()=>new Promise(resolve=>setTimeout(resolve,0));
 const supportCache=new Map();
 
-export async function instagramMp4Support(){
+export async function instagramMp4Support(options={}){
  if(typeof VideoEncoder==='undefined'||typeof AudioEncoder==='undefined'||typeof VideoFrame==='undefined'||typeof AudioData==='undefined'){
   return {supported:false,reason:'This browser lacks WebCodecs video or AAC encoding.'};
  }
@@ -28,7 +29,9 @@ export async function instagramMp4Support(){
    return {supported:false,reason:'This browser cannot encode AAC audio for Instagram-compatible MP4.'};
   }
  }catch(error){return {supported:false,reason:'AAC encoding is not available: '+String(error.message||error)}}
- for(const size of SIZES){
+ // Honor the selected 720p output instead of silently upscaling it.
+ const sizes=Number(options.width)>0&&Number(options.width)<900?[...SIZES].reverse():SIZES;
+ for(const size of sizes){
   for(const codec of PROFILES){
    for(const acceleration of ['prefer-hardware','no-preference','prefer-software']){
     const video={
@@ -72,7 +75,7 @@ export async function recordInstagramMp4(adapter,sound,opts={}){
  sound=ensureAudio(sound,adapter.duration);
  aborted(opts.signal);
  if(document.visibilityState==='hidden')throw Error('Keep this tab visible while exporting the MP4.');
- const capability=await instagramMp4Support();
+ const capability=await instagramMp4Support(opts);
  if(!capability.supported){
   const error=new Error(capability.reason);
   error.name='InstagramMp4Unsupported';
@@ -168,11 +171,13 @@ export async function recordInstagramMp4(adapter,sound,opts={}){
   const buffer=target.buffer;
   if(!(buffer instanceof ArrayBuffer)||buffer.byteLength<4096)throw Error('MP4 encoder returned an empty file.');
   if(buffer.byteLength>MAX_BYTES)throw Error('Finished MP4 exceeded the 480 MB browser memory safeguard.');
+  // Never return a short or desynchronized MP4 as Instagram-compatible.
+  const timeline=verifyInstagramMp4(new Uint8Array(buffer),adapter.duration);
   opts.onProgress?.(1);
   return {
    blob:new Blob([buffer],{type:'video/mp4'}),mime:'video/mp4',
    extension:'mp4',container:'mp4',targetFps:FPS,
-   verified:true,instagramCompatible:true,
+   verified:true,instagramCompatible:true,verifiedDuration:timeline.duration,
    video:{width:video.width,height:video.height,bitrate:video.bitrate,
     codec:'h264',encoder:'WebCodecs+MP4',frames:frameCount},
    audioCodec:'aac',duration:adapter.duration

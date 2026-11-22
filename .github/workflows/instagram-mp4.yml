@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - fix/instagram-reels-mp4-export
+      - improve/studio-export-preview-midi-mobile
   pull_request:
     branches:
       - main
@@ -52,10 +53,13 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node scripts/check-indexing.cjs
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verify MP4 duration guards, MIDI diagnostics and adaptive preview
+        shell: pwsh
+        run: node scripts/studio-improvement-regression.cjs
       - name: Encode full-length Instagram MP4 and verify audio/video timelines
         shell: pwsh
         env:
-          FULL_EXPORT_FILTER: instagram-h264-aac-12s
+          FULL_EXPORT_FILTER: instagram-
         run: node scripts/full-video-export-regression.cjs
       - name: Upload Instagram MP4 regression report
         if: always()

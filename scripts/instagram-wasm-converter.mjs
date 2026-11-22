@@ -1,6 +1,7 @@
 // Local-only WebM to Instagram-compatible H.264/AAC MP4 using FFmpeg.wasm.
 // The pinned encoder runtime is hosted on Vidirexa itself. The recording
 // stays entirely in the browser; no video or audio is sent to any server.
+import {verifyInstagramMp4} from './mp4-duration-validation.mjs';
 const CORE='/assets/ffmpeg';
 const MAX_SOURCE=280*1024*1024,MAX_OUTPUT=480*1024*1024;
 async function loadBlob(url,type,signal){
@@ -10,12 +11,7 @@ async function loadBlob(url,type,signal){
  if(!bytes.byteLength)throw Error('Empty browser encoder download');
  return URL.createObjectURL(new Blob([bytes],{type}));
 }
-function validMp4(bytes){
- const slice=bytes.subarray(0,Math.min(bytes.length,524288));
- const header=new TextDecoder('latin1').decode(slice);
- const f=header.indexOf('ftyp'),m=header.indexOf('moov'),d=header.indexOf('mdat');
- return f>=0&&f<16&&m>f&&d>m&&header.includes('avc1');
-}
+
 export async function convertWebmToInstagramMp4(recorded,options={}){
  if(!recorded?.blob?.size)throw Error('Empty recording cannot be converted');
  if(recorded.blob.size>MAX_SOURCE)throw Error('The clip is too large for on-device MP4 conversion. Convert its saved WebM file with desktop FFmpeg.');
@@ -53,11 +49,12 @@ export async function convertWebmToInstagramMp4(recorded,options={}){
   if(signal?.aborted)throw new DOMException('Capture cancelled','AbortError');
   const converted=await call('convert',{duration,buffer:source},[source]);
   const bytes=new Uint8Array(converted.buffer);
-  if(bytes.byteLength<4096||bytes.byteLength>MAX_OUTPUT||!validMp4(bytes))throw Error('FFmpeg did not return a fast-start H.264 MP4');
+  if(bytes.byteLength>MAX_OUTPUT)throw Error('Finished video exceeds the 480 MB browser memory safeguard.');
+  const timeline=verifyInstagramMp4(bytes,duration);
   options.onProgress?.(1);
   return {
    blob:new Blob([bytes],{type:'video/mp4'}),mime:'video/mp4',extension:'mp4',container:'mp4',
-   duration,instagramCompatible:true,verified:true,
+   duration,instagramCompatible:true,verified:true,verifiedDuration:timeline.duration,
    video:{...recorded.video,codec:'h264',encoder:'FFmpeg.wasm H264/AAC',targetFps:30},
    audioCodec:'aac',targetFps:30
   };
