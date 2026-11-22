@@ -55,7 +55,7 @@ jobs:
       - name: Encode full-length Instagram MP4 and verify audio/video timelines
         shell: pwsh
         env:
-          FULL_EXPORT_FILTER: instagram-h264-aac-12s
+          FULL_EXPORT_FILTER: instagram-h264-aac
         run: node scripts/full-video-export-regression.cjs
       - name: Upload Instagram MP4 regression report
         if: always()
