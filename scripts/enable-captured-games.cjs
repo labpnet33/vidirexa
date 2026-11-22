@@ -153,11 +153,13 @@ for(const [game,route] of gameRoute){
   const controllerRecording=':await recordCanvas(t,h.buffer,p);';
   if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
   cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
-  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){window.__vidirexaIsExporting=true;try{const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const raw=await recordCanvas(adapter,audio,options);try{const converter=await import("./instagram-wasm-converter.mjs");return await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration})}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}finally{window.__vidirexaIsExporting=false}}\n';
+  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){window.__vidirexaIsExporting=true;try{const module=await import("./instagram-mp4.mjs");const sync=(await import("./midi-audio-sync.mjs")).inspectMidiAudioSync(adapter,audio);const support=await module.instagramMp4Support(options);if(support.supported){const result=await module.recordInstagramMp4(adapter,audio,options);result.midiSync=sync;return result}const raw=await recordCanvas(adapter,audio,options);raw.midiSync=sync;try{const converter=await import("./instagram-wasm-converter.mjs");const mp4=await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration});mp4.midiSync=sync;return mp4}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}finally{window.__vidirexaIsExporting=false}}\n';
   fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
   fs.copyFileSync(path.join(root,'scripts/instagram-wasm-converter.mjs'),path.join(target,'shared/instagram-wasm-converter.mjs'));
    fs.copyFileSync(path.join(root,'scripts/mp4-duration-validation.mjs'),path.join(target,'shared/mp4-duration-validation.mjs'));
    fs.copyFileSync(path.join(root,'scripts/adaptive-preview.mjs'),path.join(target,'shared/adaptive-preview.mjs'));
+   fs.copyFileSync(path.join(root,'scripts/midi-audio-sync.mjs'),path.join(target,'shared/midi-audio-sync.mjs'));
+   row.midiAudioDiagnostic=true;
    row.mp4TimelineValidation=true;
    row.adaptivePreview=true;
   fs.copyFileSync(path.join(root,'scripts/instagram-ffmpeg-worker.js'),path.join(target,'shared/instagram-ffmpeg-worker.js'));
@@ -206,7 +208,7 @@ for(const [game,route] of gameRoute){
   const midiModule=path.join(target,'midi.mjs');
   if(fs.existsSync(midiModule)){
    const uploadBefore='La(o,e),i===void 0?Y[e.key]=o:(Y[e.key]??=[],Y[e.key][i]=o),await fe(),await Ge(),Q()';
-   const uploadAfter='La(o,e),e.key==="midi"&&(await(async()=>{const m=await import("../midi.mjs"),parse=m.parseMidi??m.readMidi;if(typeof parse!=="function")throw new Error("MIDI support is unavailable for this game.");const notes=parse(new Uint8Array(await o.arrayBuffer()));if(!notes?.notes?.length)throw new Error("This MIDI has no playable notes.");T=n.validate({...T,song:"custom",...("musicMode"in T?{musicMode:"midi"}:{})})})()),i===void 0?Y[e.key]=o:(Y[e.key]??=[],Y[e.key][i]=o),await fe(),await Ge(),Q()';
+   const uploadAfter='La(o,e),e.key==="midi"&&(await(async()=>{const m=await import("../midi.mjs"),parse=m.parseMidi??m.readMidi;if(typeof parse!=="function")throw new Error("MIDI support is unavailable for this game.");const notes=parse(new Uint8Array(await o.arrayBuffer()));if(!notes?.notes?.length)throw new Error("This MIDI has no playable notes.");if(notes.notes.some(note=>{const time=note.t??note.q;return !Number.isFinite(time)||time<0}))throw new Error("MIDI contains invalid note timings.");if(Array.isArray(notes.tempos)&&notes.tempos.some(tempo=>Number.isFinite(tempo.bpm)&&(tempo.bpm<=0||tempo.bpm>1000)))throw new Error("MIDI has an invalid tempo map.");T=n.validate({...T,song:"custom",...("musicMode"in T?{musicMode:"midi"}:{})})})()),i===void 0?Y[e.key]=o:(Y[e.key]??=[],Y[e.key][i]=o),await fe(),await Ge(),Q()';
    if(studio.split(uploadBefore).length!==2)throw Error(game+': MIDI studio upload handler changed');
    studio=studio.replace(uploadBefore,uploadAfter);
    const removeBefore='i===void 0?delete Y[e.key]:Y[e.key][i]=null,await fe(),await Ge(),Q()';
@@ -229,7 +231,7 @@ for(const [game,route] of gameRoute){
   // Display a reliable Instagram compatibility status in the existing result area.
   const localDisplay='L(`Local video ready · ${R.mime}. Frame rate has not been independently verified.`)';
   if(!studio.includes(localDisplay))throw Error(game+': local recording status changed');
-  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.duration.toFixed(1)} seconds. Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
+  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.verifiedDuration?.toFixed(1)??R.duration.toFixed(1)} seconds.${R.midiSync?.status==='verified'?` MIDI audio checked (${R.midiSync.audibleOnsets}/${R.midiSync.notesChecked} note onsets).`:R.midiSync?.status==='check-audio'?' Check MIDI track volume and timing.':''} Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
