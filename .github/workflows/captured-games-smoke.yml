@@ -1,12 +1,24 @@
 name: Captured game browser smoke test
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
+      - main
       - audit/restore-captured-game-runtimes
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: studio-smoke-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   audit:
+    name: Vidirexa game studios and navigation
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
