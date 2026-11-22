@@ -1,0 +1,22 @@
+/* Only applies to Windows desktop browsers; nothing here affects Android. */
+@media (min-width: 801px) and (pointer: fine) {
+ html.vidirexa-windows-desktop,
+ html.vidirexa-windows-desktop body {
+  overflow-y: auto;
+  overscroll-behavior-x: none;
+ }
+ html.vidirexa-windows-desktop .v-workspace {
+  align-items: start;
+ }
+ html.vidirexa-windows-desktop .v-preview {
+  position: sticky !important;
+  top: 12px !important;
+  align-self: start;
+ }
+ /* Ensure the full preview and transport controls fit in the iframe viewport.
+    Only the CSS size changes: recorded width, height and bitrate are unchanged. */
+ html.vidirexa-windows-desktop .v-phone,
+ html.vidirexa-windows-desktop .v-scrub {
+  width: min(100%, clamp(205px, calc((100dvh - 285px) * .5625), 330px)) !important;
+ }
+}
