@@ -122,7 +122,15 @@ async function testStudio(width,game){
     if(!box||box.width<44||box.height<44)throw Error('Mobile navigation button is too small: '+JSON.stringify(box));
    }else throw Error('No visible recording or navigation control after tapping final step');
   }
-  return {width,game,canvasCount:inner.canvasCount,buttons:inner.buttons,frameHeight:Math.round(iframeHeight),innerWidth:inner.viewport,innerDocumentWidth:inner.documentWidth};
+  // The iframe must expand with mobile step content instead of adding
+  // a second vertical scroll area that hides controls behind the parent page.
+  await frame.waitForTimeout(350);
+  const contentHeight=await frame.evaluate(()=>Math.ceil(Math.max(
+   document.documentElement.scrollHeight,document.body.scrollHeight,document.querySelector('#studio')?.scrollHeight||0
+  )));
+  const finalHeight=await frameElement.evaluate(el=>Math.ceil(el.getBoundingClientRect().height));
+  if(contentHeight>finalHeight+28)throw Error('Studio content is clipped by iframe: '+JSON.stringify({contentHeight,finalHeight,base:document.baseURI}));
+  return {width,game,canvasCount:inner.canvasCount,buttons:inner.buttons,frameHeight:finalHeight,contentHeight,innerWidth:inner.viewport,innerDocumentWidth:inner.documentWidth};
  }finally{await page.close()}
 }
 async function main(){
