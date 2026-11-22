@@ -1,0 +1,65 @@
+name: Instagram-compatible MP4 export regression
+
+on:
+  push:
+    branches:
+      - fix/instagram-reels-mp4-export
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: instagram-mp4-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  instagram-mp4:
+    name: Full-length H264 AAC MP4 import compatibility
+    runs-on: windows-2022
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium and FFmpeg
+        shell: pwsh
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install chromium
+          if (-not (Get-Command ffprobe -ErrorAction SilentlyContinue)) {
+            choco install ffmpeg --no-progress -y
+          }
+          ffprobe -version
+      - name: Build 66 recovered studios
+        shell: pwsh
+        run: |
+          node scripts/build-public-preview.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/enable-captured-games.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/check-indexing.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Encode full-length Instagram MP4 and verify audio/video timelines
+        shell: pwsh
+        env:
+          FULL_EXPORT_FILTER: instagram-h264-aac-12s
+        run: node scripts/full-video-export-regression.cjs
+      - name: Upload Instagram MP4 regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instagram-mp4-import-check
+          path: |
+            public-preview/export-regression/full-video-export-report.json
+            public-preview/export-regression/*.png
+          if-no-files-found: ignore
