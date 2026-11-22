@@ -129,7 +129,7 @@ for(const [game,route] of gameRoute){
   const localPolicyEnd='},a.append(E)}const c=d("button",';
   const start=studio.indexOf(localPolicyStart),stop=studio.indexOf(localPolicyEnd,start);
   if(start<0||stop<0)throw Error(game+': local subscription panel layout changed');
-  studio=studio.slice(0,start)+'a.append(d("p","Local recording is available without an account, subscription, cloud upload or daily quota. The video is generated and downloaded on this device.", "v-hint"))'+studio.slice(stop+localPolicyEnd.indexOf('}const c=')+1);
+  studio=studio.slice(0,start)+'a.append(d("p","Local recording is available without an account, subscription, cloud upload or daily quota. The video is generated and downloaded on this device.", "v-hint"))}' +studio.slice(stop+localPolicyEnd.indexOf('}const c=')+1);
   // The uploaded video / audio policy only applies to the unavailable hosted
   // service. A silent clip and unavailable IndexedDB should not block local capture.
   const mustMatch=[
