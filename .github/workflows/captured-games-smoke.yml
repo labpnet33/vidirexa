@@ -26,6 +26,7 @@ jobs:
         run: |
           node scripts/build-public-preview.cjs
           node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
       - name: Click-check all 68 game catalogue cards
         run: GAME_CATALOGUE_ONLY=1 node scripts/smoke-captured-games.cjs
       - name: Verify local recording is unlocked in representative games
