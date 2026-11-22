@@ -1,0 +1,28 @@
+{
+  "profile": "data-package",
+  "resources": [
+    {
+      "name": "pages.jsonl",
+      "path": "pages/pages.jsonl",
+      "hash": "sha256:378001d92b008ed4c4b95c3b8cb1cd6940cad83fe5f3c830f420384c2ab64ad8",
+      "bytes": 28747
+    },
+    {
+      "name": "data.warc.gz",
+      "path": "archive/data.warc.gz",
+      "hash": "sha256:dff03556bbbcf48cf7ecf4200471b5375ed475dfbcca997f9c7d1175977c6479",
+      "bytes": 11685404
+    },
+    {
+      "name": "index.cdx",
+      "path": "indexes/index.cdx",
+      "hash": "sha256:64cb3c7a85a030eb34a9b8c378f6e83019315dfeb0573dda067f436783a2c985",
+      "bytes": 321880
+    }
+  ],
+  "wacz_version": "1.1.1",
+  "software": "Webrecorder ArchiveWeb.page 0.17.1, using warcio.js 2.4.12",
+  "created": "2026-11-14T11:26:26.424Z",
+  "title": "My Archiving Session",
+  "modified": "2026-11-22T08:57:16.356Z"
+}
