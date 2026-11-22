@@ -82,16 +82,45 @@ async function verifyAndroid(browser,base){
   const handle=await page.waitForSelector('iframe[data-vidirexa-studio-frame]',{timeout:18000});
   const frame=await handle.contentFrame();assert(frame,'Android studio missing');
   await frame.waitForFunction(()=>!!document.querySelector('#studio canvas'),null,{timeout:35000});
-  const state=await handle.evaluate(el=>({windowStyle:el.style.getPropertyValue('--vidirexa-frame-height'),height:el.getBoundingClientRect().height}));
-  const child=await frame.evaluate(()=>({classAdded:document.documentElement.classList.contains('vidirexa-windows-desktop'),previewPosition:getComputedStyle(document.querySelector('.v-preview')).position}));
-  assert(!state.windowStyle.includes('100dvh'),'Windows viewport fix accidentally applied to Android',state);
-  assert(!child.classAdded&&child.previewPosition==='static','Android preview layout changed',child);
+  await page.waitForTimeout(200);
+  const outer=await handle.evaluate(el=>({inlineHeight:el.style.height,height:el.getBoundingClientRect().height}));
+  assert(outer.inlineHeight.includes('100dvh'),'Android viewport-bound editor not installed',outer);
+  assert(outer.height>=520&&outer.height<=860,'Android studio viewport-sized iframe expected',outer);
+  const initial=await frame.evaluate(()=>({
+   windowsClass:document.documentElement.classList.contains('vidirexa-windows-desktop'),
+   previewStyle:getComputedStyle(document.querySelector('.v-preview')).position,
+   innerHeight:window.innerHeight
+  }));
+  assert(!initial.windowsClass&&initial.previewStyle==='static','Windows desktop styles leaked into Android',initial);
   await frame.locator('#studio [data-step="1"]').first().tap({timeout:20000});
-  await frame.waitForTimeout(450);
-  const expanded=await handle.evaluate(el=>el.getBoundingClientRect().height);
-  const full=await frame.evaluate(()=>Math.max(document.documentElement.scrollHeight,document.body.scrollHeight));
-  assert(expanded>=full-35,'Android existing auto-expanded frame is clipped',{expanded,full});
-  return {game,viewport:'390x844',windowsClass:false,position:child.previewPosition,autoExpanded:Math.round(expanded),contentHeight:Math.round(full)};
+  await frame.waitForTimeout(500);
+  const content=await frame.evaluate(()=>document.documentElement.scrollHeight);
+  assert(content>initial.innerHeight+250,'Settings panel must scroll inside Android iframe',{content,initial});
+  await frame.evaluate(()=>window.scrollTo({top:Math.min(document.documentElement.scrollHeight-window.innerHeight-200,1300),behavior:'instant'}));
+  await frame.waitForTimeout(650);
+  const result=await frame.evaluate(()=>{
+   const phone=document.querySelector('.v-phone');
+   const canvas=phone?.querySelector('canvas');
+   const bar=phone?.querySelector('.v-mini-bar');
+   const collapsed=document.querySelector('.v-mini-tab');
+   return {
+    scroll:window.scrollY,
+    innerHeight:window.innerHeight,
+    floating:phone?.classList.contains('v-float'),
+    minimized:phone?.classList.contains('v-mini-collapsed'),
+    canvas:canvas?.getBoundingClientRect().toJSON(),
+    phone:phone?.getBoundingClientRect().toJSON(),
+    barVisible:bar?getComputedStyle(bar).display!=='none':false,
+    restoreVisible:collapsed?!collapsed.hidden:false
+   };
+  });
+  assert(result.scroll>350,'Android iframe did not scroll through settings',result);
+  assert(result.floating||result.restoreVisible,'No persistent Android preview after scrolling',result);
+  if(result.floating&&!result.minimized){
+   assert(result.canvas&&result.canvas.top>=-3&&result.canvas.bottom<=result.innerHeight+3,'Android preview canvas clipped',result);
+   assert(result.phone&&result.phone.width>=95&&result.phone.right<=window.innerWidth+5,'Floating preview outside mobile viewport',result);
+  }
+  return {game,viewport:'390x844',frameHeight:Math.round(outer.height),settingsScroll:Math.round(result.scroll),floating:result.floating,previewTop:Math.round(result.canvas?.top??-1),previewBottom:Math.round(result.canvas?.bottom??-1),restoreVisible:result.restoreVisible};
  }finally{await page.close()}
 }
 async function main(){
@@ -103,7 +132,7 @@ async function main(){
    ['Windows Shape Merger 1280x900',()=>verifyWindows(browser,base,'shape-merger',{width:1280,height:900})],
    ['Windows Shape Merger 1366x768',()=>verifyWindows(browser,base,'shape-merger',{width:1366,height:768})],
    ['Windows Crush Machine 1280x900',()=>verifyWindows(browser,base,'crush-machine',{width:1280,height:900})],
-   ['Android unchanged 390x844',()=>verifyAndroid(browser,base)]
+   ['Android persistent mini preview 390x844',()=>verifyAndroid(browser,base)]
   ]){
    try{const details=await fn();report.checks.push({type,details});console.log('PASS Windows preview '+type+' '+JSON.stringify(details))}
    catch(err){report.failures.push({type,error:String(err.message||err).slice(0,1800)});console.error('FAIL Windows preview '+type+' '+String(err.message||err).slice(0,1800))}
