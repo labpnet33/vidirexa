@@ -51,7 +51,7 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 .replace(/<(img|source|video|audio)\b[^>]*>/gi,t=>t.replace(/\s+(src|poster)\s*=\s*(["'])(.*?)\2/gi,(_,attr,q,v)=>{const dest=asset(v,base);return dest?' '+attr+'="'+esc(dest)+'"':''}).replace(/\s+srcset\s*=\s*(["'])(.*?)\1/gi,''))
 .replace(/<link\b[^>]*>/gi,t=>t.replace(/\s+href\s*=\s*(["'])(.*?)\1/gi,(_,q,v)=>{const dest=asset(v,base);return dest?' href="'+esc(dest)+'"':''}))
 .replace(/<title>([\s\S]*?)<\/title>/i,'<title>Archived preview — $1</title>')
-.replace(/<\/head>/i,'<meta name="robots" content="noindex,nofollow"><style>.analytics-consent-banner,.support-widget,.sale-banner{display:none!important}a[aria-disabled=true],button,input,select,textarea{pointer-events:none!important;cursor:default!important}body{padding-bottom:0!important}</style></head>')
+.replace(/<\/head>/i,'<style>.analytics-consent-banner,.support-widget,.sale-banner{display:none!important}a[aria-disabled=true],button,input,select,textarea{pointer-events:none!important;cursor:default!important}body{padding-bottom:0!important}</style></head>')
 .replace(/<body\b[^>]*>/i,m=>m+label);
 if(route==='/create'||route==='/games'){const gameList=[...pages.keys()].filter(x=>x.startsWith('/games/')).sort().map(p=>'<a href="'+esc(p)+'" style="display:inline-block;margin:5px;padding:10px;border:1px solid #777;border-radius:6px">'+esc(p.split('/').pop().replace(/-/g,' '))+'</a>').join('');h=h.replace(label,label+'<section style="padding:20px;max-width:1100px;margin:auto"><h2>Captured simulation catalogue</h2><p>Browse archived game descriptions. Playable engines require independent implementation.</p>'+gameList+'</section>')}
 if(route.startsWith('/create/index__q_')){
@@ -131,6 +131,6 @@ for(const runtime of [foldRuntime,melodyRuntime]){
  put(base+'/bootstrap.mjs',boot);
 }
 put('404.html','<!doctype html><html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Archive page unavailable</title><h1>Page not included in the archive</h1><p>Live account and backend services are not part of the capture.</p><a href="/">Return to archive home</a></html>');
-put('robots.txt','User-agent: *\nDisallow: /\n');
+put('robots.txt','User-agent: *\nAllow: /\n');
 console.log('Archive build: '+pages.size+' public routes (including '+studioRoutes.size+' game-specific snapshots) and '+assets.size+' static assets.');
 if(!pages.has('/'))throw Error('Missing archive homepage');
