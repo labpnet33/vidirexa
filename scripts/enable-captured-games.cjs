@@ -53,7 +53,7 @@ function bootScript(title,url){
  const lines=[
   'const status=document.getElementById("runtime-status");',
   'const root=document.getElementById("studio");',
-  'if(/Windows|Win32|Win64/i.test([navigator.userAgentData?.platform,navigator.platform,navigator.userAgent].join(" "))&&window.matchMedia("(min-width:801px) and (pointer:fine)").matches)document.documentElement.classList.add("vidirexa-windows-desktop");',
+  'if(/Windows|Win32|Win64/i.test([navigator.userAgentData?.platform,navigator.platform,navigator.userAgent].join(" "))&&window.parent.matchMedia("(min-width:801px) and (pointer:fine)").matches)document.documentElement.classList.add("vidirexa-windows-desktop");',
   'const fail=(e)=>{status.dataset.error="true";status.replaceChildren();const p=document.createElement("p");p.textContent="Could not start '+title.replace(/"/g,'')+': "+String(e?.message??e??"Unknown error").slice(0,450);const a=document.createElement("a");a.href="'+base+'/index.html";a.textContent="Try the captured engine directly";a.target="_top";status.append(p,a);};',
   'window.addEventListener("error",e=>fail(e.error||e.message));',
   'window.addEventListener("unhandledrejection",e=>fail(e.reason));',
