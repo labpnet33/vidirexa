@@ -28,6 +28,16 @@ const server=http.createServer((req,res)=>{
  fs.createReadStream(target).pipe(res);
 });
 const report={started:new Date().toISOString(),cases:[],passed:0,failed:0};
+// Deterministic format-1 MIDI with a mid-song tempo change, shared by
+// the MIDI preview and completed-media recording regressions.
+function midiFixture(){
+ const ascii=s=>[...s].map(x=>x.charCodeAt(0)),w=n=>[(n>>8)&255,n&255],d=n=>[(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255];
+ const vlq=n=>{let a=[n&127];while((n>>>=7)>0)a.unshift((n&127)|128);return a};
+ const track=ev=>{ev.sort((a,b)=>a.t-b.t||a.o-b.o);let out=[],last=0;for(const x of ev){out.push(...vlq(x.t-last),...x.b);last=x.t}out.push(0,255,47,0);return [...ascii('MTrk'),...d(out.length),...out]};
+ const tempo=[{t:0,o:0,b:[255,81,3,7,161,32]},{t:960,o:0,b:[255,81,3,15,66,64]}];
+ const notes=[];for(let i=0;i<16;i++){const t=i*240,n=60+(i%8)*2;notes.push({t,o:1,b:[144,n,115]},{t:t+180,o:2,b:[128,n,0]})}
+ return [...ascii('MThd'),...d(6),...w(1),...w(2),...w(480),...track(tempo),...track(notes)];
+}
 const cases=[
  // Full HD 30 s with sound through the same CaptureController used by the studio.
  {id:'fullhd-audio-30s',game:'chaos-cutter',duration:30,width:1080,height:1920,synthetic:true,audio:true},
@@ -35,7 +45,9 @@ const cases=[
  {id:'max-duration-audio-180s',game:'melody-bounce',duration:180,width:720,height:1280,synthetic:true,audio:true},
  // Exercise a real game: use the original Chaos Cutter adapter, sound engine,
  // original duration, and the same controller path as the game.
- {id:'real-game-chaos-cutter',game:'chaos-cutter',synthetic:false,audio:true,width:1080,height:1920}
+ {id:'real-game-chaos-cutter',game:'chaos-cutter',synthetic:false,audio:true,width:1080,height:1920},
+ // Real custom-MIDI engine: the exported video and audio share the same MIDI events.
+ {id:'custom-midi-melody-bounce',game:'melody-bounce',synthetic:false,audio:true,midiBytes:midiFixture(),width:1080,height:1920}
 ];
 const command=(bin,args,timeout=30000)=>{
  const r=cp.spawnSync(bin,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});
@@ -63,6 +75,24 @@ function inspectFile(filename,caseInfo,duration,metadata){
  }else throw Error('Unexpected recording file extension '+extension);
  const actual=Number(probe.format.duration||video.duration||0);
  if(!(actual>0)||Math.abs(actual-duration)>Math.max(3,duration*0.03))throw Error('Recorded duration '+actual+' does not match '+duration);
+ // For a captured MIDI game, inspect decoded audio near the exact scheduled
+ // note onsets from the same engine timeline used to render the video.
+ let verifiedMidiOnsets=null;
+ if(Array.isArray(metadata.midiOnsets)&&metadata.midiOnsets.length){
+  const dec=cp.spawnSync('ffmpeg',['-v','error','-i',filename,'-map','0:a:0','-ac','1','-ar','44100','-f','f32le','pipe:1'],{timeout:70000,maxBuffer:5*1024*1024});
+  if(dec.error||dec.status!==0)throw Error('Could not decode uploaded-MIDI audio: '+String(dec.stderr).slice(-240));
+  const pcm=dec.stdout;
+  let checked=0,heard=0;
+  for(const t of metadata.midiOnsets){
+   if(!(t>0.1&&t<duration-0.25))continue;
+   const first=Math.max(0,Math.floor((t-.04)*44100)),last=Math.min(pcm.length/4,Math.ceil((t+.14)*44100));
+   let peak=0;
+   for(let i=first;i<last;i+=16)peak=Math.max(peak,Math.abs(pcm.readFloatLE(i*4)));
+   checked++;if(peak>.0005)heard++;
+  }
+  if(checked<2||heard<Math.min(4,Math.floor(checked*.55)))throw Error('Recorded audio did not align with MIDI note onsets: '+heard+'/'+checked);
+  verifiedMidiOnsets=heard;
+ }
  const bytes=fs.statSync(filename).size;
  if(bytes<4096)throw Error('Recorded output is unexpectedly tiny ('+bytes+' bytes)');
  // Decode frames at both ends; this catches files with missing or corrupt tails.
@@ -94,14 +124,14 @@ function inspectFile(filename,caseInfo,duration,metadata){
   maximumVolume=Number(match[1]);
   if(maximumVolume< -48)throw Error('Audio track is effectively silent: '+maximumVolume+' dB');
  }
- return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
+ return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,verifiedMidiOnsets,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
 }
 async function main(){
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve)});
  const origin='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required']});
  try{
-  for(const example of cases){
+  for(const example of cases.filter(x=>!process.env.FULL_EXPORT_FILTER||x.id===process.env.FULL_EXPORT_FILTER)){
    const item={id:example.id,game:example.game,status:'failed'};
    report.cases.push(item);
    let page;
@@ -153,7 +183,11 @@ async function main(){
         };
        }else{
         const [mod,core]=await Promise.all([import(moduleRoot+'/adapter.mjs'),import(moduleRoot+'/core.mjs')]);
-        adapter=await mod.createAdapter(canvas,core.normalizeConfig({sound:true,volume:75}),{},{});
+        const midi=example.midiBytes?new File([new Uint8Array(example.midiBytes)],'custom-tempo.mid',{type:'audio/midi'}):null;
+        const configuration=core.normalizeConfig(midi?{song:'custom',length:15,intro:'off',sound:true,volume:80,tempo:100}:{sound:true,volume:75});
+        adapter=await mod.createAdapter(canvas,configuration,midi?{midi}:{},{});
+        if(midi&&!adapter.level?.song?.custom)throw Error('MIDI recording used a library track instead of the uploaded score');
+        if(midi&&(!adapter.level.audioNotes||adapter.level.audioNotes.length<8))throw Error('MIDI recording is missing synchronized audio notes');
         if(!Number.isFinite(adapter.duration)||adapter.duration<5||adapter.duration>180)throw Error('Invalid natural game duration '+adapter.duration);
        }
        const onProgress=()=>{window.__exportProgress=(window.__exportProgress||0)+1};
@@ -176,7 +210,7 @@ async function main(){
        download.textContent='Download exported video';
        download.style.cssText='position:fixed;top:80px;left:20px;z-index:2147483647;display:block;padding:16px;background:#fff;color:#000;pointer-events:auto';
        document.body.append(download);
-       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,progressCallbacks:window.__exportProgress||0,video:result.video};
+       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,progressCallbacks:window.__exportProgress||0,video:result.video,midiOnsets:example.midiBytes?adapter.level.audioNotes.map(n=>n.t).filter(Number.isFinite).slice(0,30):null};
        adapter.dispose();
       }catch(e){
        try{adapter?.dispose()}catch{}
