@@ -26,8 +26,8 @@ jobs:
         run: |
           node scripts/build-public-preview.cjs
           node scripts/enable-captured-games.cjs
-      - name: Smoke test four representative engines first
-        run: GAME_FILTER=fold-groove,melody-bounce,marble-race,fruit-merge node scripts/smoke-captured-games.cjs
+      - name: Diagnose four heavy 3D game engines sequentially
+        run: GAME_FILTER=wobble-stack,marble-race,blueprint-builder,voxel-builder GAME_WORKERS=1 node scripts/smoke-captured-games.cjs
       - name: Smoke test every complete game studio in Chromium
         run: node scripts/smoke-captured-games.cjs
       - name: Upload audit and failure screenshots
