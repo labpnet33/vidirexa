@@ -33,6 +33,14 @@ const unexpected=blocked.filter(rel=>{
 if(unexpected.length)throw Error('Unexpected HTML indexing blockers: '+unexpected.slice(0,15).join(', '));
 
 if(!checked||!fs.existsSync(path.join(root,'create/index.html'))||!fs.existsSync(path.join(root,'index.html')))throw Error('Expected public HTML pages missing');
+// Keep the native game catalogue, but never reinsert the obsolete archive link dump.
+for(const route of ['create','games']){
+ const filename=path.join(root,route,'index.html');
+ if(!fs.existsSync(filename))throw Error('Missing '+route+' page');
+ const html=fs.readFileSync(filename,'utf8');
+ if(html.includes('Captured simulation catalogue')||html.includes('Playable engines require independent implementation'))throw Error('Obsolete archive catalogue returned on /'+route);
+ if(route==='create'&&!html.includes('game-tile-shell'))throw Error('Native Create game cards missing');
+}
 const notFound=fs.readFileSync(path.join(root,'404.html'),'utf8');
 if(!/<meta\b[^>]*name="robots"[^>]*content="noindex"/i.test(notFound))throw Error('404 should remain noindex');
 console.log('Search indexing check PASSED: '+checked+' public pages, robots.txt crawlable; '+blocked.length+' preserved source-specific noindex pages; 404 excluded.');
