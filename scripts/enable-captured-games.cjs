@@ -265,6 +265,20 @@ for(const [game,route] of gameRoute){
   audit.push(row);
  }catch(e){row.status='error';row.reason=String(e.message||e);audit.push(row);disabled.push(game);}
 }
+// Self-host the one FFmpeg core shared by all recovered studios. The WASM
+// runtime is never copied into each game package, and nothing calls a CDN
+// when the user's recording is converted.
+{
+ const coreRoot=path.join(root,'node_modules/@ffmpeg/core/dist/umd');
+ const targetRoot=path.join(out,'assets/ffmpeg');
+ fs.mkdirSync(targetRoot,{recursive:true});
+ for(const name of ['ffmpeg-core.js','ffmpeg-core.wasm']){
+  const file=path.join(coreRoot,name);
+  if(!fs.existsSync(file))throw Error('Self-hosted Instagram encoder missing: '+file);
+  fs.copyFileSync(file,path.join(targetRoot,name));
+ }
+ console.log('Self-hosted H.264/AAC FFmpeg.wasm runtime added (no third-party recording uploads).');
+}
 // Parent frame listener, shared by recovered game pages only.
 fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,'assets/vidirexa-mobile-frame.mjs'));
 fs.copyFileSync(path.join(root,'scripts/windows-studio-frame.mjs'),path.join(out,'assets/vidirexa-windows-frame.mjs'));
