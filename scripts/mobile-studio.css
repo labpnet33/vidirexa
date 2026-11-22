@@ -39,3 +39,40 @@ html,body{max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){
  .v-phone,.v-preview,.v-controls{scroll-behavior:auto}
 }
+
+
+/* Android safety fallback: if the game's native floating-preview trigger
+   misses a scroll event, keep its original live canvas visible. No duplicate
+   video element or second animation loop is ever created. */
+@media(max-width:760px) and (pointer:coarse){
+ .v-phone.v-android-preview-guard{
+  position:fixed!important;
+  top:10px!important;
+  right:10px!important;
+  bottom:auto!important;
+  left:auto!important;
+  width:min(140px,36vw)!important;
+  max-width:min(140px,36vw)!important;
+  height:auto!important;
+  margin:0!important;
+  padding:4px!important;
+  transform:none!important;
+  z-index:1000!important;
+  border:1px solid #a78bfa!important;
+  border-radius:14px!important;
+  box-shadow:0 6px 22px #000c,0 0 0 1px #ffffff33!important;
+  background:#0b1018!important;
+  contain:layout paint;
+ }
+ .v-phone.v-android-preview-guard canvas{
+  display:block!important;
+  aspect-ratio:9/16!important;
+  width:100%!important;
+  height:auto!important;
+  max-width:100%!important;
+  border-radius:9px!important;
+ }
+ .v-phone.v-android-preview-guard .v-mini-bar{
+  display:flex!important;
+ }
+}

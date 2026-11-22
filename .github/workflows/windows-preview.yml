@@ -1,0 +1,51 @@
+name: Windows desktop studio preview scroll
+
+on:
+  push:
+    branches:
+      - fix/windows-studio-preview-scroll
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-preview-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-sticky-preview:
+    name: Desktop sticky preview and Android unchanged
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Build recovered studios
+        run: |
+          node scripts/build-public-preview.cjs
+          node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
+      - name: Verify sticky desktop preview and unchanged Android layout
+        run: node scripts/windows-sticky-preview-regression.cjs
+      - name: Upload browser regression report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-preview-scroll-report
+          path: public-preview/windows-studio-preview-report.json
+          if-no-files-found: ignore

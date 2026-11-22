@@ -1,0 +1,27 @@
+/* Only applies to Windows desktop browsers; nothing here affects Android. */
+@media (pointer: fine) {
+ html.vidirexa-windows-desktop {
+  overflow-x: clip;
+  overflow-y: auto;
+  overscroll-behavior-x: none;
+ }
+ /* The body must not be a nested overflow container: otherwise sticky
+    positions against the wrong scroller and the preview disappears. */
+ html.vidirexa-windows-desktop body {
+  overflow: visible !important;
+ }
+ html.vidirexa-windows-desktop .v-workspace {
+  align-items: start;
+ }
+ html.vidirexa-windows-desktop .v-preview {
+  position: sticky !important;
+  top: 12px !important;
+  align-self: start;
+ }
+ /* Ensure the full preview and transport controls fit in the iframe viewport.
+    Only the CSS size changes: recorded width, height and bitrate are unchanged. */
+ html.vidirexa-windows-desktop .v-phone:not(.v-float),
+ html.vidirexa-windows-desktop .v-scrub {
+  width: min(100%, clamp(205px, calc((100dvh - 285px) * .5625), 330px)) !important;
+ }
+}

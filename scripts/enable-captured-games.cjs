@@ -18,7 +18,7 @@ const audit=[];
 const disabled=[];
 function iframeFor(title,url){
  const dir=url.replace(/\/index\.html$/,'');
- const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><link rel="stylesheet" href="'+dir+'/shared/studio.css"><style>html,body{margin:0;background:#0b1018;color:#e2e8f0;font:14px/1.5 system-ui}#runtime-status{margin:20px auto;max-width:720px;padding:12px 16px;border:1px solid #374b64;border-radius:10px}#runtime-status[data-error="true"]{border-color:#fb7185;color:#ffe4e6}#runtime-status a{color:#93c5fd}</style></head><body><div id="studio"></div><div id="runtime-status" role="status">Loading '+escape(title)+'…</div><script type="module" src="'+dir+'/bootstrap.mjs"></script></body></html>';
+ const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><link rel="stylesheet" href="'+dir+'/shared/studio.css"><style>html,body{margin:0;background:#0b1018;color:#e2e8f0;font:14px/1.5 system-ui}#runtime-status{margin:20px auto;max-width:720px;padding:12px 16px;border:1px solid #374b64;border-radius:10px}#runtime-status[data-error="true"]{border-color:#fb7185;color:#ffe4e6}#runtime-status a{color:#93c5fd}</style></head><body><div id="studio"></div><div id="runtime-status" role="status">Loading '+escape(title)+'…</div><script type="module" src="'+dir+'/bootstrap.mjs"></script><script type="module" src="'+dir+'/shared/android-preview-guard.mjs"></script></body></html>';
  return '<iframe data-vidirexa-studio-frame="true" class="vidirexa-studio-frame" title="'+escape(title)+' studio" srcdoc="'+escape(html)+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:var(--vidirexa-frame-height,1650px);border:0;border-radius:12px"></iframe>';
 }
 function moduleImports(file,baseDir){
@@ -53,6 +53,7 @@ function bootScript(title,url){
  const lines=[
   'const status=document.getElementById("runtime-status");',
   'const root=document.getElementById("studio");',
+  'if(/Windows|Win32|Win64/i.test([navigator.userAgentData?.platform,navigator.platform,navigator.userAgent].join(" "))&&window.parent.matchMedia("(min-width:801px) and (pointer:fine)").matches)document.documentElement.classList.add("vidirexa-windows-desktop");',
   'const fail=(e)=>{status.dataset.error="true";status.replaceChildren();const p=document.createElement("p");p.textContent="Could not start '+title.replace(/"/g,'')+': "+String(e?.message??e??"Unknown error").slice(0,450);const a=document.createElement("a");a.href="'+base+'/index.html";a.textContent="Try the captured engine directly";a.target="_top";status.append(p,a);};',
   'window.addEventListener("error",e=>fail(e.error||e.message));',
   'window.addEventListener("unhandledrejection",e=>fail(e.reason));',
@@ -210,6 +211,9 @@ for(const [game,route] of gameRoute){
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
   fs.appendFileSync(cssFile,'\n'+fs.readFileSync(path.join(root,'scripts/mobile-studio.css'),'utf8')+'\n');
+  fs.copyFileSync(path.join(root,'scripts/android-preview-guard.mjs'),path.join(target,'shared/android-preview-guard.mjs'));
+  fs.appendFileSync(cssFile,'\n'+fs.readFileSync(path.join(root,'scripts/windows-studio.css'),'utf8')+'\n');
+  row.androidPreviewGuard=true;
   row.cleanPreview=true;
   fs.writeFileSync(path.join(target,'bootstrap.mjs'),bootScript(game,runtime.pathname));
   let html=fs.readFileSync(published,'utf8');
@@ -235,7 +239,7 @@ for(const [game,route] of gameRoute){
   if(!anchor.test(html))throw Error('Studio page layout cannot embed the game');
   html=html.replace(anchor,note+frame+'</div><aside class="published-studio-details"');
   if(!html.includes('srcdoc=')||html.includes('Unlock with Creator'))throw Error('Captured studio replacement failed');
-  html=html.replace('</body>','<script type="module" src="/assets/vidirexa-mobile-frame.mjs"></script></body>');
+  html=html.replace('</body>','<script type="module" src="/assets/vidirexa-mobile-frame.mjs"></script><script type="module" src="/assets/vidirexa-windows-frame.mjs"></script></body>');
   fs.writeFileSync(published,html);
   row.status='bundled';row.reason='Static engine captured; browser playback not yet tested';
   row.runtime=runtime.pathname;row.moduleFiles=fs.readdirSync(baseDir,{recursive:true}).filter(x=>/\.(mjs|js)$/.test(x)).length;
@@ -244,6 +248,7 @@ for(const [game,route] of gameRoute){
 }
 // Parent frame listener, shared by recovered game pages only.
 fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,'assets/vidirexa-mobile-frame.mjs'));
+fs.copyFileSync(path.join(root,'scripts/windows-studio-frame.mjs'),path.join(out,'assets/vidirexa-windows-frame.mjs'));
 // Restore catalogue navigation. Captured pages used JS-bound <button> cards,
 // but the archive build removes script handlers and disables button pointer events.
 // Native anchor links work without JavaScript and reach the existing studio routes.
@@ -307,6 +312,6 @@ fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,
  console.log('Restored '+total+' mobile-tappable featured homepage game cards.');
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,androidPreviewGuard:audit.filter(x=>x.androidPreviewGuard).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.androidPreviewGuard!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));

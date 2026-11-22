@@ -87,6 +87,7 @@ if(route.startsWith('/create/index__q_')){
  }
 }
 h=h.replace(/<\/head>/i,'<link rel="stylesheet" href="/assets/vidirexa-mobile.css"></head>');
+h=h.replace(/<\/body>/i,'<script type="module" src="/assets/vidirexa-android-nav.mjs"></script></body>');
 put(route==='/'?'index.html':route.slice(1)+'/index.html',h)}
 for(const rel of assets){const b=fs.readFileSync(path.join(root,rel));if(rel.endsWith('.css')){const css=b.toString('utf8').replace(/url\(\s*(['"]?)(.*?)\1\s*\)/gi,(m,q,v)=>{if(v.startsWith('data:')||v.startsWith('#'))return m;const u=asset(v,'/'+rel);return u?'url("'+u.replace(/"/g,'%22')+'")':'url("data:,")'});put(rel,css)}else put(rel,b)}
 // Serve captured Fold Groove files at a same-origin URL for browser-local use.
@@ -134,6 +135,8 @@ for(const runtime of [foldRuntime,melodyRuntime]){
 put('404.html','<!doctype html><html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Archive page unavailable</title><h1>Page not included in the archive</h1><p>Live account and backend services are not part of the capture.</p><a href="/">Return to archive home</a></html>');
 put('robots.txt','User-agent: *\nAllow: /\n');
 put('assets/vidirexa-mobile.css',fs.readFileSync(path.resolve('scripts/mobile-site.css'),'utf8'));
+put('assets/vidirexa-android-nav.mjs',fs.readFileSync(path.resolve('scripts/android-navigation.mjs'),'utf8'));
+
 
 console.log('Archive build: '+pages.size+' public routes (including '+studioRoutes.size+' game-specific snapshots) and '+assets.size+' static assets.');
 if(!pages.has('/'))throw Error('Missing archive homepage');
