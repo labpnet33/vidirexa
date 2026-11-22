@@ -42,6 +42,7 @@ if(android){
   const root=document.querySelector('#studio .v-preview');
   if(!root)return;
   observed=true;
+  mountObserver.disconnect();
   observer.observe(root,{subtree:true,attributes:true,attributeFilter:['class','style']});
   schedule();
  };
