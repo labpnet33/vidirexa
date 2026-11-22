@@ -41,10 +41,21 @@ async function parserTest(file){
  const m=await import(pathToFileURL(file).href),parse=m.parseMidi??m.readMidi;
  assert(typeof parse==='function','MIDI parser missing');
  for(const format of [0,1]){
-  const r=parse(fixture(format)),notes=r.notes?.filter(x=>x.ch!==9).sort((a,b)=>a.t-b.t)||[];
+  const r=parse(fixture(format)),notes=r.notes?.filter(x=>x.ch!==9).sort((a,b)=>(a.t??a.q)-(b.t??b.q))||[];
   assert(notes.length>=16,'Format '+format+' has '+notes.length+' notes');
+  const seconds=note=>{
+   if(Number.isFinite(note?.t))return note.t;
+   if(!Number.isFinite(note?.q)||!Array.isArray(r.tempos))return NaN;
+   let total=0,last=0,bpm=120;
+   for(const segment of r.tempos){
+    if(segment.q>=note.q)break;
+    total+=(segment.q-last)*60/bpm;
+    last=segment.q;bpm=segment.bpm;
+   }
+   return total+(note.q-last)*60/bpm;
+  };
   for(const [i,sec] of [[0,0],[2,.5],[4,1],[6,2]]){
-   const actual=notes[i]?.t;
+   const actual=seconds(notes[i]);
    assert(Number.isFinite(actual)&&Math.abs(actual-sec)<.05,'Tempo change incorrect: format '+format+', note '+i+', got '+actual+' expected '+sec);
   }
  }
