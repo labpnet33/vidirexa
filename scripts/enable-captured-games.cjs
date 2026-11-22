@@ -57,9 +57,9 @@ function bootScript(title,url){
   'window.addEventListener("error",e=>fail(e.error||e.message));',
   'window.addEventListener("unhandledrejection",e=>fail(e.reason));',
   'try{await import("./studio.mjs");if(root.childElementCount>0){status.remove()}else{fail("Studio script loaded but no interface was mounted.")}}catch(e){fail(e)}',
-  'let heightPending=false;const reportHeight=()=>{if(heightPending)return;heightPending=true;requestAnimationFrame(()=>{heightPending=false;const height=Math.ceil(Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,root.scrollHeight));if(height>0)window.parent.postMessage({type:"vidirexa:studio-height",height},window.location.origin)})};',
+  'let heightPending=false;const reportHeight=()=>{if(heightPending)return;heightPending=true;requestAnimationFrame(()=>{heightPending=false;const height=Math.ceil(Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,root.scrollHeight));if(height>0)window.parent.postMessage({type:"vidirexa:studio-height",height},window.parent.location.origin)})};',
   'if(typeof ResizeObserver==="function"){const observer=new ResizeObserver(reportHeight);observer.observe(root)}',
-  'window.addEventListener("message",event=>{if(event.origin===window.location.origin&&event.data?.type==="vidirexa:studio-height-request")reportHeight()});',
+  'window.addEventListener("message",event=>{if(event.source===window.parent&&event.origin===window.parent.location.origin&&event.data?.type==="vidirexa:studio-height-request")reportHeight()});',
   'window.addEventListener("load",reportHeight);window.addEventListener("resize",reportHeight);reportHeight();'
  ];
  return lines.join('\n')+'\n';
