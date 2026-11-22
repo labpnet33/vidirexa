@@ -179,6 +179,33 @@ for(const [game,route] of gameRoute){
   studio=studio.replace(recordingLabel,'const S=d("button","Download latest video","v-subtle"');
   studio=studio.replace(recordingHandler,':ze?w("download").click():L("Record a local video first, then download it here.")');
   row.localRecording=true;
+  // The upstream upload field stored a MIDI Blob without selecting the
+  // matching custom-song mode; uploading a new MIDI could leave the old song
+  // playing. Validate note data and select the custom score before rebuilding.
+  // There are 8 captured MIDI-aware engines; all other studios are untouched.
+  const midiModule=path.join(target,'midi.mjs');
+  if(fs.existsSync(midiModule)){
+   const uploadBefore='La(o,e),i===void 0?Y[e.key]=o:(Y[e.key]??=[],Y[e.key][i]=o),await fe(),await Ge(),Q()';
+   const uploadAfter='La(o,e),e.key==="midi"&&(await(async()=>{const m=await import("../midi.mjs"),parse=m.parseMidi??m.readMidi;if(typeof parse!=="function")throw new Error("MIDI support is unavailable for this game.");const notes=parse(new Uint8Array(await o.arrayBuffer()));if(!notes?.notes?.length)throw new Error("This MIDI has no playable notes.");T=n.validate({...T,song:"custom",...("musicMode"in T?{musicMode:"midi"}:{})})})()),i===void 0?Y[e.key]=o:(Y[e.key]??=[],Y[e.key][i]=o),await fe(),await Ge(),Q()';
+   if(studio.split(uploadBefore).length!==2)throw Error(game+': MIDI studio upload handler changed');
+   studio=studio.replace(uploadBefore,uploadAfter);
+   const removeBefore='i===void 0?delete Y[e.key]:Y[e.key][i]=null,await fe(),await Ge(),Q()';
+   const removeAfter='i===void 0?delete Y[e.key]:Y[e.key][i]=null,e.key==="midi"&&T.song==="custom"&&(T=n.validate({...T,song:n.defaults.song})),await fe(),await Ge(),Q()';
+   if(studio.split(removeBefore).length!==2)throw Error(game+': MIDI studio remove handler changed');
+   studio=studio.replace(removeBefore,removeAfter);
+   // Do not play a library track when an uploaded MIDI failed parsing or was
+   // absent after draft restoration. Instead show the original parsing error.
+   const adapterFile=path.join(target,'adapter.mjs');
+   let adapterCode=fs.readFileSync(adapterFile,'utf8');
+   const loadPattern=/([a-zA-Z_$][\w$]*)=await (loadMidiScore|loadCustomSong|loadCustomScore|loadOwnSong)\(([a-zA-Z_$][\w$]*),([a-zA-Z_$][\w$]*)\);/;
+   const loadMatch=adapterCode.match(loadPattern);
+   if(!loadMatch)throw Error(game+': cannot locate custom MIDI loader');
+   const [,scoreVar,,configVar,assetsVar]=loadMatch;
+   const guard='if('+configVar+'.song==="custom"&&'+configVar+'.musicMode!=="original"&&!'+scoreVar+'.score)throw new Error('+scoreVar+'.notice||"Choose a valid MIDI file (.mid or .midi) to use this song.");';
+   adapterCode=adapterCode.replace(loadPattern,loadMatch[0]+guard);
+   fs.writeFileSync(adapterFile,adapterCode);
+   row.midiImportVerified=true;
+  }
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
@@ -280,6 +307,6 @@ fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,
  console.log('Restored '+total+' mobile-tappable featured homepage game cards.');
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
