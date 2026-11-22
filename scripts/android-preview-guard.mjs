@@ -19,7 +19,7 @@ if(android){
   const v=viewport(),p=preview.getBoundingClientRect(),r=phone.getBoundingClientRect();
   const deliberatelyMinimized=phone.classList.contains('v-mini-collapsed');
   const originalInSight=p.bottom>=32&&p.top<v.height-60;
-  const nativeMiniInSight=phone.classList.contains('v-float')&&
+  const nativeMiniInSight=!phone.classList.contains('v-android-preview-guard')&&phone.classList.contains('v-float')&&
     r.top>=-4&&r.bottom<=v.height+4&&r.left>=-4&&r.right<=v.width+4;
   // Once a native mini-preview is visible, let the engine manage it.
   const mustPin=!deliberatelyMinimized&&!originalInSight&&!nativeMiniInSight&&
