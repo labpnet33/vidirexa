@@ -240,7 +240,7 @@ async function main(){
        download.textContent='Download exported video';
        download.style.cssText='position:fixed;top:80px;left:20px;z-index:2147483647;display:block;padding:16px;background:#fff;color:#000;pointer-events:auto';
        document.body.append(download);
-       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,progressCallbacks:window.__exportProgress||0,video:result.video,midiOnsets:example.midiBytes?adapter.level.audioNotes.map(n=>n.t).filter(Number.isFinite).slice(0,30):null};
+       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,warning:result.instagramWarning||null,progressCallbacks:window.__exportProgress||0,video:result.video,midiOnsets:example.midiBytes?adapter.level.audioNotes.map(n=>n.t).filter(Number.isFinite).slice(0,30):null};
        adapter.dispose();
       }catch(e){
        try{adapter?.dispose()}catch{}
@@ -253,7 +253,7 @@ async function main(){
     await page.waitForFunction(()=>window.__exportResult?.done,null,{timeout:(duration+100)*1000});
     const outcome=await page.evaluate(()=>window.__exportResult);
     if(!outcome.success)throw Error('Browser export failed: '+JSON.stringify(outcome));
-    if(example.instagramReady&&outcome.extension!=='mp4')throw Error('Browser cannot create H.264/AAC MP4 (no silent WebM fallback for Instagram test)');
+    if(example.instagramReady&&outcome.extension!=='mp4')throw Error('Browser could not create H.264/AAC MP4: '+(outcome.warning||'Unknown codec/conversion issue'));
     if(outcome.progressCallbacks<1)throw Error('Export never advanced playback progress');
     const [download]=await Promise.all([page.waitForEvent('download',{timeout:25000}),page.locator('#download-full-export').click({timeout:20000})]);
     const filename=path.join(directory,download.suggestedFilename());
