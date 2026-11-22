@@ -144,6 +144,15 @@ for(const [game,route] of gameRoute){
   if(!fs.existsSync(webmFix))throw Error('Missing WebM Duration finalizer source');
   fs.copyFileSync(webmFix,path.join(target,'shared/fix-webm-duration.mjs'));
   row.webmDurationRepair=true;
+  // On capable browsers, the local recording is H.264+AAC in a fast-start MP4.
+  // Keep WebM fallback only when H.264/AAC WebCodecs are unavailable.
+  const controllerRecording=':await recordCanvas(t,h.buffer,p);';
+  if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
+  cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
+  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const result=await recordCanvas(adapter,audio,options);result.instagramCompatible=false;result.instagramWarning="This browser could only produce WebM, which Instagram may shorten or reject. For Instagram, use a browser that can export H.264/AAC MP4 or convert this file before uploading.";return result}\n';
+  fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
+  fs.copyFileSync(path.join(root,'scripts/vendor/mp4-muxer-5.2.2.min.mjs'),path.join(target,'shared/mp4-muxer-5.2.2.min.mjs'));
+  row.instagramMp4Export=true;
   fs.writeFileSync(capFile,cap);
   const studioFile=path.join(target,'shared/studio.mjs');
   let studio=fs.readFileSync(studioFile,'utf8');
@@ -207,6 +216,10 @@ for(const [game,route] of gameRoute){
    fs.writeFileSync(adapterFile,adapterCode);
    row.midiImportVerified=true;
   }
+  // Display a reliable Instagram compatibility status in the existing result area.
+  const localDisplay='L(`Local video ready · ${R.mime}. Frame rate has not been independently verified.`)';
+  if(!studio.includes(localDisplay))throw Error(game+': local recording status changed');
+  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.duration.toFixed(1)} seconds. Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
@@ -312,6 +325,6 @@ fs.copyFileSync(path.join(root,'scripts/windows-studio-frame.mjs'),path.join(out
  console.log('Restored '+total+' mobile-tappable featured homepage game cards.');
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,androidPreviewGuard:audit.filter(x=>x.androidPreviewGuard).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,instagramMp4Export:audit.filter(x=>x.instagramMp4Export).length,androidPreviewGuard:audit.filter(x=>x.androidPreviewGuard).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.androidPreviewGuard!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.instagramMp4Export!==summary.bundled||summary.androidPreviewGuard!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
