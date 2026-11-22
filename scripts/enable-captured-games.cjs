@@ -231,7 +231,7 @@ for(const [game,route] of gameRoute){
   // Display a reliable Instagram compatibility status in the existing result area.
   const localDisplay='L(`Local video ready · ${R.mime}. Frame rate has not been independently verified.`)';
   if(!studio.includes(localDisplay))throw Error(game+': local recording status changed');
-  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.verifiedDuration?.toFixed(1)??R.duration.toFixed(1)} seconds.${R.midiSync?.status==='verified'?` MIDI audio checked (${R.midiSync.audibleOnsets}/${R.midiSync.notesChecked} note onsets).`:R.midiSync?.status==='check-audio'?' Check MIDI track volume and timing.':''} Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
+  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.verifiedDuration?.toFixed(1)??R.duration.toFixed(1)} seconds.${R.midiSync?.status==="verified"?` MIDI audio checked (${R.midiSync.audibleOnsets}/${R.midiSync.notesChecked} note onsets).`:R.midiSync?.status==="check-audio"?" Check MIDI track volume and timing.":""} Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
