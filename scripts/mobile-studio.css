@@ -47,8 +47,8 @@ html,body{max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%}
 @media(max-width:760px) and (pointer:coarse){
  .v-phone.v-android-preview-guard{
   position:fixed!important;
-  top:10px!important;
-  right:10px!important;
+  top:max(10px,env(safe-area-inset-top))!important;
+  right:max(10px,env(safe-area-inset-right))!important;
   bottom:auto!important;
   left:auto!important;
   width:min(140px,36vw)!important;
@@ -75,4 +75,10 @@ html,body{max-width:100%;overflow-x:clip;-webkit-text-size-adjust:100%}
  .v-phone.v-android-preview-guard .v-mini-bar{
   display:flex!important;
  }
+}
+
+/* Avoid expensive decorative UI animations on constrained devices without
+   altering simulation graphics or the user's selected export resolution. */
+@media(max-width:760px) and (prefers-reduced-motion:reduce){
+ .v-host *:not(canvas){scroll-behavior:auto!important}
 }
