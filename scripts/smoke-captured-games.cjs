@@ -80,7 +80,10 @@ async function main(){
  await new Promise((resolve,reject)=>{serve.once('error',reject);serve.listen(0,'127.0.0.1',resolve)});
  base='http://127.0.0.1:'+serve.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
- const rows=audit.results.filter(r=>r.status==='bundled');
+ let rows=audit.results.filter(r=>r.status==='bundled');
+ const filter=new Set((process.env.GAME_FILTER||'').split(',').map(x=>x.trim()).filter(Boolean));
+ if(filter.size)rows=rows.filter(r=>filter.has(r.game));
+ if(!rows.length)throw Error('No games matched the browser smoke selection');
  // Four workers limit canvas/audio memory while covering every bundled game.
  let cursor=0;
  await Promise.all(Array.from({length:4},async()=>{while(cursor<rows.length)await test(rows[cursor++])}));
