@@ -96,7 +96,8 @@ async function main(){
  if(!rows.length)throw Error('No games matched the browser smoke selection');
  // Four workers limit canvas/audio memory while covering every bundled game.
  let cursor=0;
- await Promise.all(Array.from({length:4},async()=>{while(cursor<rows.length)await test(rows[cursor++])}));
+ const workers=Math.max(1,Math.min(4,Number(process.env.GAME_WORKERS)||4));
+ await Promise.all(Array.from({length:workers},async()=>{while(cursor<rows.length)await test(rows[cursor++])}));
  const report={createdAt:new Date().toISOString(),total:rows.length,passed:results.filter(x=>x.status==='passed').length,failed:results.filter(x=>x.status==='error').length,results:results.sort((a,b)=>a.game.localeCompare(b.game))};
  fs.writeFileSync(path.join(root,'browser-smoke-report.json'),JSON.stringify(report,null,2));
  console.log('Browser audit:',JSON.stringify({total:report.total,passed:report.passed,failed:report.failed}));
