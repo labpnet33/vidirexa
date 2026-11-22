@@ -24,7 +24,7 @@ img,video{max-width:100%}
  .nav-wrap{min-width:0;max-width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
  .hero-actions{flex-wrap:wrap}
  .hero-actions a,.hero-actions button{min-height:44px}
- .vidirexa-studio-frame{height:1250px;border-radius:8px}
+ .vidirexa-studio-frame{--vidirexa-frame-height:1250px;border-radius:8px}
 }
 @media(max-width:359px){
  .midnight-library .studio-controls .game-choices{gap:8px}
