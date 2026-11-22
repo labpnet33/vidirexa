@@ -153,6 +153,13 @@ for(const [game,route] of gameRoute){
   const controllerRecording=':await recordCanvas(t,h.buffer,p);';
   if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
   cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
+   // The captured CaptureController omitted width/height when forwarding options.
+   // Preserve explicit 720p/1080p export quality without changing preview size.
+   const controllerOptions='onRestart:d,onRetry:l}={}){';
+   const forwardOptions='const p={signal:f.signal,onProgress:n,watermark:i,adaptive:o,preferSmall:a,onRestart:d,onRetry:l};';
+   if(cap.split(controllerOptions).length!==2||cap.split(forwardOptions).length!==2)throw Error(game+': captured export quality options changed');
+   cap=cap.replace(controllerOptions,'onRestart:d,onRetry:l,width:__vidirexaWidth,height:__vidirexaHeight}={}){');
+   cap=cap.replace(forwardOptions,'const p={signal:f.signal,onProgress:n,watermark:i,adaptive:o,preferSmall:a,onRestart:d,onRetry:l,width:__vidirexaWidth,height:__vidirexaHeight};');
   cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){window.__vidirexaIsExporting=true;try{const module=await import("./instagram-mp4.mjs");const sync=(await import("./midi-audio-sync.mjs")).inspectMidiAudioSync(adapter,audio);const support=await module.instagramMp4Support(options);if(support.supported){const result=await module.recordInstagramMp4(adapter,audio,options);result.midiSync=sync;return result}const raw=await recordCanvas(adapter,audio,options);raw.midiSync=sync;try{const converter=await import("./instagram-wasm-converter.mjs");const mp4=await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration});mp4.midiSync=sync;return mp4}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}finally{window.__vidirexaIsExporting=false}}\n';
   fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
   fs.copyFileSync(path.join(root,'scripts/instagram-wasm-converter.mjs'),path.join(target,'shared/instagram-wasm-converter.mjs'));
