@@ -178,10 +178,10 @@ async function testRealLocalRecording(){
  try{
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});
   await page.evaluate((url)=>{
-   const btn=document.createElement('button');
-   btn.id='test-browser-local-recording';btn.textContent='Test local recording';
+   const btn=document.createElement('a');
+   btn.id='test-browser-local-recording';btn.href='#local-capture';btn.textContent='Test local recording';btn.style.cssText='position:fixed;top:10px;left:10px;z-index:999999;background:#fff;color:#000;padding:16px;pointer-events:auto';
    document.body.append(btn);
-   btn.onclick=async()=>{
+   btn.onclick=async(event)=>{event.preventDefault();
     try{
      const capture=await import(url);
      const canvas=document.createElement('canvas');
