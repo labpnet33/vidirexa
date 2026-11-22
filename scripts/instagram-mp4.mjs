@@ -54,10 +54,17 @@ export async function instagramMp4Support(){
 function ensureAudio(buffer,duration){
  if(!buffer)return null;
  validateAudio(buffer,duration);
- if(buffer.sampleRate!==AUDIO_RATE||buffer.numberOfChannels!==2){
-  throw Error('MP4 audio must be prepared as stereo 48 kHz PCM.');
+ if(!Number.isFinite(buffer.sampleRate)||buffer.sampleRate<=0||buffer.numberOfChannels<1){
+  throw Error('The game audio does not have a valid sample rate or channel layout.');
  }
  return buffer;
+}
+
+function pcmAt(channel,position){
+ const sample=Math.floor(position);
+ if(!channel||sample<0||sample>=channel.length)return 0;
+ const fraction=position-sample;
+ return channel[sample]*(1-fraction)+(channel[sample+1]??channel[sample])*fraction;
 }
 
 export async function recordInstagramMp4(adapter,sound,opts={}){
@@ -105,17 +112,24 @@ export async function recordInstagramMp4(adapter,sound,opts={}){
   aud.configure(audio);
   const frameCount=Math.round(adapter.duration*FPS);
   const samples=Math.round(adapter.duration*AUDIO_RATE);
-  const left=sound?.getChannelData(0),right=sound?.getChannelData(1);
-  // AAC uses constant 1024-sample packets and exact sample timestamps,
-  // preventing Instagram from interpreting the media as a short fragment.
+  // Many original game adapters render mono audio, sometimes at 44.1 kHz.
+  // Resample into 48 kHz stereo in small chunks without allocating another
+  // full-length AudioBuffer. Mono is duplicated to left and right.
+  const left=sound?.getChannelData(0);
+  const right=sound?.getChannelData(Math.min(sound.numberOfChannels-1,1));
+  const sampleRatio=(sound?.sampleRate??AUDIO_RATE)/AUDIO_RATE;
+  // AAC packets and exact timestamps retain the complete media timeline.
   for(let start=0;start<samples;start+=AUDIO_CHUNK){
    aborted(opts.signal);
    if(encoderError)throw encoderError;
    const count=Math.min(AUDIO_CHUNK,samples-start);
    const planes=new Float32Array(count*2);
    if(left&&right){
-    planes.set(left.subarray(start,start+count),0);
-    planes.set(right.subarray(start,start+count),count);
+    for(let i=0;i<count;i++){
+     const position=(start+i)*sampleRatio;
+     planes[i]=pcmAt(left,position);
+     planes[count+i]=pcmAt(right,position);
+    }
    }
    const data=new AudioData({
     format:'f32-planar',sampleRate:AUDIO_RATE,numberOfChannels:2,
