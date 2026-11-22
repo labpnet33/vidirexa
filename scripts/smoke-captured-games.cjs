@@ -69,12 +69,22 @@ async function test(row){
  }catch(error){
   record.details=String(error?.message||error).slice(0,500);
   try{
+   const element=await page?.$('iframe[title$=" studio"]');
+   const frame=await element?.contentFrame();
+   if(frame)record.debug=await frame.evaluate(()=>{
+    const root=document.querySelector('#studio');
+    const status=document.querySelector('#runtime-status');
+    return {rootChildren:root?.childElementCount,rootText:root?.innerText?.slice(0,650),canvasCount:root?.querySelectorAll('canvas').length,svgCount:root?.querySelectorAll('svg').length,rootHtmlLength:root?.innerHTML.length,statusText:status?.innerText?.slice(0,350),statusError:status?.dataset.error??null,documentReady:document.readyState};
+   });
+  }catch(e){record.debugError=String(e.message||e).slice(0,250)}
+
+  try{
    const screenDir=path.join(root,'browser-failures');fs.mkdirSync(screenDir,{recursive:true});
    await page?.screenshot({path:path.join(screenDir,row.game+'.png'),timeout:5000});
   }catch{}
  }finally{try{await page?.close()}catch{}}
  results.push(record);
- console.log((record.status==='passed'?'PASS':'FAIL')+' '+row.game+' '+record.details);
+ console.log((record.status==='passed'?'PASS':'FAIL')+' '+row.game+' '+record.details+(record.status==='passed'?'':' | '+JSON.stringify(record.debug??record.debugError??record.consoleErrors)));
 }
 async function main(){
  await new Promise((resolve,reject)=>{serve.once('error',reject);serve.listen(0,'127.0.0.1',resolve)});
