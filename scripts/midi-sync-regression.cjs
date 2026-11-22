@@ -122,6 +122,34 @@ async function main(){
       return value;
      }finally{a.dispose()}
     },{dir,fixture:[...good],game});
+    // User-facing integration: change the file input, not just the adapter API.
+    // The studio previously stored MIDI without activating song=custom.
+    const manifest=JSON.parse(fs.readFileSync('manifest.json','utf8')); const target=manifest.assets.find(x=>x.url==='https://vidirexa.com/create?game='+game)?.local; if(!target)throw Error('Missing captured studio route'); const published=target.match(/index__q_[a-f0-9]+/)[0]; await page.goto(base+'/create/'+published+'/index.html',{waitUntil:'domcontentloaded',timeout:25000});
+    // The published studio path comes from the archive manifest, not the package URL.
+    const selector=page.locator('iframe[title$=" studio"]');
+    if(!await selector.count())throw Error('Studio iframe missing for actual upload test');
+    const frame=await selector.first().contentFrame();
+    if(!frame)throw Error('MIDI upload frame unavailable');
+    await frame.waitForFunction(()=>!!document.querySelector('#studio [data-step="1"]'),null,{timeout:25000});
+    await frame.locator('#studio [data-step="1"]').first().click({timeout:25000});
+    const input=frame.locator('input[type="file"][data-asset="midi"]').first();
+    await input.waitFor({state:'attached',timeout:15000});
+    await input.setInputFiles({name:game+'-tempo-test.mid',mimeType:'audio/midi',buffer:Buffer.from(good)});
+    const apiName=game.replace(/-([a-z])/g,(_,c)=>c.toUpperCase());
+    await frame.waitForFunction(name=>{
+      const obj=window[name];
+      return !!obj&&obj.config?.song==='custom'&&obj.assets?.midi?.size>0&&!obj.busy;
+    },apiName,{timeout:40000});
+    const uploaded=await frame.evaluate(name=>{
+      const state=window[name];
+      return {song:state.config?.song,musicMode:state.config?.musicMode,
+       filename:state.assets?.midi?.name||null,midiBytes:state.assets?.midi?.size,
+       adapter:!!state.adapter,configSong:state.adapter?.config?.song,
+       outcome:state.adapter?.outcome?.songTitle||null};
+    },apiName);
+    if(uploaded.song!=='custom'||uploaded.midiBytes!==good.length||!uploaded.adapter)throw Error('UI MIDI file was not applied: '+JSON.stringify(uploaded));
+    if(game==='beat-press'&&uploaded.musicMode!=='midi')throw Error('Beat Press failed to enable MIDI music mode');
+    rec.upload=uploaded;
     rec.status='passed';report.passed++;console.log('PASS MIDI '+game+' '+JSON.stringify(rec.runtime));
    }catch(error){rec.error=String(error?.message||error).slice(0,900);report.failed++;console.error('FAIL MIDI '+game+' '+rec.error)}
    finally{await page?.close()}
