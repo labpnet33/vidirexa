@@ -46,10 +46,19 @@ jobs:
           node scripts/check-indexing.cjs
       - name: Test all MIDI-aware engines and audio timing
         run: node scripts/midi-sync-regression.cjs
+      - name: Verify a completed custom-MIDI game recording and note-onset timing
+        run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          FULL_EXPORT_FILTER=custom-midi-melody-bounce node scripts/full-video-export-regression.cjs
       - name: Store MIDI synchronization audit
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: midi-sync-audit
-          path: public-preview/midi-sync-audit.json
+          path: |
+            public-preview/midi-sync-audit.json
+            public-preview/export-regression/full-video-export-report.json
           if-no-files-found: ignore
