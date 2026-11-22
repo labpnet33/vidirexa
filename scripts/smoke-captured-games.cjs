@@ -63,9 +63,28 @@ async function test(row){
     return count;
    }catch(e){return String(e.message||e)}
   });
+  // The PREVIEW ONLY text is an HTML overlay, while the vireel.net label is
+  // drawn directly on the canvas. Check both; CSS-only fixes are insufficient.
+  const watermarkModule=row.runtime.replace(/index\.html$/,'shared/capture.mjs');
+  record.previewMarks=await frame.evaluate(async path=>{
+   const wm=document.querySelector('#watermark');
+   if(!wm)throw Error('Preview overlay container missing');
+   const overlayDisplay=getComputedStyle(wm).display;
+   const overlayTiles=wm.querySelectorAll('.v-wm-tile').length;
+   const mod=await import(path);
+   const c=document.createElement('canvas');
+   c.width=720;c.height=1280;
+   mod.watermark(c,1);mod.previewWatermark(c,1);
+   const ctx=c.getContext('2d',{willReadFrequently:true});
+   const data=ctx.getImageData(0,0,c.width,c.height).data;
+   let drawnPixels=0;
+   for(let i=3;i<data.length;i+=4)if(data[i]>0)drawnPixels++;
+   return {overlayDisplay,overlayTiles,drawnPixels};
+  },watermarkModule);
+  if(record.previewMarks.overlayDisplay!=='none'||record.previewMarks.overlayTiles!==0||record.previewMarks.drawnPixels!==0)throw Error('Preview branding still visible: '+JSON.stringify(record.previewMarks));
   record.buttons=buttons;
   record.status='passed';
-  record.details='Studio mounted, canvas and controls present';
+  record.details='Studio mounted, canvas and controls present; clean preview overlay and canvas verified';
  }catch(error){
   record.details=String(error?.message||error).slice(0,500);
   try{
