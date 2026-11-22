@@ -146,10 +146,14 @@ for(const [game,route] of gameRoute){
   row.webmDurationRepair=true;
   // On capable browsers, the local recording is H.264+AAC in a fast-start MP4.
   // Keep WebM fallback only when H.264/AAC WebCodecs are unavailable.
+  // Expose a preferred MediaRecorder MIME option for native MP4 support.
+  const captureMime="const n=recordingMime();if(!n)throw new Error(\"Canvas recording is unavailable in this browser. Try a supported desktop browser.\");";
+  if(!cap.includes(captureMime))throw Error(game+': recorder MIME selection changed');
+  cap=cap.replace(captureMime,'const n=r.preferredMime&&globalThis.MediaRecorder?.isTypeSupported(r.preferredMime)?r.preferredMime:recordingMime();if(!n)throw new Error("Canvas recording is unavailable in this browser. Try a supported desktop browser.");');
   const controllerRecording=':await recordCanvas(t,h.buffer,p);';
   if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
   cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
-  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const result=await recordCanvas(adapter,audio,options);result.instagramCompatible=false;result.instagramWarning="This browser could only produce WebM, which Instagram may shorten or reject. For Instagram, use a browser that can export H.264/AAC MP4 or convert this file before uploading.";return result}\n';
+  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);if(globalThis.MediaRecorder?.isTypeSupported("video/mp4")){const result=await recordCanvas(adapter,audio,{...options,preferredMime:"video/mp4"});if(result.extension==="mp4"){result.duration=adapter.duration;result.instagramCompatible=true;result.video.encoder="Native MediaRecorder MP4";return result}}const result=await recordCanvas(adapter,audio,options);result.instagramCompatible=false;result.instagramWarning="This browser could only produce WebM, which Instagram may shorten or reject. For Instagram, use a browser that can export H.264/AAC MP4 or convert this file before uploading.";return result}\n';
   fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
   fs.copyFileSync(path.join(root,'scripts/vendor/mp4-muxer-5.2.2.min.mjs'),path.join(target,'shared/mp4-muxer-5.2.2.min.mjs'));
   row.instagramMp4Export=true;
