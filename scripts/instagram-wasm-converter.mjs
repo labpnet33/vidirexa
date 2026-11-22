@@ -1,7 +1,7 @@
 // Local-only WebM to Instagram-compatible H.264/AAC MP4 using FFmpeg.wasm.
-// The static encoder runtime is downloaded from pinned jsDelivr URLs. Media
+// The pinned encoder runtime is hosted on Vidirexa itself. The recording
 // stays entirely in the browser; no video or audio is sent to any server.
-const CORE='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.10/dist/umd';
+const CORE='/assets/ffmpeg';
 const MAX_SOURCE=280*1024*1024,MAX_OUTPUT=480*1024*1024;
 async function loadBlob(url,type,signal){
  const response=await fetch(url,{mode:'cors',signal});
