@@ -109,6 +109,13 @@ for(const [game,route] of gameRoute){
   const memoryErr='This recording exceeded the browser-memory safety limit (512 MB). Try reducing resolution or duration.';
   if(cap.split(capLimit).length-1!==2||cap.split(legacyErr).length-1!==2)throw Error(game+': upstream recording limits changed; inspect before patching');
   cap=cap.replaceAll(capLimit,'512*1024*1024').replaceAll(legacyErr,memoryErr);
+  // Prefer H.264 MP4 where supported. When Chromium only supports VP9,
+  // choose a WebM container rather than a misleading VP9-in-MP4 fallback.
+  // Keep generic MP4 last for Safari-style recorders without codec-level support.
+  const originalMime='["video/mp4;codecs=avc1.64002A,mp4a.40.2","video/mp4;codecs=avc1.4D402A,mp4a.40.2","video/mp4;codecs=avc1.42E01E,mp4a.40.2","video/mp4","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"]';
+  const preferredMime='["video/mp4;codecs=avc1.64002A,mp4a.40.2","video/mp4;codecs=avc1.4D402A,mp4a.40.2","video/mp4;codecs=avc1.42E01E,mp4a.40.2","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm","video/mp4"]';
+  if(!cap.includes(originalMime))throw Error(game+': supported MediaRecorder formats changed');
+  cap=cap.replace(originalMime,preferredMime);
   // Allow a complete playable local file even if the browser cannot sustain
   // a perfect 60 FPS capture. The exported MP4/WebM already includes the
   // captured timestamps; dropping frames should not destroy the whole video.
