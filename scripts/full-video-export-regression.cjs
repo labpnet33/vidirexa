@@ -154,6 +154,11 @@ async function main(){
     const moduleRoot=target.runtime.replace(/\/index\.html$/,'');
     page=await browser.newPage({viewport:{width:1250,height:850},acceptDownloads:true});
     page.on('pageerror',e=>{item.pageError=String(e?.message||e).slice(0,240)});
+    if(example.instagramReady){
+      page.on('console',message=>{if(message.type()==='error')console.log('INSTAGRAM_BROWSER_CONSOLE '+message.text().slice(0,900))});
+      page.on('requestfailed',req=>console.log('INSTAGRAM_REQUEST_FAILED '+req.url()+' '+req.failure()?.errorText));
+      page.on('response',res=>{if(res.url().includes('/assets/ffmpeg/'))console.log('INSTAGRAM_FFMPEG_ASSET '+res.status()+' '+res.url())});
+    }
     await page.goto(origin+'/',{waitUntil:'domcontentloaded',timeout:20000});
     if(example.instagramReady){
       const diagnostics=await page.evaluate(async root=>{
@@ -170,6 +175,18 @@ async function main(){
         return d;
       },moduleRoot);
       console.log('INSTAGRAM_ENCODER_DIAGNOSTICS '+JSON.stringify(diagnostics));
+      const ffprobe=await page.evaluate(async()=>{
+        const urls=['/assets/ffmpeg/ffmpeg-core.js','/assets/ffmpeg/ffmpeg-core.wasm'];
+        return await Promise.all(urls.map(async url=>{
+          try{
+            const response=await fetch(url);
+            const result={url,origin:location.origin,ok:response.ok,status:response.status,type:response.headers.get('content-type'),length:response.headers.get('content-length')};
+            await response.body?.cancel();
+            return result;
+          }catch(e){return {url,origin:location.origin,error:String(e.message||e)}}
+        }))
+      });
+      console.log('INSTAGRAM_FFMPEG_FETCH_PROBE '+JSON.stringify(ffprobe));
     }
 
     // Static archive's banner intercepts clicks; remove only in this test page.
