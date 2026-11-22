@@ -49,7 +49,9 @@ const cases=[
  // Real custom-MIDI engine: the exported video and audio share the same MIDI events.
  {id:'custom-midi-melody-bounce',game:'melody-bounce',synthetic:false,audio:true,midiBytes:midiFixture(),width:1080,height:1920},
  // Must produce a complete and fast-start H.264/AAC MP4 on compatible browsers.
- {id:'instagram-h264-aac-12s',game:'chaos-cutter',duration:12,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true}
+ {id:'instagram-h264-aac-12s',game:'chaos-cutter',duration:12,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true},
+ // Longer Instagram Reels must retain complete media duration, not just a few seconds.
+ {id:'instagram-h264-aac-30s',game:'chaos-cutter',duration:30,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true}
 ];
 const command=(bin,args,timeout=30000)=>{
  const r=cp.spawnSync(bin,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});
