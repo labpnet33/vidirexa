@@ -1,9 +1,14 @@
 /* Only applies to Windows desktop browsers; nothing here affects Android. */
 @media (min-width: 801px) and (pointer: fine) {
- html.vidirexa-windows-desktop,
- html.vidirexa-windows-desktop body {
+ html.vidirexa-windows-desktop {
+  overflow-x: clip;
   overflow-y: auto;
   overscroll-behavior-x: none;
+ }
+ /* The body must not be a nested overflow container: otherwise sticky
+    positions against the wrong scroller and the preview disappears. */
+ html.vidirexa-windows-desktop body {
+  overflow: visible !important;
  }
  html.vidirexa-windows-desktop .v-workspace {
   align-items: start;
