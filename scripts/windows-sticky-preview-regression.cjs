@@ -136,7 +136,31 @@ async function verifyAndroid(browser,base,game='shape-merger',width=390){
    assert(float.canvas&&float.canvas.top>=-3&&float.canvas.bottom<=float.innerHeight+3,'Floating preview is clipped after scrolling',float);
    assert(float.phone&&float.phone.left>=-3&&float.phone.right<=float.innerWidth+3,'Floating preview is outside Android screen',float);
   }
-  return {game,width,frameHeight:Math.round(outer.frame.height),navCount:outer.navCount,outerScroll:outerY,settingsScroll:Math.round(float.scroll),floating:float.floating,previewTop:Math.round(float.canvas?.top??-1),previewBottom:Math.round(float.canvas?.bottom??-1)};
+  // Simulate a failed native floating position. The Android fallback must pin
+  // the SAME canvas instead of leaving the preview above the viewport.
+  const guardLoaded=await frame.evaluate(()=>!!document.querySelector('script[src*="android-preview-guard.mjs"]'));
+  assert(guardLoaded,'Android preview fallback was not bundled into the iframe');
+  await frame.evaluate(()=>{
+    const phone=document.querySelector('.v-phone');
+    if(!phone)throw Error('Live preview phone missing');
+    phone.style.transform='translate3d(0,-2400px,0)';
+  });
+  await frame.waitForFunction(()=>{
+    const phone=document.querySelector('.v-phone');
+    const canvas=phone?.querySelector('canvas');
+    if(!phone?.classList.contains('v-android-preview-guard')||!canvas)return false;
+    const box=canvas.getBoundingClientRect();
+    return box.top>=-3&&box.bottom<=innerHeight+3;
+  },null,{timeout:5500});
+  const guard=await frame.evaluate(()=>{
+    const canvas=document.querySelector('.v-phone canvas');
+    const phone=document.querySelector('.v-phone');
+    return {canvasCount:document.querySelectorAll('#studio canvas').length,guard:phone.classList.contains('v-android-preview-guard'),top:canvas.getBoundingClientRect().top,bottom:canvas.getBoundingClientRect().bottom};
+  });
+  assert(guard.canvasCount>=1&&guard.guard,'Android fallback did not show the original live canvas',guard);
+  await frame.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  await frame.waitForFunction(()=>!document.querySelector('.v-phone')?.classList.contains('v-android-preview-guard'),null,{timeout:5000});
+  return {game,width,frameHeight:Math.round(outer.frame.height),navCount:outer.navCount,outerScroll:outerY,settingsScroll:Math.round(float.scroll),floating:float.floating,previewTop:Math.round(float.canvas?.top??-1),previewBottom:Math.round(float.canvas?.bottom??-1),fallbackPinned:guard.guard,fallbackCanvasTop:Math.round(guard.top)};
  }finally{await page.close()}
 }
 async function verifyAndroidCatalogueNav(browser,base){
