@@ -155,6 +155,23 @@ async function main(){
     page=await browser.newPage({viewport:{width:1250,height:850},acceptDownloads:true});
     page.on('pageerror',e=>{item.pageError=String(e?.message||e).slice(0,240)});
     await page.goto(origin+'/',{waitUntil:'domcontentloaded',timeout:20000});
+    if(example.instagramReady){
+      const diagnostics=await page.evaluate(async root=>{
+        const m=await import(root+'/shared/instagram-mp4.mjs');
+        const d={support:await m.instagramMp4Support(),audioEncoder:typeof AudioEncoder,videoEncoder:typeof VideoEncoder};
+        if(typeof AudioEncoder==='function'){
+          try{d.aac=await AudioEncoder.isConfigSupported({codec:'mp4a.40.2',sampleRate:48000,numberOfChannels:2,bitrate:128000})}catch(e){d.aacError=String(e)}
+        }
+        if(typeof VideoEncoder==='function'){
+          for(const codec of ['avc1.64002A','avc1.4D402A','avc1.42E02A']){
+           try{d[codec]=await VideoEncoder.isConfigSupported({codec,width:720,height:1280,framerate:60,bitrate:6000000,avc:{format:'avc'}})}catch(e){d[codec+'Error']=String(e)}
+          }
+        }
+        return d;
+      },moduleRoot);
+      console.log('INSTAGRAM_ENCODER_DIAGNOSTICS '+JSON.stringify(diagnostics));
+    }
+
     // Static archive's banner intercepts clicks; remove only in this test page.
     await page.evaluate(()=>document.querySelector('body > div[role="note"]')?.remove());
     await page.evaluate(({example,moduleRoot})=>{
