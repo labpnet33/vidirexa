@@ -47,7 +47,9 @@ const cases=[
  // original duration, and the same controller path as the game.
  {id:'real-game-chaos-cutter',game:'chaos-cutter',synthetic:false,audio:true,width:1080,height:1920},
  // Real custom-MIDI engine: the exported video and audio share the same MIDI events.
- {id:'custom-midi-melody-bounce',game:'melody-bounce',synthetic:false,audio:true,midiBytes:midiFixture(),width:1080,height:1920}
+ {id:'custom-midi-melody-bounce',game:'melody-bounce',synthetic:false,audio:true,midiBytes:midiFixture(),width:1080,height:1920},
+ // Must produce a complete and fast-start H.264/AAC MP4 on compatible browsers.
+ {id:'instagram-h264-aac-12s',game:'chaos-cutter',duration:12,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true}
 ];
 const command=(bin,args,timeout=30000)=>{
  const r=cp.spawnSync(bin,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});
@@ -65,7 +67,18 @@ function inspectFile(filename,caseInfo,duration,metadata){
  if(caseInfo.audio&&!audio)throw Error('No audio track in '+caseInfo.id);
  if(video.width!==caseInfo.width||video.height!==caseInfo.height)throw Error('Incorrect video resolution: '+video.width+'x'+video.height);
  const format=String(probe.format?.format_name||'');
+ if(caseInfo.instagramReady){
+  if(video.codec_name!=='h264'||audio?.codec_name!=='aac')throw Error('Instagram export needs H.264/AAC, got '+video.codec_name+'/'+audio?.codec_name);
+  if(Number(audio.sample_rate)!==48000)throw Error('Instagram AAC track needs 48000 Hz');
+  const file=fs.readFileSync(filename);
+  const mov=file.indexOf(Buffer.from('moov'));
+  const data=file.indexOf(Buffer.from('mdat'));
+  if(!(mov>0&&data>mov))throw Error('MP4 must have fast-start moov before mdat for Instagram import');
+ }
+
  const extension=path.extname(filename).slice(1);
+ if(caseInfo.instagramReady&&extension!=='mp4')throw Error('Instagram-ready export unexpectedly returned '+extension+', MIME '+metadata.mime);
+
  if(extension==='mp4'){
   if(!/mp4|mov/i.test(format))throw Error('MP4 extension contains '+format);
   if(!['h264','hevc'].includes(video.codec_name))throw Error('MP4 requires standard H264/HEVC, actual codec '+video.codec_name);
@@ -124,7 +137,7 @@ function inspectFile(filename,caseInfo,duration,metadata){
   maximumVolume=Number(match[1]);
   if(maximumVolume< -48)throw Error('Audio track is effectively silent: '+maximumVolume+' dB');
  }
- return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,verifiedMidiOnsets,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
+ return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,verifiedMidiOnsets,instagramReady:!!caseInfo.instagramReady,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
 }
 async function main(){
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve)});
@@ -223,6 +236,7 @@ async function main(){
     await page.waitForFunction(()=>window.__exportResult?.done,null,{timeout:(duration+100)*1000});
     const outcome=await page.evaluate(()=>window.__exportResult);
     if(!outcome.success)throw Error('Browser export failed: '+JSON.stringify(outcome));
+    if(example.instagramReady&&outcome.extension!=='mp4')throw Error('Browser cannot create H.264/AAC MP4 (no silent WebM fallback for Instagram test)');
     if(outcome.progressCallbacks<1)throw Error('Export never advanced playback progress');
     const [download]=await Promise.all([page.waitForEvent('download',{timeout:25000}),page.locator('#download-full-export').click({timeout:20000})]);
     const filename=path.join(directory,download.suggestedFilename());
