@@ -128,6 +128,17 @@ for(const [game,route] of gameRoute){
   const localBitrate='const i=await outputSurface(e,r),o=videoBitrate(e.duration),a=[];';
   if(!cap.includes(localBitrate))throw Error(game+': unexpected local MediaRecorder bitrate code');
   cap=cap.replace(localBitrate,'const i=await outputSurface(e,r),o=VIDEO_BITRATE,a=[];');
+  // MediaRecorder WebM often has no Duration element, so video editors and
+  // FFprobe cannot determine the clip's full length. Finalize the container
+  // metadata without re-encoding or copying a multi-hundred-MB video into JS.
+  const unfinalized='blob:new Blob(a,{type:l.mimeType})';
+  if(cap.split(unfinalized).length!==2)throw Error(game+': expected one local MediaRecorder blob result');
+  cap=cap.replace(unfinalized,'blob:await finalizeWebmDuration(new Blob(a,{type:l.mimeType}),e.duration)');
+  cap+='\nasync function finalizeWebmDuration(blob,duration){if(!blob.type.startsWith("video/webm"))return blob;return (await import("./fix-webm-duration.mjs")).fixWebmDuration(blob,duration)}\n';
+  const webmFix=path.join(root,'scripts/webm-duration-fix.mjs');
+  if(!fs.existsSync(webmFix))throw Error('Missing WebM Duration finalizer source');
+  fs.copyFileSync(webmFix,path.join(target,'shared/fix-webm-duration.mjs'));
+  row.webmDurationRepair=true;
   fs.writeFileSync(capFile,cap);
   const studioFile=path.join(target,'shared/studio.mjs');
   let studio=fs.readFileSync(studioFile,'utf8');
@@ -239,6 +250,6 @@ for(const [game,route] of gameRoute){
  }
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
