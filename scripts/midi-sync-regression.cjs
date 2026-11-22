@@ -126,9 +126,9 @@ async function main(){
     // The studio previously stored MIDI without activating song=custom.
     const manifest=JSON.parse(fs.readFileSync('manifest.json','utf8')); const target=manifest.assets.find(x=>x.url==='https://vidirexa.com/create?game='+game)?.local; if(!target)throw Error('Missing captured studio route'); const published=target.match(/index__q_[a-f0-9]+/)[0]; await page.goto(base+'/create/'+published+'/index.html',{waitUntil:'domcontentloaded',timeout:25000});
     // The published studio path comes from the archive manifest, not the package URL.
-    const selector=page.locator('iframe[title$=" studio"]');
-    if(!await selector.count())throw Error('Studio iframe missing for actual upload test');
-    const frame=await selector.first().contentFrame();
+    const iframeHandle=await page.waitForSelector('iframe[title$=" studio"]',{timeout:20000});
+    if(!iframeHandle)throw Error('Studio iframe missing for actual upload test');
+    const frame=await iframeHandle.contentFrame();
     if(!frame)throw Error('MIDI upload frame unavailable');
     await frame.waitForFunction(()=>!!document.querySelector('#studio [data-step="1"]'),null,{timeout:25000});
     await frame.locator('#studio [data-step="1"]').first().click({timeout:25000});
