@@ -10,6 +10,11 @@ const map=new Map();
 if(fs.existsSync('manifest.json')){for(const r of JSON.parse(fs.readFileSync('manifest.json','utf8')).assets||[]){if(typeof r.local==='string'&&r.local.startsWith('site/')&&assets.has(r.local.slice(5))&&typeof r.url==='string'){try{map.set(new URL(r.url).href,r.local.slice(5))}catch{}}}}
 // Restore existing captured game-specific studio snapshots, not live engines.
 const studioRoutes=new Map();
+// Reuse the captured Fold Groove game, not a substitute simulation.
+const foldHash='f04d2a37dcc6ea1b83f025f8b6de23e6cadb89dfa22df964abf21a353f64acf1';
+const foldRuntime='/packages/fold-groove/0.1.4/'+foldHash+'/index.html';
+const foldSource=path.resolve('vidirexa/vireel-games-production.up.railway.app'+foldRuntime.replace(/\/index\.html$/,''));
+
 for(const r of (fs.existsSync('manifest.json')?JSON.parse(fs.readFileSync('manifest.json','utf8')).assets||[]:[])){
  const m=/^site\/create\/(index__q_[a-f0-9]+)\.html$/.exec(r.local||'');
  const g=/^https:\/\/vidirexa\.com\/create\?game=([a-z0-9-]+)$/.exec(r.url||'');
@@ -40,12 +45,37 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 .replace(/<body\b[^>]*>/i,m=>m+label);
 if(route==='/create'||route==='/games'){const gameList=[...pages.keys()].filter(x=>x.startsWith('/games/')).sort().map(p=>'<a href="'+esc(p)+'" style="display:inline-block;margin:5px;padding:10px;border:1px solid #777;border-radius:6px">'+esc(p.split('/').pop().replace(/-/g,' '))+'</a>').join('');h=h.replace(label,label+'<section style="padding:20px;max-width:1100px;margin:auto"><h2>Captured simulation catalogue</h2><p>Browse archived game descriptions. Playable engines require independent implementation.</p>'+gameList+'</section>')}
 if(route.startsWith('/create/index__q_')){
- h=h.replace(/Connecting your studio\.\.\.|Connecting studio/g,'Archived studio — live engine unavailable')
- .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Recording and export are not available in this read-only snapshot.')
- .replace(label,label+'<section role="note" style="padding:16px;text-align:center"><strong>Game-specific studio snapshot</strong><p>This is the archived interface only. No live engine or recording service is connected.</p><a href="/create">Back to game catalogue</a></section>');
+ if(route===studioRoutes.get('fold-groove')){
+  const frame='<iframe title="Fold Groove browser-local studio" src="'+foldRuntime+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+  h=h.replace(/(<span class="studio-connecting-text">)[\s\S]*?(<\/span><\/div>)/,(_,open,close)=>open+'Original Fold Groove engine · local browser mode'+close+frame);
+  if(!h.includes(frame))throw Error('Unable to attach captured Fold Groove runtime');
+  h=h.replace(/Connecting studio/g,'Local browser engine')
+   .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Record locally and download in your browser. Cloud storage and account services are not connected.')
+   .replace(/sign up after recording to download your video\. No payment, no card needed\./g,'record in your browser; no sign-up or cloud storage is connected.')
+   .replace(/Settings, audio and recording are available inside the game workspace\./g,'The captured settings, sound, preview and browser recording are available in the workspace.')
+   .replace(/<button\b[^>]*class="button outline published-recordings-link"[^>]*>[\s\S]*?<\/button>/g,'')
+   .replace(label,'<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Captured Fold Groove engine running in browser-local mode. Account, quota and cloud-recording services are not connected. <a href="/create" style="color:#c7e8ff">Back to games</a></div>');
+ }else{
+  h=h.replace(/Connecting your studio\.\.\.|Connecting studio/g,'Archived studio — live engine unavailable')
+  .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Recording and export are not available in this read-only snapshot.')
+  .replace(label,label+'<section role="note" style="padding:16px;text-align:center"><strong>Game-specific studio snapshot</strong><p>This is the archived interface only. No live engine or recording service is connected.</p><a href="/create">Back to game catalogue</a></section>');
+ }
 }
 put(route==='/'?'index.html':route.slice(1)+'/index.html',h)}
 for(const rel of assets){const b=fs.readFileSync(path.join(root,rel));if(rel.endsWith('.css')){const css=b.toString('utf8').replace(/url\(\s*(['"]?)(.*?)\1\s*\)/gi,(m,q,v)=>{if(v.startsWith('data:')||v.startsWith('#'))return m;const u=asset(v,'/'+rel);return u?'url("'+u.replace(/"/g,'%22')+'")':'url("data:,")'});put(rel,css)}else put(rel,b)}
+// Serve captured Fold Groove files at a same-origin URL for browser-local use.
+// The original production host requires an unavailable session/backend.
+if(studioRoutes.has('fold-groove')){
+ for(const rel of ['index.html','studio.mjs','shared/studio.mjs','shared/deployment.mjs']){
+  if(!fs.existsSync(path.join(foldSource,rel)))throw Error('Missing captured Fold Groove file: '+rel);
+ }
+ const dest=path.join(out,foldRuntime.slice(1).replace(/\/index\.html$/,''));
+ fs.cpSync(foldSource,dest,{recursive:true,filter:f=>fs.statSync(f).isDirectory()||/\.(?:mjs|css|html)$/i.test(f)});
+ const dep=path.join(dest,'shared/deployment.mjs'),config=fs.readFileSync(dep,'utf8');
+ if(!config.includes('mode:"production"'))throw Error('Unexpected Fold Groove deployment metadata');
+ fs.writeFileSync(dep,config.replace('mode:"production"','mode:"local"'));
+ console.log('Bundled captured Fold Groove engine (browser-local mode).');
+}
 put('404.html','<!doctype html><html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Archive page unavailable</title><h1>Page not included in the archive</h1><p>Live account and backend services are not part of the capture.</p><a href="/">Return to archive home</a></html>');
 put('robots.txt','User-agent: *\nDisallow: /\n');
 console.log('Archive build: '+pages.size+' public routes (including '+studioRoutes.size+' game-specific snapshots) and '+assets.size+' static assets.');
