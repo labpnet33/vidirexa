@@ -53,7 +53,6 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 .replace(/<title>([\s\S]*?)<\/title>/i,'<title>Archived preview — $1</title>')
 .replace(/<\/head>/i,'<style>.analytics-consent-banner,.support-widget,.sale-banner{display:none!important}a[aria-disabled=true],button,input,select,textarea{pointer-events:none!important;cursor:default!important}body{padding-bottom:0!important}</style></head>')
 .replace(/<body\b[^>]*>/i,m=>m+label);
-if(route==='/create'||route==='/games'){const gameList=[...pages.keys()].filter(x=>x.startsWith('/games/')).sort().map(p=>'<a href="'+esc(p)+'" style="display:inline-block;margin:5px;padding:10px;border:1px solid #777;border-radius:6px">'+esc(p.split('/').pop().replace(/-/g,' '))+'</a>').join('');h=h.replace(label,label+'<section style="padding:20px;max-width:1100px;margin:auto"><h2>Captured simulation catalogue</h2><p>Browse archived game descriptions. Playable engines require independent implementation.</p>'+gameList+'</section>')}
 if(route.startsWith('/create/index__q_')){
  if(route===studioRoutes.get('melody-bounce')){
   const frame=embeddedStudio('Melody Bounce',melodyRuntime);
