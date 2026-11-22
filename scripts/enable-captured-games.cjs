@@ -99,8 +99,9 @@ for(const [game,route] of gameRoute){
   html=html.replace(/<button\b[^>]*class="button outline published-recordings-link"[^>]*>[\s\S]*?<\/button>/g,'');
   html=html.replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Browser-local recording only; cloud storage and original subscription services are not connected.');
   html=html.replace(/Settings, audio and recording are available inside the game workspace\./g,'Local simulation and playback use the captured game engine; browser recording depends on device support.');
+  html=html.replace(/Recording and export are not available in this read-only snapshot\./g,'Account cloud export is unavailable. Browser-local recording is supported where the device permits.');
   html=html.replace(/<div role="note" style="position:relative;z-index:2147483647;[^>]*>[\s\S]*?<\/div>/,'<div role="note" style="padding:10px 16px;text-align:center;background:#172554;color:white;font:13px system-ui">Recovered game workspace · runs locally in this browser · original cloud services are not connected.</div>');
-  html=html.replace('</head>','<style>.free-cap-studio{display:none!important}</style></head>');
+  html=html.replace('</head>','<style>.free-cap-studio,.published-studio-rail nav button{display:none!important}</style></head>');
   const title=game.split('-').map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(' ');
   const frame=iframeFor(title,runtime.pathname);
   const note='<p role="status" style="margin:12px 0;color:#93c5fd;font:13px/1.5 system-ui">Local captured engine · customizable preview · browser recording where supported</p>';
