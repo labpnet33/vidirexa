@@ -203,10 +203,13 @@ async function main(){
          canvas,width:720,height:1280,fps:60,duration,config:{},
          renderAt:paint,reset(){paint(0)},dispose(){},setOutputSize(w,h){canvas.width=w;canvas.height=h;paint(0)},
          async audio(){
-          const context=new AudioContext({sampleRate:48000});
-          const buffer=context.createBuffer(1,Math.round(duration*48000),48000);
+          // Exercise the same mono/44.1 kHz input used by some real games.
+          // The Instagram exporter must resample this to 48 kHz stereo AAC.
+          const sampleRate=example.instagramReady?44100:48000;
+          const context=new AudioContext({sampleRate});
+          const buffer=context.createBuffer(1,Math.round(duration*sampleRate),sampleRate);
           const samples=buffer.getChannelData(0);
-          for(let i=0;i<samples.length;i++)samples[i]=.18*Math.sin(2*Math.PI*440*i/48000);
+          for(let i=0;i<samples.length;i++)samples[i]=.18*Math.sin(2*Math.PI*440*i/sampleRate);
           await context.close();
           return buffer;
          }
