@@ -39,6 +39,7 @@ for(const route of ['create','games']){
  if(!fs.existsSync(filename))throw Error('Missing '+route+' page');
  const html=fs.readFileSync(filename,'utf8');
  if(html.includes('Captured simulation catalogue')||html.includes('Playable engines require independent implementation'))throw Error('Obsolete archive catalogue returned on /'+route);
+ if(route==='create'&&html.includes('aria-label="Next free slot"'))throw Error('Obsolete Next free slot countdown returned on Create catalogue');
  if(route==='create'&&!html.includes('game-tile-shell'))throw Error('Native Create game cards missing');
 }
 const notFound=fs.readFileSync(path.join(root,'404.html'),'utf8');
