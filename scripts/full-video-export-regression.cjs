@@ -158,7 +158,7 @@ async function main(){
     if(example.instagramReady){
       const diagnostics=await page.evaluate(async root=>{
         const m=await import(root+'/shared/instagram-mp4.mjs');
-        const d={support:await m.instagramMp4Support(),audioEncoder:typeof AudioEncoder,videoEncoder:typeof VideoEncoder};
+        const d={support:await m.instagramMp4Support(),audioEncoder:typeof AudioEncoder,videoEncoder:typeof VideoEncoder,mediaRecorderMP4:['video/mp4','video/mp4;codecs=avc1.42E01E,mp4a.40.2'].map(x=>({mime:x,supported:MediaRecorder.isTypeSupported(x)}))};
         if(typeof AudioEncoder==='function'){
           try{d.aac=await AudioEncoder.isConfigSupported({codec:'mp4a.40.2',sampleRate:48000,numberOfChannels:2,bitrate:128000})}catch(e){d.aacError=String(e)}
         }
