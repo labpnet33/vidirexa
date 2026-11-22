@@ -16,7 +16,7 @@ function visit(dir){
    const data=fs.readFileSync(file,'utf8');
    checked++;
    const robotsTag=data.match(/<meta\b(?=[^>]*\bname\s*=\s*['"](?:robots|googlebot)['"])[^>]*>/gi)||[];
-   if(robotsTag.some(tag=>/\b(noindex|nofollow|none)\b/i.test(tag)))blocked.push(path.relative(root,file));
+   if(robotsTag.some(tag=>/\b(noindex|nofollow|none)\b/i.test(tag)))blocked.push(path.relative(root,file).split(path.sep).join('/'));
   }
  }
 }

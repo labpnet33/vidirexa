@@ -144,6 +144,21 @@ for(const [game,route] of gameRoute){
   if(!fs.existsSync(webmFix))throw Error('Missing WebM Duration finalizer source');
   fs.copyFileSync(webmFix,path.join(target,'shared/fix-webm-duration.mjs'));
   row.webmDurationRepair=true;
+  // On capable browsers, the local recording is H.264+AAC in a fast-start MP4.
+  // Keep WebM fallback only when H.264/AAC WebCodecs are unavailable.
+  // Expose a preferred MediaRecorder MIME option for native MP4 support.
+  const captureMime="const n=recordingMime();if(!n)throw new Error(\"Canvas recording is unavailable in this browser. Try a supported desktop browser.\");";
+  if(!cap.includes(captureMime))throw Error(game+': recorder MIME selection changed');
+  cap=cap.replace(captureMime,'const n=r.preferredMime&&globalThis.MediaRecorder?.isTypeSupported(r.preferredMime)?r.preferredMime:recordingMime();if(!n)throw new Error("Canvas recording is unavailable in this browser. Try a supported desktop browser.");');
+  const controllerRecording=':await recordCanvas(t,h.buffer,p);';
+  if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
+  cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
+  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const raw=await recordCanvas(adapter,audio,options);try{const converter=await import("./instagram-wasm-converter.mjs");return await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration})}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}\n';
+  fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
+  fs.copyFileSync(path.join(root,'scripts/instagram-wasm-converter.mjs'),path.join(target,'shared/instagram-wasm-converter.mjs'));
+  fs.copyFileSync(path.join(root,'scripts/instagram-ffmpeg-worker.js'),path.join(target,'shared/instagram-ffmpeg-worker.js'));
+  fs.copyFileSync(path.join(root,'scripts/vendor/mp4-muxer-5.2.2.min.mjs'),path.join(target,'shared/mp4-muxer-5.2.2.min.mjs'));
+  row.instagramMp4Export=true;
   fs.writeFileSync(capFile,cap);
   const studioFile=path.join(target,'shared/studio.mjs');
   let studio=fs.readFileSync(studioFile,'utf8');
@@ -207,6 +222,10 @@ for(const [game,route] of gameRoute){
    fs.writeFileSync(adapterFile,adapterCode);
    row.midiImportVerified=true;
   }
+  // Display a reliable Instagram compatibility status in the existing result area.
+  const localDisplay='L(`Local video ready · ${R.mime}. Frame rate has not been independently verified.`)';
+  if(!studio.includes(localDisplay))throw Error(game+': local recording status changed');
+  studio=studio.replace(localDisplay,'L(R.instagramCompatible?`Instagram-ready MP4 · H.264 video, AAC audio · ${R.duration.toFixed(1)} seconds. Upload this .mp4 file to Instagram.`:R.instagramWarning||`Local video ready · ${R.mime}. Instagram may not support this format.`)');
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
@@ -245,6 +264,20 @@ for(const [game,route] of gameRoute){
   row.runtime=runtime.pathname;row.moduleFiles=fs.readdirSync(baseDir,{recursive:true}).filter(x=>/\.(mjs|js)$/.test(x)).length;
   audit.push(row);
  }catch(e){row.status='error';row.reason=String(e.message||e);audit.push(row);disabled.push(game);}
+}
+// Self-host the one FFmpeg core shared by all recovered studios. The WASM
+// runtime is never copied into each game package, and nothing calls a CDN
+// when the user's recording is converted.
+{
+ const coreRoot=path.join(root,'node_modules/@ffmpeg/core/dist/umd');
+ const targetRoot=path.join(out,'assets/ffmpeg');
+ fs.mkdirSync(targetRoot,{recursive:true});
+ for(const name of ['ffmpeg-core.js','ffmpeg-core.wasm']){
+  const file=path.join(coreRoot,name);
+  if(!fs.existsSync(file))throw Error('Self-hosted Instagram encoder missing: '+file);
+  fs.copyFileSync(file,path.join(targetRoot,name));
+ }
+ console.log('Self-hosted H.264/AAC FFmpeg.wasm runtime added (no third-party recording uploads).');
 }
 // Parent frame listener, shared by recovered game pages only.
 fs.copyFileSync(path.join(root,'scripts/mobile-studio-frame.mjs'),path.join(out,'assets/vidirexa-mobile-frame.mjs'));
@@ -312,6 +345,6 @@ fs.copyFileSync(path.join(root,'scripts/windows-studio-frame.mjs'),path.join(out
  console.log('Restored '+total+' mobile-tappable featured homepage game cards.');
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,androidPreviewGuard:audit.filter(x=>x.androidPreviewGuard).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,webmDurationRepair:audit.filter(x=>x.webmDurationRepair).length,instagramMp4Export:audit.filter(x=>x.instagramMp4Export).length,androidPreviewGuard:audit.filter(x=>x.androidPreviewGuard).length,midiCapable:audit.filter(x=>x.midiImportVerified).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.androidPreviewGuard!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled||summary.webmDurationRepair!==summary.bundled||summary.instagramMp4Export!==summary.bundled||summary.androidPreviewGuard!==summary.bundled||summary.midiCapable!==8)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));

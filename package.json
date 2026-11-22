@@ -1,0 +1,9 @@
+{
+  "name": "vidirexa-browser-export",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bundled on-device H.264/AAC conversion for Vidirexa local recordings",
+  "dependencies": {
+    "@ffmpeg/core": "0.12.10"
+  }
+}
