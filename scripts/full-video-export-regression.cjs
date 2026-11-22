@@ -1,0 +1,217 @@
+'use strict';
+// Full local-video export regression. Runs real MediaRecorder / CaptureController,
+// saves downloaded files and probes the resulting streams with FFprobe/FFmpeg.
+// Unlike a simple "button enabled" smoke test, this validates 30 s / 180 s
+// finished videos with audio and a complete game-adapter recording.
+const fs=require('node:fs');
+const path=require('node:path');
+const http=require('node:http');
+const cp=require('node:child_process');
+const {chromium}=require('playwright');
+const root=path.resolve('public-preview');
+const directory=path.join(root,'export-regression');
+fs.mkdirSync(directory,{recursive:true});
+const audit=JSON.parse(fs.readFileSync(path.join(root,'captured-game-audit.json'),'utf8'));
+const cors=JSON.parse(fs.readFileSync('vercel.json','utf8')).headers[0].headers.find(x=>x.key==='Content-Security-Policy').value;
+const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.wav':'audio/wav','.wasm':'application/wasm'};
+const server=http.createServer((req,res)=>{
+ let requested;
+ try{requested=decodeURIComponent(new URL(req.url,'http://localhost').pathname)}catch{res.writeHead(400).end();return}
+ const file=path.resolve(root,'.'+requested);
+ if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return}
+ let target=file;
+ try{if(fs.statSync(target).isDirectory())target=path.join(target,'index.html')}catch{}
+ if(!fs.existsSync(target)){res.writeHead(404).end('Not found');return}
+ res.setHeader('Content-Type',types[path.extname(target).toLowerCase()]||'application/octet-stream');
+ res.setHeader('Content-Security-Policy',cors);
+ res.setHeader('X-Content-Type-Options','nosniff');
+ fs.createReadStream(target).pipe(res);
+});
+const report={started:new Date().toISOString(),cases:[],passed:0,failed:0};
+const cases=[
+ // Full HD 30 s with sound through the same CaptureController used by the studio.
+ {id:'fullhd-audio-30s',game:'chaos-cutter',duration:30,width:1080,height:1920,synthetic:true,audio:true},
+ // Maximum permitted duration, with a lower-output-size option for memory safety.
+ {id:'max-duration-audio-180s',game:'melody-bounce',duration:180,width:720,height:1280,synthetic:true,audio:true},
+ // Exercise a real game: use the original Chaos Cutter adapter, sound engine,
+ // original duration, and the same controller path as the game.
+ {id:'real-game-chaos-cutter',game:'chaos-cutter',synthetic:false,audio:true,width:1080,height:1920}
+];
+const command=(bin,args,timeout=30000)=>{
+ const r=cp.spawnSync(bin,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});
+ if(r.error)throw r.error;
+ if(r.status!==0)throw Error(bin+' failed: '+(r.stderr||r.stdout).slice(-1600));
+ return r.stdout;
+};
+function inspectFile(filename,caseInfo,duration,metadata){
+ const raw=command('ffprobe',['-v','error','-show_format','-show_streams','-of','json',filename],30000);
+ const probe=JSON.parse(raw);
+ const streams=probe.streams||[];
+ const video=streams.find(x=>x.codec_type==='video');
+ const audio=streams.find(x=>x.codec_type==='audio');
+ if(!video)throw Error('No encoded video track in '+caseInfo.id);
+ if(caseInfo.audio&&!audio)throw Error('No audio track in '+caseInfo.id);
+ if(video.width!==caseInfo.width||video.height!==caseInfo.height)throw Error('Incorrect video resolution: '+video.width+'x'+video.height);
+ const format=String(probe.format?.format_name||'');
+ const extension=path.extname(filename).slice(1);
+ if(extension==='mp4'){
+  if(!/mp4|mov/i.test(format))throw Error('MP4 extension contains '+format);
+  if(!['h264','hevc'].includes(video.codec_name))throw Error('MP4 requires standard H264/HEVC, actual codec '+video.codec_name);
+ }else if(extension==='webm'){
+  if(!/webm|matroska/i.test(format))throw Error('WebM extension contains '+format);
+  if(!['vp8','vp9','av1'].includes(video.codec_name))throw Error('WebM encoded unexpected codec: '+video.codec_name);
+ }else throw Error('Unexpected recording file extension '+extension);
+ const actual=Number(probe.format.duration||video.duration||0);
+ if(!(actual>0)||Math.abs(actual-duration)>Math.max(3,duration*0.03))throw Error('Recorded duration '+actual+' does not match '+duration);
+ const bytes=fs.statSync(filename).size;
+ if(bytes<4096)throw Error('Recorded output is unexpectedly tiny ('+bytes+' bytes)');
+ // Decode frames at both ends; this catches files with missing or corrupt tails.
+ for(const second of [0,Math.max(0,actual-2)]){
+  command('ffmpeg',['-v','error','-ss',String(second),'-i',filename,'-map','0:v:0','-t','1','-f','null','-'],70000);
+ }
+ // MediaRecorder output is variable-frame-rate WebM; inspect packet timestamps,
+ // not only metadata, to ensure the final recorded scene is present.
+ const packetStats=type=>{
+  const payload=JSON.parse(command('ffprobe',['-v','error','-select_streams',type,'-show_packets','-show_entries','packet=pts_time,duration_time','-of','json',filename],90000));
+  let last=0;
+  for(const packet of payload.packets||[]){
+   const pts=Number(packet.pts_time),part=Number(packet.duration_time);
+   if(Number.isFinite(pts))last=Math.max(last,pts+(Number.isFinite(part)?part:0));
+  }
+  return {count:(payload.packets||[]).length,lastTimestamp:last};
+ };
+ const videoPackets=packetStats('v:0');
+ if(videoPackets.count<duration*12||videoPackets.lastTimestamp<duration-3)throw Error('Video stream is incomplete: '+JSON.stringify(videoPackets));
+ const audioPackets=caseInfo.audio?packetStats('a:0'):null;
+ if(caseInfo.audio&&(audioPackets.count===0||audioPackets.lastTimestamp<duration-3))throw Error('Audio stream ends early: '+JSON.stringify(audioPackets));
+ let maximumVolume=null;
+ if(caseInfo.audio){
+  if(!Number(audio.sample_rate))throw Error('Audio sample rate missing');
+  const data=cp.spawnSync('ffmpeg',['-hide_banner','-i',filename,'-map','0:a:0','-af','volumedetect','-f','null','-'],{encoding:'utf8',timeout:90000,maxBuffer:6*1024*1024});
+  if(data.error||data.status!==0)throw Error('Audio stream cannot decode: '+(data.stderr||data.error||'').toString().slice(-600));
+  const match=(data.stderr||'').match(/max_volume:\s*(-?[\d.]+)\s*dB/);
+  if(!match)throw Error('No measurable audio signal in export');
+  maximumVolume=Number(match[1]);
+  if(maximumVolume< -48)throw Error('Audio track is effectively silent: '+maximumVolume+' dB');
+ }
+ return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
+}
+async function main(){
+ await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve)});
+ const origin='http://127.0.0.1:'+server.address().port;
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required']});
+ try{
+  for(const example of cases){
+   const item={id:example.id,game:example.game,status:'failed'};
+   report.cases.push(item);
+   let page;
+   try{
+    const target=audit.results.find(x=>x.game===example.game&&x.status==='bundled');
+    if(!target)throw Error('Game runtime is not present: '+example.game);
+    const moduleRoot=target.runtime.replace(/\/index\.html$/,'');
+    page=await browser.newPage({viewport:{width:1250,height:850},acceptDownloads:true});
+    page.on('pageerror',e=>{item.pageError=String(e?.message||e).slice(0,240)});
+    await page.goto(origin+'/',{waitUntil:'domcontentloaded',timeout:20000});
+    // Static archive's banner intercepts clicks; remove only in this test page.
+    await page.evaluate(()=>document.querySelector('body > div[role="note"]')?.remove());
+    await page.evaluate(({example,moduleRoot})=>{
+     const trigger=document.createElement('a');
+     trigger.id='start-full-export';
+     trigger.href='#record';
+     trigger.textContent='Start browser export';
+     trigger.style.cssText='position:fixed;top:20px;left:20px;z-index:2147483647;display:block;padding:16px;background:#fff;color:#000;pointer-events:auto';
+     document.body.append(trigger);
+     trigger.addEventListener('click',async event=>{
+      event.preventDefault();
+      let adapter;
+      try{
+       const cap=await import(moduleRoot+'/shared/capture.mjs');
+       const canvas=document.createElement('canvas');
+       canvas.width=720;canvas.height=1280;
+       let sound=null;
+       if(example.synthetic){
+        const duration=example.duration;
+        const paint=t=>{
+         const ctx=canvas.getContext('2d',{alpha:false});
+         ctx.fillStyle='#08192b';ctx.fillRect(0,0,canvas.width,canvas.height);
+         const x=Math.round((Math.sin(t*2.7)*.36+.5)*canvas.width);
+         ctx.fillStyle='#00d4f0';ctx.fillRect(x,Math.floor(canvas.height*.25),Math.floor(canvas.width*.12),Math.floor(canvas.height*.12));
+         ctx.fillStyle='#ff6baf';ctx.fillRect(Math.round((t*73)%canvas.width),Math.floor(canvas.height*.7),45,45);
+         ctx.fillStyle='#ffffff';ctx.font='48px sans-serif';ctx.fillText('FULL VIDEO TEST',30,75);
+        };
+        adapter={
+         canvas,width:720,height:1280,fps:60,duration,config:{},
+         renderAt:paint,reset(){paint(0)},dispose(){},setOutputSize(w,h){canvas.width=w;canvas.height=h;paint(0)},
+         async audio(){
+          const context=new AudioContext({sampleRate:48000});
+          const buffer=context.createBuffer(1,Math.round(duration*48000),48000);
+          const samples=buffer.getChannelData(0);
+          for(let i=0;i<samples.length;i++)samples[i]=.18*Math.sin(2*Math.PI*440*i/48000);
+          await context.close();
+          return buffer;
+         }
+        };
+       }else{
+        const [mod,core]=await Promise.all([import(moduleRoot+'/adapter.mjs'),import(moduleRoot+'/core.mjs')]);
+        adapter=await mod.createAdapter(canvas,core.normalizeConfig({sound:true,volume:75}),{},{});
+        if(!Number.isFinite(adapter.duration)||adapter.duration<5||adapter.duration>180)throw Error('Invalid natural game duration '+adapter.duration);
+       }
+       const onProgress=()=>{window.__exportProgress=(window.__exportProgress||0)+1};
+       let result;
+       if(example.synthetic&&example.duration===180){
+        // Verify maximum-duration recording without forcing 1080p on low-memory runners.
+        const track=await adapter.audio();
+        adapter.reset();
+        result=await cap.recordCanvas(adapter,track,{width:720,height:1280,watermark:false,onProgress});
+       }else{
+        const capture=new cap.CaptureController();
+        result=await capture.run(adapter,{mode:'record',watermark:false,onProgress});
+       }
+       if(!(result.blob instanceof Blob)||!result.blob.size)throw Error('Export did not return a video Blob');
+       const extension=result.extension;
+       const url=URL.createObjectURL(result.blob);
+       const download=document.createElement('a');
+       download.id='download-full-export';
+       download.href=url;download.download=example.id+'.'+extension;
+       download.textContent='Download exported video';
+       download.style.cssText='position:fixed;top:80px;left:20px;z-index:2147483647;display:block;padding:16px;background:#fff;color:#000;pointer-events:auto';
+       document.body.append(download);
+       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,progressCallbacks:window.__exportProgress||0,video:result.video};
+       adapter.dispose();
+      }catch(e){
+       try{adapter?.dispose()}catch{}
+       window.__exportResult={done:true,success:false,error:String(e?.message||e),stack:String(e?.stack||'').slice(0,550)};
+      }
+     });
+    },{example,moduleRoot});
+    await page.locator('#start-full-export').click({timeout:15000});
+    const duration=example.duration||70;
+    await page.waitForFunction(()=>window.__exportResult?.done,null,{timeout:(duration+100)*1000});
+    const outcome=await page.evaluate(()=>window.__exportResult);
+    if(!outcome.success)throw Error('Browser export failed: '+JSON.stringify(outcome));
+    if(outcome.progressCallbacks<1)throw Error('Export never advanced playback progress');
+    const [download]=await Promise.all([page.waitForEvent('download',{timeout:25000}),page.locator('#download-full-export').click({timeout:20000})]);
+    const filename=path.join(directory,download.suggestedFilename());
+    await download.saveAs(filename);
+    const probed=inspectFile(filename,example,outcome.duration,outcome);
+    item.status='passed';item.result=probed;
+    report.passed++;
+    console.log('PASS FULL EXPORT '+example.id+' '+JSON.stringify(probed));
+    // Keep only JSON reports in CI artifacts, not the full video bytes.
+    fs.unlinkSync(filename);
+   }catch(error){
+    item.error=String(error?.message||error).slice(0,1300);
+    report.failed++;console.error('FAIL FULL EXPORT '+example.id+' '+item.error);
+    try{await page?.screenshot({path:path.join(directory,example.id+'.png'),timeout:10000})}catch{}
+   }finally{await page?.close()}
+  }
+ }finally{
+  report.completed=new Date().toISOString();
+  fs.writeFileSync(path.join(directory,'full-video-export-report.json'),JSON.stringify(report,null,2));
+  await browser.close();
+  server.close();
+ }
+ console.log('Full video export summary: '+JSON.stringify({passed:report.passed,failed:report.failed,total:report.cases.length}));
+ if(report.failed)process.exitCode=1;
+}
+main().catch(error=>{console.error(error);report.failed++;fs.writeFileSync(path.join(directory,'full-video-export-report.json'),JSON.stringify(report,null,2));server.close();process.exitCode=1});

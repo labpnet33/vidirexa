@@ -1,0 +1,61 @@
+name: Captured game browser smoke test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - audit/restore-captured-game-runtimes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: studio-smoke-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Vidirexa game studios and navigation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Checkout captured website
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Configure Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium and Playwright
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Build and statically verify captured game runtimes
+        run: |
+          node scripts/build-public-preview.cjs
+          node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
+      - name: Click-check all 68 game catalogue cards
+        run: GAME_CATALOGUE_ONLY=1 node scripts/smoke-captured-games.cjs
+      - name: Verify local recording is unlocked in representative games
+        run: GAME_RECORDING_PANEL_ONLY=1 node scripts/smoke-captured-games.cjs
+      - name: Record a real five-second local browser video
+        run: GAME_REAL_RECORD_ONLY=1 node scripts/smoke-captured-games.cjs
+      - name: Diagnose four heavy 3D game engines sequentially
+        run: GAME_FILTER=wobble-stack,marble-race,blueprint-builder,voxel-builder GAME_WORKERS=1 node scripts/smoke-captured-games.cjs
+      - name: Smoke test every complete game studio in Chromium
+        run: GAME_WORKERS=1 node scripts/smoke-captured-games.cjs
+      - name: Upload audit and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: captured-game-smoke-report
+          path: |
+            public-preview/captured-game-audit.json
+            public-preview/browser-smoke-report.json
+            public-preview/browser-failures/
+          if-no-files-found: ignore

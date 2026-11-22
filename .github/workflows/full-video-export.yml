@@ -1,0 +1,59 @@
+name: Full local video export regression
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+      - audit/restore-captured-game-runtimes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: full-export-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  export-regression:
+    name: Vidirexa full video export
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium and FFprobe
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+          ffprobe -version
+      - name: Build recovered game engines and verify public pages
+        run: |
+          node scripts/build-public-preview.cjs
+          node scripts/enable-captured-games.cjs
+          node scripts/check-indexing.cjs
+      - name: Encode, download and inspect full-duration video exports
+        run: node scripts/full-video-export-regression.cjs
+      - name: Upload report and failed-case screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-local-export-report
+          path: |
+            public-preview/export-regression/full-video-export-report.json
+            public-preview/export-regression/*.png
+          if-no-files-found: ignore
