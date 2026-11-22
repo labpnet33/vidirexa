@@ -19,7 +19,7 @@ const disabled=[];
 function iframeFor(title,url){
  const dir=url.replace(/\/index\.html$/,'');
  const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><link rel="stylesheet" href="'+dir+'/shared/studio.css"><style>html,body{margin:0;background:#0b1018;color:#e2e8f0;font:14px/1.5 system-ui}#runtime-status{margin:20px auto;max-width:720px;padding:12px 16px;border:1px solid #374b64;border-radius:10px}#runtime-status[data-error="true"]{border-color:#fb7185;color:#ffe4e6}#runtime-status a{color:#93c5fd}</style></head><body><div id="studio"></div><div id="runtime-status" role="status">Loading '+escape(title)+'…</div><script type="module" src="'+dir+'/bootstrap.mjs"></script></body></html>';
- return '<iframe data-vidirexa-studio-frame="true" class="vidirexa-studio-frame" title="'+escape(title)+' studio" srcdoc="'+escape(html)+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+ return '<iframe data-vidirexa-studio-frame="true" class="vidirexa-studio-frame" title="'+escape(title)+' studio" srcdoc="'+escape(html)+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:var(--vidirexa-frame-height,1650px);border:0;border-radius:12px"></iframe>';
 }
 function moduleImports(file,baseDir){
  const content=fs.readFileSync(file,'utf8');
