@@ -140,7 +140,7 @@ for(const [game,route] of gameRoute){
   return next;
  });
  if(changed!==gameRoute.size||seen.size!==gameRoute.size)throw Error('Expected '+gameRoute.size+' accessible cards; got '+changed);
- const uiCss='<style>.game-tile-shell>a.game-choice{display:block;width:100%;box-sizing:border-box;text-decoration:none;color:inherit;cursor:pointer;pointer-events:auto!important}.game-tile-shell>a.game-choice:focus-visible{outline:3px solid #22d3ee;outline-offset:4px}.game-choice .tier-badge,.game-choice .free-cap-badge,.game-choice .free-cap-overlay{display:none!important}</style>';
+ const uiCss='<style>.game-tile-shell>a.game-choice{display:flex;flex-direction:column;width:100%;box-sizing:border-box;text-decoration:none;color:inherit;cursor:pointer;pointer-events:auto!important}.game-tile-shell>a.game-choice:focus-visible{outline:3px solid #22d3ee;outline-offset:4px}.game-choice .tier-badge,.game-choice .free-cap-badge,.game-choice .free-cap-overlay{display:none!important}</style>';
  html=html.replace('</head>',uiCss+'</head>');
  fs.writeFileSync(catalogue,html);
  console.log('Restored '+changed+' Create catalogue game links (native anchors).');
