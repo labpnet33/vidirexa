@@ -129,7 +129,7 @@ async function testStudio(width,game){
    document.documentElement.scrollHeight,document.body.scrollHeight,document.querySelector('#studio')?.scrollHeight||0
   )));
   const finalHeight=await frameElement.evaluate(el=>Math.ceil(el.getBoundingClientRect().height));
-  if(contentHeight>finalHeight+28)throw Error('Studio content is clipped by iframe: '+JSON.stringify({contentHeight,finalHeight,base:document.baseURI}));
+  if(contentHeight>finalHeight+28)throw Error('Studio content is clipped by iframe: '+JSON.stringify({contentHeight,finalHeight}));
   return {width,game,canvasCount:inner.canvasCount,buttons:inner.buttons,frameHeight:finalHeight,contentHeight,innerWidth:inner.viewport,innerDocumentWidth:inner.documentWidth};
  }finally{await page.close()}
 }
