@@ -85,6 +85,33 @@ for(const [game,route] of gameRoute){
   const dep=path.join(target,'shared/deployment.mjs');
   const depContent=fs.readFileSync(dep,'utf8');
   if(depContent.includes('mode:"production"'))fs.writeFileSync(dep,depContent.replace('mode:"production"','mode:"local"'));
+  // Remove only preview branding from the bundled browser runtime (do not
+  // change original archived source files or simulation physics).
+  // The repeating PREVIEW ONLY text is an HTML layer, but the rotating
+  // vireel.net pill is drawn onto the canvas by the shared capture module.
+  const capFile=path.join(target,'shared/capture.mjs');
+  let cap=fs.readFileSync(capFile,'utf8');
+  const markedRender='export function render(e,t,{watermark:r=!0,preview:n=!1}={}){e.renderAt(Math.max(0,Math.min(e.duration,t))),r&&(n?previewWatermark:watermark)(e.canvas,t)}';
+  const cleanRender='export function render(e,t,{watermark:r=!0,preview:n=!1}={}){e.renderAt(Math.max(0,Math.min(e.duration,t)))}';
+  if(!cap.includes(markedRender))throw Error(game+': preview canvas watermark renderer changed; review before patching');
+  cap=cap.replace(markedRender,cleanRender);
+  for(const exportedFn of ['export function watermark(e,t=0){','export function previewWatermark(e,t=0){']){
+   if(!cap.includes(exportedFn))throw Error(game+': missing '+exportedFn);
+   cap=cap.replace(exportedFn,exportedFn+'return;');
+  }
+  fs.writeFileSync(capFile,cap);
+  const studioFile=path.join(target,'shared/studio.mjs');
+  let studio=fs.readFileSync(studioFile,'utf8');
+  const tiles='function _r(){if(!fn.childNodes.length)for(let e=0;e<28;e++)fn.append(d("span","PREVIEW ONLY","v-wm-tile"))}';
+  if(!studio.includes(tiles))throw Error(game+': repeating preview overlay changed; review before patching');
+  studio=studio.replace(tiles,'function _r(){fn.replaceChildren()}');
+  // The explainer is no longer relevant once its watermark has been removed.
+  if(!studio.includes('function Wr(){let e=0;'))throw Error(game+': preview explainer changed');
+  studio=studio.replace('function Wr(){let e=0;','function Wr(){return;let e=0;');
+  fs.writeFileSync(studioFile,studio);
+  const cssFile=path.join(target,'shared/studio.css');
+  fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
+  row.cleanPreview=true;
   fs.writeFileSync(path.join(target,'bootstrap.mjs'),bootScript(game,runtime.pathname));
   let html=fs.readFileSync(published,'utf8');
   // The base archive strips scripts and iframes and has a safe static catalogue.
@@ -156,6 +183,6 @@ for(const [game,route] of gameRoute){
  }
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60)throw Error('Too few complete captured engines: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
