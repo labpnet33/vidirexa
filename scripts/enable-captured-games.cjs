@@ -99,6 +99,21 @@ for(const [game,route] of gameRoute){
    if(!cap.includes(exportedFn))throw Error(game+': missing '+exportedFn);
    cap=cap.replace(exportedFn,exportedFn+'return;');
   }
+  // This is a standalone, browser-local recorder: there is no server upload.
+  // The upstream capture code aborts at 48 MiB for a server upload limit,
+  // even when the video stays on the user's own device. Raise this to a
+  // separate 512 MiB browser-memory safeguard for 5–180 second recordings.
+  const legacyCap=48*1024*1024;
+  const capLimit='48*1024*1024';
+  const legacyErr='The encoded video exceeds the upload limit. Try a shorter clip.';
+  const memoryErr='This recording exceeded the browser-memory safety limit (512 MB). Try reducing resolution or duration.';
+  if(cap.split(capLimit).length-1!==2||cap.split(legacyErr).length-1!==2)throw Error(game+': upstream recording limits changed; inspect before patching');
+  cap=cap.replaceAll(capLimit,'512*1024*1024').replaceAll(legacyErr,memoryErr);
+  // Local MediaRecorder is not an upload; use the configured local video
+  // quality rather than lowering its bitrate to meet an upload allowance.
+  const localBitrate='const i=await outputSurface(e,r),o=videoBitrate(e.duration),a=[];';
+  if(!cap.includes(localBitrate))throw Error(game+': unexpected local MediaRecorder bitrate code');
+  cap=cap.replace(localBitrate,'const i=await outputSurface(e,r),o=VIDEO_BITRATE,a=[];');
   fs.writeFileSync(capFile,cap);
   const studioFile=path.join(target,'shared/studio.mjs');
   let studio=fs.readFileSync(studioFile,'utf8');
@@ -108,6 +123,33 @@ for(const [game,route] of gameRoute){
   // The explainer is no longer relevant once its watermark has been removed.
   if(!studio.includes('function Wr(){let e=0;'))throw Error(game+': preview explainer changed');
   studio=studio.replace('function Wr(){let e=0;','function Wr(){return;let e=0;');
+  // Hosted subscription and daily quota rules do not apply to a local
+  // downloaded video. Keep the real engine and encoding checks intact.
+  const localPolicyStart='a.append(d("p","Account recording is not connected in this local review. The same server rules apply to every game."));';
+  const localPolicyEnd='},a.append(E)}const c=d("button",';
+  const start=studio.indexOf(localPolicyStart),stop=studio.indexOf(localPolicyEnd,start);
+  if(start<0||stop<0)throw Error(game+': local subscription panel layout changed');
+  studio=studio.slice(0,start)+'a.append(d("p","Local recording is available without an account, subscription, cloud upload or daily quota. The video is generated and downloaded on this device.", "v-hint"))'+studio.slice(stop+localPolicyEnd.indexOf('}const c=')+1);
+  // The uploaded video / audio policy only applies to the unavailable hosted
+  // service. A silent clip and unavailable IndexedDB should not block local capture.
+  const mustMatch=[
+   ['if(await ae(),e==="record"){','if(await ae(),r&&e==="record"){'],
+   ['if(!await fe())return;Nn(),Ke()','if(!await fe()&&r)return;Nn(),Ke()'],
+   ['const o=!i&&!f&&ln();si=ln(),o&&','const o=r&&!i&&!f&&ln();si=ln(),o&&'],
+   ['w("download").download=\u0060vireel-\u0024{j.id}.\u0024{R.extension}\u0060','w("download").download=\u0060vidirexa-\u0024{j.id}.\u0024{R.extension}\u0060']
+  ];
+  for(const [oldCode,newCode] of mustMatch){
+   if(!studio.includes(oldCode))throw Error(game+': missing local recording guard: '+oldCode);
+   studio=studio.replace(oldCode,newCode);
+  }
+  // There is no recordings server. Open the existing local Blob download
+  // instead of a dead http://127.0.0.1:5173/recordings link.
+  const recordingLabel='const S=d("button","My recordings","v-subtle"';
+  const recordingHandler=':window.open("http://127.0.0.1:5173/recordings","_blank","noopener")';
+  if(!studio.includes(recordingLabel)||!studio.includes(recordingHandler))throw Error(game+': local recording result links changed');
+  studio=studio.replace(recordingLabel,'const S=d("button","Download latest video","v-subtle"');
+  studio=studio.replace(recordingHandler,':ze?w("download").click():L("Record a local video first, then download it here.")');
+  row.localRecording=true;
   fs.writeFileSync(studioFile,studio);
   const cssFile=path.join(target,'shared/studio.css');
   fs.appendFileSync(cssFile,'\n/* Clean local preview: the original game canvas remains unchanged. */\n.v-watermark,.v-watermark.v-on,.v-wm-tile{display:none!important;visibility:hidden!important;opacity:0!important;animation:none!important}\n');
@@ -183,6 +225,6 @@ for(const [game,route] of gameRoute){
  }
 }
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
-const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
+const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,cleanPreviews:audit.filter(x=>x.cleanPreview).length,localRecording:audit.filter(x=>x.localRecording).length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
-if(summary.bundled<60||summary.cleanPreviews!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
+if(summary.bundled<60||summary.cleanPreviews!==summary.bundled||summary.localRecording!==summary.bundled)throw Error('Incomplete captured game or clean-preview build: '+JSON.stringify(summary));
