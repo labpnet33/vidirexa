@@ -1,16 +1,13 @@
 name: Full local video export regression
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-      - audit/restore-captured-game-runtimes
       - main
-    paths:
-      - scripts/full-video-export-regression.cjs
-      - scripts/enable-captured-games.cjs
-      - scripts/build-public-preview.cjs
-      - .github/workflows/full-video-export.yml
-      - vercel.json
+      - audit/restore-captured-game-runtimes
   workflow_dispatch:
 
 permissions:
@@ -22,6 +19,7 @@ concurrency:
 
 jobs:
   export-regression:
+    name: Vidirexa full video export
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
