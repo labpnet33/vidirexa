@@ -14,6 +14,10 @@ const studioRoutes=new Map();
 const foldHash='f04d2a37dcc6ea1b83f025f8b6de23e6cadb89dfa22df964abf21a353f64acf1';
 const foldRuntime='/packages/fold-groove/0.1.4/'+foldHash+'/index.html';
 const foldSource=path.resolve('vidirexa/vireel-games-production.up.railway.app'+foldRuntime.replace(/\/index\.html$/,''));
+// Original captured Melody Bounce package, retained on the same /create?game=melody-bounce route.
+const melodyHash='1ab576aaa94386e60235137b6b701bb7455d7fffc609f03c00c73a7dc949cea8';
+const melodyRuntime='/packages/melody-bounce/0.1.18/'+melodyHash+'/index.html';
+const melodySource=path.resolve('vidirexa/vireel-games-production.up.railway.app'+melodyRuntime.replace(/\/index\.html$/,''));
 
 for(const r of (fs.existsSync('manifest.json')?JSON.parse(fs.readFileSync('manifest.json','utf8')).assets||[]:[])){
  const m=/^site\/create\/(index__q_[a-f0-9]+)\.html$/.exec(r.local||'');
@@ -45,7 +49,19 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 .replace(/<body\b[^>]*>/i,m=>m+label);
 if(route==='/create'||route==='/games'){const gameList=[...pages.keys()].filter(x=>x.startsWith('/games/')).sort().map(p=>'<a href="'+esc(p)+'" style="display:inline-block;margin:5px;padding:10px;border:1px solid #777;border-radius:6px">'+esc(p.split('/').pop().replace(/-/g,' '))+'</a>').join('');h=h.replace(label,label+'<section style="padding:20px;max-width:1100px;margin:auto"><h2>Captured simulation catalogue</h2><p>Browse archived game descriptions. Playable engines require independent implementation.</p>'+gameList+'</section>')}
 if(route.startsWith('/create/index__q_')){
- if(route===studioRoutes.get('fold-groove')){
+ if(route===studioRoutes.get('melody-bounce')){
+  const frame='<iframe title="Melody Bounce browser-local studio" src="'+melodyRuntime+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+  // The captured premium notice belongs to the original hosted service, not this local workspace.
+  const notice=/<div class="premium-access-notice tier-access-notice">[\s\S]*?<\/button><\/div>/;
+  if(!notice.test(h))throw Error('Missing captured Melody Bounce premium notice');
+  h=h.replace(notice,'<div role="status" style="padding:14px 18px;margin:10px 0;border:1px solid #2d5060;border-radius:12px;background:#111d28;color:#bce6ff;font:500 14px/1.5 system-ui">Local browser workspace · Song library, MIDI upload, settings, audio and preview. Browser recording is available where supported; no Creator subscription or cloud account is connected.</div>'+frame)
+   .replace(/Studio connected/g,'Local browser engine')
+   .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Make a browser-local recording and download it on this device. Cloud storage is not connected.')
+   .replace(/Settings, audio and recording are available inside the game workspace\./g,'Use the captured Melody Bounce editor for song selection, MIDI files, previews and browser-local recording.')
+   .replace(/<button\b[^>]*class="button outline published-recordings-link"[^>]*>[\s\S]*?<\/button>/g,'')
+   .replace(label,'<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Captured Melody Bounce engine running locally in the browser. Original account, quota, cloud-storage and hosted recording services are not connected. <a href="/create" style="color:#c7e8ff">Back to games</a></div>');
+  if(!h.includes(frame)||h.includes('Unlock with Creator'))throw Error('Melody Bounce did not convert to the local studio');
+ }else if(route===studioRoutes.get('fold-groove')){
   const frame='<iframe title="Fold Groove browser-local studio" src="'+foldRuntime+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
   h=h.replace(/(<span class="studio-connecting-text">)[\s\S]*?(<\/span><\/div>)/,(_,open,close)=>open+'Original Fold Groove engine · local browser mode'+close+frame);
   if(!h.includes(frame))throw Error('Unable to attach captured Fold Groove runtime');
@@ -78,6 +94,19 @@ if(studioRoutes.has('fold-groove')){
  if(!config.includes('mode:"production"'))throw Error('Unexpected Fold Groove deployment metadata');
  fs.writeFileSync(dep,config.replace('mode:"production"','mode:"local"'));
  console.log('Bundled captured Fold Groove engine (browser-local mode).');
+}
+// Bundle the captured Melody Bounce engine with its public-domain song library
+// and custom MIDI parser. Browser-local mode disables unavailable hosted account flows.
+if(studioRoutes.has('melody-bounce')){
+ for(const rel of ['index.html','studio.mjs','adapter.mjs','core.mjs','midi.mjs','songs.mjs','shared/studio.mjs','shared/deployment.mjs']){
+  if(!fs.existsSync(path.join(melodySource,rel)))throw Error('Missing captured Melody Bounce file: '+rel);
+ }
+ const dest=path.join(out,melodyRuntime.slice(1).replace(/\/index\.html$/,''));
+ fs.cpSync(melodySource,dest,{recursive:true,filter:f=>fs.statSync(f).isDirectory()||/\.(?:mjs|css|html)$/i.test(f)});
+ const dep=path.join(dest,'shared/deployment.mjs'),config=fs.readFileSync(dep,'utf8');
+ if(!config.includes('mode:"production"'))throw Error('Unexpected Melody Bounce deployment metadata');
+ fs.writeFileSync(dep,config.replace('mode:"production"','mode:"local"'));
+ console.log('Bundled captured Melody Bounce engine (browser-local mode).');
 }
 put('404.html','<!doctype html><html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Archive page unavailable</title><h1>Page not included in the archive</h1><p>Live account and backend services are not part of the capture.</p><a href="/">Return to archive home</a></html>');
 put('robots.txt','User-agent: *\nDisallow: /\n');
