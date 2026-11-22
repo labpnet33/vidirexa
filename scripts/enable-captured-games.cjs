@@ -109,6 +109,13 @@ for(const [game,route] of gameRoute){
   const memoryErr='This recording exceeded the browser-memory safety limit (512 MB). Try reducing resolution or duration.';
   if(cap.split(capLimit).length-1!==2||cap.split(legacyErr).length-1!==2)throw Error(game+': upstream recording limits changed; inspect before patching');
   cap=cap.replaceAll(capLimit,'512*1024*1024').replaceAll(legacyErr,memoryErr);
+  // Allow a complete playable local file even if the browser cannot sustain
+  // a perfect 60 FPS capture. The exported MP4/WebM already includes the
+  // captured timestamps; dropping frames should not destroy the whole video.
+  const originalFpsGate='if(g/e.duration<50)throw new Error("Recording frame rate was too low. Close busy apps and retry.");';
+  if(!cap.includes(originalFpsGate))throw Error(game+': expected old strict FPS abort in local recorder');
+  cap=cap.replace(originalFpsGate,'if(g<1)throw new Error("No video frames were rendered. Keep the tab visible and retry.");');
+
   // Local MediaRecorder is not an upload; use the configured local video
   // quality rather than lowering its bitrate to meet an upload allowance.
   const localBitrate='const i=await outputSurface(e,r),o=videoBitrate(e.duration),a=[];';
