@@ -110,10 +110,17 @@ async function testStudio(width,game){
   if(await step1.count())await step1.tap({timeout:15000});
   const step2=frame.locator('#studio [data-step="2"]').first();
   if(await step2.count())await step2.tap({timeout:15000});
-  const next=frame.locator('#next');
-  if(await next.count()){
-   const b=await next.boundingBox();
-   if(!b||b.width<44)throw Error('Mobile Next button is too narrow '+JSON.stringify(b));
+  const record=frame.locator('#record');
+  if(await record.count()&&await record.isVisible()){
+   if(await record.isDisabled())throw Error('Local recording is disabled on mobile');
+   const box=await record.boundingBox();
+   if(!box||box.width<44||box.height<44)throw Error('Mobile recording button is too small: '+JSON.stringify(box));
+  }else{
+   const next=frame.locator('#next');
+   if(await next.isVisible()){
+    const box=await next.boundingBox();
+    if(!box||box.width<44||box.height<44)throw Error('Mobile navigation button is too small: '+JSON.stringify(box));
+   }else throw Error('No visible recording or navigation control after tapping final step');
   }
   return {width,game,canvasCount:inner.canvasCount,buttons:inner.buttons,frameHeight:Math.round(iframeHeight),innerWidth:inner.viewport,innerDocumentWidth:inner.documentWidth};
  }finally{await page.close()}
