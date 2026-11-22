@@ -57,7 +57,7 @@ function bootScript(title,url){
   'const fail=(e)=>{status.dataset.error="true";status.replaceChildren();const p=document.createElement("p");p.textContent="Could not start '+title.replace(/"/g,'')+': "+String(e?.message??e??"Unknown error").slice(0,450);const a=document.createElement("a");a.href="'+base+'/index.html";a.textContent="Try the captured engine directly";a.target="_top";status.append(p,a);};',
   'window.addEventListener("error",e=>fail(e.error||e.message));',
   'window.addEventListener("unhandledrejection",e=>fail(e.reason));',
-  'try{await import("./studio.mjs");if(root.childElementCount>0){status.remove()}else{fail("Studio script loaded but no interface was mounted.")}}catch(e){fail(e)}',
+  'try{await import("./studio.mjs");if(root.childElementCount>0){status.remove();const p=await import("./shared/adaptive-preview.mjs");p.installAdaptivePreview("'+title+'")}else{fail("Studio script loaded but no interface was mounted.")}}catch(e){fail(e)}',
   'let heightPending=false;const reportHeight=()=>{if(heightPending)return;heightPending=true;requestAnimationFrame(()=>{heightPending=false;const height=Math.ceil(Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,root.scrollHeight));if(height>0)window.parent.postMessage({type:"vidirexa:studio-height",height},window.parent.location.origin)})};',
   'if(typeof ResizeObserver==="function"){const observer=new ResizeObserver(reportHeight);observer.observe(root)}',
   'window.addEventListener("message",event=>{if(event.source===window.parent&&event.origin===window.parent.location.origin&&event.data?.type==="vidirexa:studio-height-request")reportHeight()});',
@@ -153,9 +153,13 @@ for(const [game,route] of gameRoute){
   const controllerRecording=':await recordCanvas(t,h.buffer,p);';
   if(cap.split(controllerRecording).length!==2)throw Error(game+': expected old recording selection');
   cap=cap.replace(controllerRecording,':await recordLocalInstagramVideo(t,h.buffer,p);');
-  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const raw=await recordCanvas(adapter,audio,options);try{const converter=await import("./instagram-wasm-converter.mjs");return await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration})}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}\n';
+  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){window.__vidirexaIsExporting=true;try{const module=await import("./instagram-mp4.mjs");const support=await module.instagramMp4Support();if(support.supported)return module.recordInstagramMp4(adapter,audio,options);const raw=await recordCanvas(adapter,audio,options);try{const converter=await import("./instagram-wasm-converter.mjs");return await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration})}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}finally{window.__vidirexaIsExporting=false}}\n';
   fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
   fs.copyFileSync(path.join(root,'scripts/instagram-wasm-converter.mjs'),path.join(target,'shared/instagram-wasm-converter.mjs'));
+   fs.copyFileSync(path.join(root,'scripts/mp4-duration-validation.mjs'),path.join(target,'shared/mp4-duration-validation.mjs'));
+   fs.copyFileSync(path.join(root,'scripts/adaptive-preview.mjs'),path.join(target,'shared/adaptive-preview.mjs'));
+   row.mp4TimelineValidation=true;
+   row.adaptivePreview=true;
   fs.copyFileSync(path.join(root,'scripts/instagram-ffmpeg-worker.js'),path.join(target,'shared/instagram-ffmpeg-worker.js'));
   fs.copyFileSync(path.join(root,'scripts/vendor/mp4-muxer-5.2.2.min.mjs'),path.join(target,'shared/mp4-muxer-5.2.2.min.mjs'));
   row.instagramMp4Export=true;
