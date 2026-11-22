@@ -53,6 +53,9 @@ if(route.startsWith('/create/index__q_')){
    .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Record locally and download in your browser. Cloud storage and account services are not connected.')
    .replace(/sign up after recording to download your video\. No payment, no card needed\./g,'record in your browser; no sign-up or cloud storage is connected.')
    .replace(/Settings, audio and recording are available inside the game workspace\./g,'The captured settings, sound, preview and browser recording are available in the workspace.')
+   .replace(/0\/3 used/g,'Local mode')
+   .replace(/3 of 3 slots left · refills continuously/g,'Browser-only · no cloud quota')
+   .replace(/<button\b[^>]*class="free-cap-help-btn"[^>]*>[\s\S]*?<\/button>/g,'')
    .replace(/<button\b[^>]*class="button outline published-recordings-link"[^>]*>[\s\S]*?<\/button>/g,'')
    .replace(label,'<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Captured Fold Groove engine running in browser-local mode. Account, quota and cloud-recording services are not connected. <a href="/create" style="color:#c7e8ff">Back to games</a></div>');
  }else{
