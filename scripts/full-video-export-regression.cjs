@@ -69,17 +69,32 @@ function inspectFile(filename,caseInfo,duration,metadata){
  for(const second of [0,Math.max(0,actual-2)]){
   command('ffmpeg',['-v','error','-ss',String(second),'-i',filename,'-map','0:v:0','-t','1','-f','null','-'],70000);
  }
+ // MediaRecorder output is variable-frame-rate WebM; inspect packet timestamps,
+ // not only metadata, to ensure the final recorded scene is present.
+ const packetStats=type=>{
+  const payload=JSON.parse(command('ffprobe',['-v','error','-select_streams',type,'-show_packets','-show_entries','packet=pts_time,duration_time','-of','json',filename],90000));
+  let last=0;
+  for(const packet of payload.packets||[]){
+   const pts=Number(packet.pts_time),part=Number(packet.duration_time);
+   if(Number.isFinite(pts))last=Math.max(last,pts+(Number.isFinite(part)?part:0));
+  }
+  return {count:(payload.packets||[]).length,lastTimestamp:last};
+ };
+ const videoPackets=packetStats('v:0');
+ if(videoPackets.count<duration*12||videoPackets.lastTimestamp<duration-3)throw Error('Video stream is incomplete: '+JSON.stringify(videoPackets));
+ const audioPackets=caseInfo.audio?packetStats('a:0'):null;
+ if(caseInfo.audio&&(audioPackets.count===0||audioPackets.lastTimestamp<duration-3))throw Error('Audio stream ends early: '+JSON.stringify(audioPackets));
  let maximumVolume=null;
  if(caseInfo.audio){
   if(!Number(audio.sample_rate))throw Error('Audio sample rate missing');
-  const data=cp.spawnSync('ffmpeg',['-hide_banner','-i',filename,'-map','0:a:0','-t','3','-af','volumedetect','-f','null','-'],{encoding:'utf8',timeout:40000,maxBuffer:6*1024*1024});
+  const data=cp.spawnSync('ffmpeg',['-hide_banner','-i',filename,'-map','0:a:0','-af','volumedetect','-f','null','-'],{encoding:'utf8',timeout:90000,maxBuffer:6*1024*1024});
   if(data.error||data.status!==0)throw Error('Audio stream cannot decode: '+(data.stderr||data.error||'').toString().slice(-600));
   const match=(data.stderr||'').match(/max_volume:\s*(-?[\d.]+)\s*dB/);
   if(!match)throw Error('No measurable audio signal in export');
   maximumVolume=Number(match[1]);
   if(maximumVolume< -48)throw Error('Audio track is effectively silent: '+maximumVolume+' dB');
  }
- return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
+ return {duration:actual,sizeBytes:bytes,container:format,videoCodec:video.codec_name,width:video.width,height:video.height,averageFps:video.avg_frame_rate,measuredFps:Number((videoPackets.count/actual).toFixed(1)),lastVideoTimestamp:videoPackets.lastTimestamp,lastAudioTimestamp:audioPackets?.lastTimestamp??null,audioCodec:audio?.codec_name||null,audioSampleRate:audio?.sample_rate||null,maximumVolumeDb:maximumVolume,reportedMime:metadata.mime,progressCallbacks:metadata.progressCallbacks,adapterDuration:duration};
 }
 async function main(){
  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve)});
