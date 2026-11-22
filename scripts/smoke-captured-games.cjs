@@ -167,12 +167,54 @@ async function testLocalRecordingPanel(){
   }finally{await page.close()}
  }
 }
+async function testRealLocalRecording(){
+ // Integration test the real MediaRecorder path using a lightweight 5s canvas.
+ // A synthetic canvas avoids spending minutes rendering a full physics level,
+ // while exercising the same capture code that the game studio invokes.
+ const chosen=audit.results.find(x=>x.game==='chaos-cutter'&&x.status==='bundled');
+ if(!chosen)throw Error('No capture fixture game');
+ const modulePath=chosen.runtime.replace(/index\.html$/,'shared/capture.mjs');
+ const page=await browser.newPage({viewport:{width:1200,height:900}});
+ try{
+  await page.goto(base+'/',{waitUntil:'domcontentloaded'});
+  await page.evaluate((url)=>{
+   const btn=document.createElement('button');
+   btn.id='test-browser-local-recording';btn.textContent='Test local recording';
+   document.body.append(btn);
+   btn.onclick=async()=>{
+    try{
+     const capture=await import(url);
+     const canvas=document.createElement('canvas');
+     canvas.width=720;canvas.height=1280;
+     const ctx=canvas.getContext('2d');
+     const adapter={
+      canvas,width:720,height:1280,fps:60,duration:5,
+      reset(){this.renderAt(0)},dispose(){},async audio(){return null},
+      renderAt(t){
+       ctx.fillStyle='#081020';ctx.fillRect(0,0,720,1280);
+       ctx.fillStyle='#43c4df';ctx.fillRect(Math.round((t*73)%620),180,80,80);
+      }
+     };
+     adapter.reset();
+     const result=await capture.recordCanvas(adapter,null,{watermark:false});
+     window.__recordingSmoke={success:result.blob instanceof Blob,size:result.blob?.size,mime:result.mime,extension:result.extension};
+    }catch(e){window.__recordingSmoke={success:false,error:String(e?.message??e)}}
+   };
+  },modulePath);
+  await page.locator('#test-browser-local-recording').click();
+  await page.waitForFunction(()=>!!window.__recordingSmoke,null,{timeout:35000});
+  const result=await page.evaluate(()=>window.__recordingSmoke);
+  if(!result.success||result.size<1024)throw Error('Local browser recording failed: '+JSON.stringify(result));
+  console.log('PASS real local MediaRecorder: '+JSON.stringify(result));
+ }finally{await page.close()}
+}
 async function main(){
  await new Promise((resolve,reject)=>{serve.once('error',reject);serve.listen(0,'127.0.0.1',resolve)});
  base='http://127.0.0.1:'+serve.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  await testCatalogue();
  if(process.env.GAME_RECORDING_PANEL_ONLY==='1'){await testLocalRecordingPanel();console.log('Local recording panel checks passed.');return;}
+ if(process.env.GAME_REAL_RECORD_ONLY==='1'){await testRealLocalRecording();return;}
  if(process.env.GAME_CATALOGUE_ONLY==='1'){console.log('Catalogue-only click regression passed.');return;}
  let rows=audit.results.filter(r=>r.status==='bundled');
  const filter=new Set((process.env.GAME_FILTER||'').split(',').map(x=>x.trim()).filter(Boolean));
