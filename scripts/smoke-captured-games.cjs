@@ -86,10 +86,38 @@ async function test(row){
  results.push(record);
  console.log((record.status==='passed'?'PASS':'FAIL')+' '+row.game+' '+record.details+(record.status==='passed'?'':' | '+JSON.stringify(record.debug??record.debugError??record.consoleErrors)));
 }
+async function testCatalogue(){
+ const page=await browser.newPage({viewport:{width:1365,height:900}});
+ try{
+  await page.goto(base+'/create/',{waitUntil:'domcontentloaded',timeout:25000});
+  const cardSelector='.game-tile-shell > a.game-choice';
+  const cards=page.locator(cardSelector);
+  const count=await cards.count();
+  if(count!==audit.total)throw Error('Expected '+audit.total+' clickable game cards, found '+count);
+  const links=await cards.evaluateAll(elements=>elements.map(a=>({href:a.getAttribute('href'),pointer:getComputedStyle(a).pointerEvents,name:a.getAttribute('aria-label')})));
+  for(const item of links){
+   if(item.pointer==='none')throw Error('Game card has pointer-events:none: '+item.name);
+   if(!item.href?.startsWith('/create/')&&!item.href?.startsWith('/games/'))throw Error('Invalid catalogue destination: '+item.href);
+   const rel=decodeURIComponent(new URL(item.href,base).pathname).replace(/^\//,'');
+   if(!fs.existsSync(path.join(root,rel,'index.html')))throw Error('Game link has no destination: '+item.href);
+  }
+  const open=async (href)=>{
+   await page.goto(base+'/create/',{waitUntil:'domcontentloaded'});
+   const link=page.locator(cardSelector+'[href="'+href+'"]').first();
+   await link.click({timeout:15000});
+   await page.waitForURL(url=>url.pathname===href||url.pathname===href+'/',{timeout:15000});
+  };
+  await open('/create/'+routes.get('melody-bounce'));
+  await open('/create/'+routes.get('fold-groove'));
+  await open('/games/orbit-notes');
+  console.log('PASS catalogue: '+count+' valid and clickable game cards; tested 2 studios and 1 unavailable-game details link.');
+ }finally{await page.close()}
+}
 async function main(){
  await new Promise((resolve,reject)=>{serve.once('error',reject);serve.listen(0,'127.0.0.1',resolve)});
  base='http://127.0.0.1:'+serve.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+ await testCatalogue();
  let rows=audit.results.filter(r=>r.status==='bundled');
  const filter=new Set((process.env.GAME_FILTER||'').split(',').map(x=>x.trim()).filter(Boolean));
  if(filter.size)rows=rows.filter(r=>filter.has(r.game));
