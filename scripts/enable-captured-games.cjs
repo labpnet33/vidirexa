@@ -115,6 +115,46 @@ for(const [game,route] of gameRoute){
   audit.push(row);
  }catch(e){row.status='error';row.reason=String(e.message||e);audit.push(row);disabled.push(game);}
 }
+// Restore catalogue navigation. Captured pages used JS-bound <button> cards,
+// but the archive build removes script handlers and disables button pointer events.
+// Native anchor links work without JavaScript and reach the existing studio routes.
+{
+ const catalogue=path.join(out,'create','index.html');
+ let html=fs.readFileSync(catalogue,'utf8');
+ let changed=0;
+ const seen=new Set();
+ html=html.replace(/<div class="game-tile-shell">[\s\S]*?<\/div>/g,shell=>{
+  const m=/<a class="game-tile-about" href="\/games\/([a-z0-9-]+)"/.exec(shell);
+  const game=m?.[1];
+  if(!game||!gameRoute.has(game))throw Error('Unmapped game card in the Create catalogue: '+String(game));
+  if(seen.has(game))throw Error('Duplicate game card: '+game);
+  seen.add(game);
+  const result=audit.find(row=>row.game===game);
+  const available=result?.status==='bundled';
+  const href=available?'/create/'+gameRoute.get(game):'/games/'+game;
+  const name=game.split('-').map(word=>word.charAt(0).toUpperCase()+word.slice(1)).join(' ');
+  const next=shell.replace(/<button class="(game-choice[^"]*)">([\s\S]*?)<\/button>/,
+   (_,classes,inside)=>'<a class="'+classes+'" href="'+href+'" aria-label="'+(available?'Open ':'View details for ')+name+'">'+inside+'</a>');
+  if(next===shell)throw Error('Could not restore click target for '+game);
+  changed++;
+  return next;
+ });
+ if(changed!==gameRoute.size||seen.size!==gameRoute.size)throw Error('Expected '+gameRoute.size+' accessible cards; got '+changed);
+ const uiCss='<style>.game-tile-shell>a.game-choice{display:block;width:100%;box-sizing:border-box;text-decoration:none;color:inherit;cursor:pointer;pointer-events:auto!important}.game-tile-shell>a.game-choice:focus-visible{outline:3px solid #22d3ee;outline-offset:4px}.game-choice .tier-badge,.game-choice .free-cap-badge,.game-choice .free-cap-overlay{display:none!important}</style>';
+ html=html.replace('</head>',uiCss+'</head>');
+ fs.writeFileSync(catalogue,html);
+ console.log('Restored '+changed+' Create catalogue game links (native anchors).');
+ // Explain missing packages on their existing game information pages rather than
+ // opening a non-functional studio or linking to an unavailable backend.
+ for(const row of audit.filter(r=>r.status!=='bundled')){
+  const detail=path.join(out,'games',row.game,'index.html');
+  if(!fs.existsSync(detail))continue;
+  let page=fs.readFileSync(detail,'utf8');
+  const message='<p role="status" style="padding:12px 16px;border:1px solid #a46753;border-radius:8px">This game’s original engine was not included in the archive. The game information is available, but the studio cannot run yet.</p>';
+  page=page.replace(/<div class="game-landing-actions">[\s\S]*?<\/div>/,message);
+  fs.writeFileSync(detail,page);
+ }
+}
 fs.writeFileSync(path.join(out,'captured-game-audit.json'),JSON.stringify({generatedAt:new Date().toISOString(),total:gameRoute.size,results:audit},null,2));
 const summary={total:gameRoute.size,bundled:audit.filter(x=>x.status==='bundled').length,unavailable:audit.filter(x=>x.status==='unavailable').length,errors:audit.filter(x=>x.status==='error').length,disabled};
 console.log('Recovered game audit:',JSON.stringify(summary));
