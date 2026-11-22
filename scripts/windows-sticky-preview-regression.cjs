@@ -106,6 +106,7 @@ async function verifyAndroid(browser,base){
    return {
     scroll:window.scrollY,
     innerHeight:window.innerHeight,
+    innerWidth:window.innerWidth,
     floating:phone?.classList.contains('v-float'),
     minimized:phone?.classList.contains('v-mini-collapsed'),
     canvas:canvas?.getBoundingClientRect().toJSON(),
@@ -118,7 +119,7 @@ async function verifyAndroid(browser,base){
   assert(result.floating||result.restoreVisible,'No persistent Android preview after scrolling',result);
   if(result.floating&&!result.minimized){
    assert(result.canvas&&result.canvas.top>=-3&&result.canvas.bottom<=result.innerHeight+3,'Android preview canvas clipped',result);
-   assert(result.phone&&result.phone.width>=95&&result.phone.right<=window.innerWidth+5,'Floating preview outside mobile viewport',result);
+   assert(result.phone&&result.phone.width>=95&&result.phone.right<=result.innerWidth+5,'Floating preview outside mobile viewport',result);
   }
   return {game,viewport:'390x844',frameHeight:Math.round(outer.height),settingsScroll:Math.round(result.scroll),floating:result.floating,previewTop:Math.round(result.canvas?.top??-1),previewBottom:Math.round(result.canvas?.bottom??-1),restoreVisible:result.restoreVisible};
  }finally{await page.close()}
