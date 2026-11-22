@@ -177,6 +177,9 @@ async function testRealLocalRecording(){
  const page=await browser.newPage({viewport:{width:1200,height:900}});
  try{
   await page.goto(base+'/',{waitUntil:'domcontentloaded'});
+  // The base archive adds a full-width top banner above all authored content.
+  // Remove it in this synthetic encoder fixture so it cannot intercept the click.
+  await page.evaluate(()=>document.querySelector('body > div[role="note"]')?.remove());
   await page.evaluate((url)=>{
    const btn=document.createElement('a');
    btn.id='test-browser-local-recording';btn.href='#local-capture';btn.textContent='Test local recording';btn.style.cssText='position:fixed;top:10px;left:10px;z-index:999999;background:#fff;color:#000;padding:16px;pointer-events:auto';
