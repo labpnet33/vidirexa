@@ -132,11 +132,47 @@ async function testCatalogue(){
   console.log('PASS catalogue: '+count+' valid and clickable game cards; tested 2 studios and 1 unavailable-game details link.');
  }finally{await page.close()}
 }
+async function testLocalRecordingPanel(){
+ // Verify the local mode is unlocked from the original Customize->Record flow.
+ // A full-length MP4 export is a separate long-running browser test.
+ const selected=['chaos-cutter','melody-bounce','fold-groove'];
+ for(const name of selected){
+  const route=routes.get(name);
+  if(!route)throw Error('Missing recording route '+name);
+  const page=await browser.newPage({viewport:{width:1380,height:1000}});
+  try{
+   await page.goto(base+'/create/'+route+'/index.html',{waitUntil:'domcontentloaded',timeout:25000});
+   const element=await page.waitForSelector('iframe[title$=" studio"]',{timeout:15000});
+   const frame=await element.contentFrame();
+   if(!frame)throw Error('Missing runtime frame '+name);
+   await frame.waitForFunction(()=>document.querySelector('#studio')?.querySelectorAll('[data-step]').length>=3,null,{timeout:30000});
+   const step1=frame.locator('#studio [data-step="1"]').first();
+   await step1.click({timeout:20000});
+   const step2=frame.locator('#studio [data-step="2"]').first();
+   await step2.click({timeout:20000});
+   const panel=await frame.locator('#step-content').innerText();
+   if(!panel.includes('Local recording is available without an account'))throw Error(name+': local recording policy not shown');
+   if(/Daily limit reached|upload limit|Vireel watermark|Free: 2\/day|Save draft & sign in|Creator: \$4\.99/.test(panel))throw Error(name+': stale server quota or branding on record panel');
+   const record=frame.locator('#record');
+   await record.waitFor({state:'visible',timeout:12000});
+   if(await record.isDisabled())throw Error(name+': Record local video button disabled');
+   const label=await record.innerText();
+   if(!/Record local video|Record again/.test(label))throw Error(name+': incorrect button label '+label);
+   const cap=audit.results.find(x=>x.game===name);
+   const capturePath=path.join(root,cap.runtime.slice(1).replace(/index\.html$/,'shared/capture.mjs'));
+   const c=fs.readFileSync(capturePath,'utf8');
+   if(c.includes('The encoded video exceeds the upload limit')||c.includes('A>48*1024*1024'))throw Error(name+': old 48MiB upload abort remains');
+   if(!c.includes('A>512*1024*1024'))throw Error(name+': browser memory safeguard missing');
+   console.log('PASS local recording panel: '+name+' (no quota, enabled, old upload cutoff removed)');
+  }finally{await page.close()}
+ }
+}
 async function main(){
  await new Promise((resolve,reject)=>{serve.once('error',reject);serve.listen(0,'127.0.0.1',resolve)});
  base='http://127.0.0.1:'+serve.address().port;
  browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
  await testCatalogue();
+ if(process.env.GAME_RECORDING_PANEL_ONLY==='1'){await testLocalRecordingPanel();console.log('Local recording panel checks passed.');return;}
  if(process.env.GAME_CATALOGUE_ONLY==='1'){console.log('Catalogue-only click regression passed.');return;}
  let rows=audit.results.filter(r=>r.status==='bundled');
  const filter=new Set((process.env.GAME_FILTER||'').split(',').map(x=>x.trim()).filter(Boolean));
