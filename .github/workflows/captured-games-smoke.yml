@@ -30,6 +30,8 @@ jobs:
         run: GAME_CATALOGUE_ONLY=1 node scripts/smoke-captured-games.cjs
       - name: Verify local recording is unlocked in representative games
         run: GAME_RECORDING_PANEL_ONLY=1 node scripts/smoke-captured-games.cjs
+      - name: Record a real five-second local browser video
+        run: GAME_REAL_RECORD_ONLY=1 node scripts/smoke-captured-games.cjs
       - name: Diagnose four heavy 3D game engines sequentially
         run: GAME_FILTER=wobble-stack,marble-race,blueprint-builder,voxel-builder GAME_WORKERS=1 node scripts/smoke-captured-games.cjs
       - name: Smoke test every complete game studio in Chromium
