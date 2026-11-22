@@ -29,6 +29,12 @@ for(const r of (fs.existsSync('manifest.json')?JSON.parse(fs.readFileSync('manif
  pages.set(route,file);studioRoutes.set(g[1],route);
 }
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+function embeddedStudio(title,runtime){
+ const base=runtime.replace(/\/index\.html$/,'');
+ const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><link rel="stylesheet" href="'+base+'/shared/studio.css"><style>html,body{margin:0;background:#0b1018;color:#dbeafe;font:14px/1.5 system-ui}#runtime-status{max-width:700px;margin:25px auto;padding:16px 20px;border:1px solid #3b556b;border-radius:10px;color:#e0f2fe}#runtime-status a{color:#93c5fd}#runtime-status[data-error="true"]{border-color:#ff6380;color:#ffe4e6}</style></head><body><div id="studio"></div><div id="runtime-status" role="status">Loading the captured '+esc(title)+' engine…</div><script type="module" src="'+base+'/bootstrap.mjs"></script></body></html>';
+ return '<iframe title="'+esc(title)+' local studio" srcdoc="'+esc(html)+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+}
+
 const label='<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Guest browsing — no account required. Read-only website archive, not the original service. <a href="/" style="color:#c7e8ff">Home</a> · <a href="/games" style="color:#c7e8ff">Games</a> · <a href="/create" style="color:#c7e8ff">Create catalogue</a> · <a href="/guides" style="color:#c7e8ff">Guides</a> · <a href="/pricing" style="color:#c7e8ff">Archived pricing</a>. Original account, checkout and simulation services are unavailable.</div>';
 function resolve(raw,route){try{return new URL(raw.replace(/&amp;/g,'&'),'https://vidirexa.com'+route)}catch{return null}}
 function asset(raw,route){if(/^data:image\//i.test(raw))return raw;const u=resolve(raw,route);if(!u)return null;if(map.has(u.href))return '/'+map.get(u.href);if(u.origin==='https://vidirexa.com'&&assets.has(u.pathname.slice(1)))return u.pathname;return null}
@@ -50,11 +56,11 @@ h=h.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,'').replace(/<script\b[^>]*
 if(route==='/create'||route==='/games'){const gameList=[...pages.keys()].filter(x=>x.startsWith('/games/')).sort().map(p=>'<a href="'+esc(p)+'" style="display:inline-block;margin:5px;padding:10px;border:1px solid #777;border-radius:6px">'+esc(p.split('/').pop().replace(/-/g,' '))+'</a>').join('');h=h.replace(label,label+'<section style="padding:20px;max-width:1100px;margin:auto"><h2>Captured simulation catalogue</h2><p>Browse archived game descriptions. Playable engines require independent implementation.</p>'+gameList+'</section>')}
 if(route.startsWith('/create/index__q_')){
  if(route===studioRoutes.get('melody-bounce')){
-  const frame='<iframe title="Melody Bounce browser-local studio" src="'+melodyRuntime+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+  const frame=embeddedStudio('Melody Bounce',melodyRuntime);
   // The captured premium notice belongs to the original hosted service, not this local workspace.
   const notice=/<div class="premium-access-notice tier-access-notice">[\s\S]*?<\/button><\/div>/;
   if(!notice.test(h))throw Error('Missing captured Melody Bounce premium notice');
-  h=h.replace(notice,'<div role="status" style="padding:14px 18px;margin:10px 0;border:1px solid #2d5060;border-radius:12px;background:#111d28;color:#bce6ff;font:500 14px/1.5 system-ui">Local browser workspace · Song library, MIDI upload, settings, audio and preview. Browser recording is available where supported; no Creator subscription or cloud account is connected.</div>'+frame)
+  h=h.replace(notice,frame)
    .replace(/Studio connected/g,'Local browser engine')
    .replace(/Record first, then sign up free to download your video\. No payment, no card needed\./g,'Make a browser-local recording and download it on this device. Cloud storage is not connected.')
    .replace(/Settings, audio and recording are available inside the game workspace\./g,'Use the captured Melody Bounce editor for song selection, MIDI files, previews and browser-local recording.')
@@ -62,7 +68,7 @@ if(route.startsWith('/create/index__q_')){
    .replace(label,'<div role="note" style="position:relative;z-index:2147483647;background:#172554;color:#fff;padding:14px 18px;font:600 14px/1.5 system-ui;text-align:center">Captured Melody Bounce engine running locally in the browser. Original account, quota, cloud-storage and hosted recording services are not connected. <a href="/create" style="color:#c7e8ff">Back to games</a></div>');
   if(!h.includes(frame)||h.includes('Unlock with Creator'))throw Error('Melody Bounce did not convert to the local studio');
  }else if(route===studioRoutes.get('fold-groove')){
-  const frame='<iframe title="Fold Groove browser-local studio" src="'+foldRuntime+'" sandbox="allow-scripts allow-same-origin allow-downloads" allow="autoplay" referrerpolicy="no-referrer" loading="eager" style="display:block;width:100%;height:1650px;border:0;border-radius:12px"></iframe>';
+  const frame=embeddedStudio('Fold Groove',foldRuntime);
   h=h.replace(/(<span class="studio-connecting-text">)[\s\S]*?(<\/span><\/div>)/,(_,open,close)=>open+'Original Fold Groove engine · local browser mode'+close+frame);
   if(!h.includes(frame))throw Error('Unable to attach captured Fold Groove runtime');
   h=h.replace(/Connecting studio/g,'Local browser engine')
@@ -107,6 +113,22 @@ if(studioRoutes.has('melody-bounce')){
  if(!config.includes('mode:"production"'))throw Error('Unexpected Melody Bounce deployment metadata');
  fs.writeFileSync(dep,config.replace('mode:"production"','mode:"local"'));
  console.log('Bundled captured Melody Bounce engine (browser-local mode).');
+}
+// An external module bootstrap (allowed by CSP) reports engine import/mount errors
+// instead of leaving a blank iframe. Both packages use their actual captured code.
+for(const runtime of [foldRuntime,melodyRuntime]){
+ if(!studioRoutes.has(runtime===foldRuntime?'fold-groove':'melody-bounce'))continue;
+ const base=runtime.slice(1).replace(/\/index\.html$/,'');
+ const boot=[
+  'const status=document.getElementById("runtime-status");',
+  'const root=document.getElementById("studio");',
+  'const link="/"+'+JSON.stringify(base) + '+"/index.html";',
+  'const fail=(error)=>{status.dataset.error="true";status.replaceChildren();const p=document.createElement("p");p.textContent="Studio could not start: "+String(error?.message??error??"unknown error").slice(0,350);const a=document.createElement("a");a.href=link;a.textContent="Open the original captured studio directly";a.target="_top";status.append(p,a)};',
+  'window.addEventListener("error",event=>fail(event.error||event.message));',
+  'window.addEventListener("unhandledrejection",event=>fail(event.reason));',
+  'try{await import("./studio.mjs");if(root.childElementCount>0){status.remove()}else{fail("Game module loaded but did not mount a studio interface.")}}catch(error){fail(error)}'
+ ].join('\n');
+ put(base+'/bootstrap.mjs',boot);
 }
 put('404.html','<!doctype html><html lang="en"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Archive page unavailable</title><h1>Page not included in the archive</h1><p>Live account and backend services are not part of the capture.</p><a href="/">Return to archive home</a></html>');
 put('robots.txt','User-agent: *\nDisallow: /\n');
