@@ -49,7 +49,9 @@ const cases=[
  // Real custom-MIDI engine: the exported video and audio share the same MIDI events.
  {id:'custom-midi-melody-bounce',game:'melody-bounce',synthetic:false,audio:true,midiBytes:midiFixture(),width:1080,height:1920},
  // Must produce a complete and fast-start H.264/AAC MP4 on compatible browsers.
- {id:'instagram-h264-aac-12s',game:'chaos-cutter',duration:12,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true}
+ {id:'instagram-h264-aac-12s',game:'chaos-cutter',duration:12,width:1080,height:1920,synthetic:true,audio:true,instagramReady:true},
+ // Verify selected 720p is preserved and AAC/H264 cover a 30-second timeline.
+ {id:'instagram-h264-aac-30s-720p',game:'chaos-cutter',duration:30,width:720,height:1280,synthetic:true,audio:true,instagramReady:true}
 ];
 const command=(bin,args,timeout=30000)=>{
  const r=cp.spawnSync(bin,args,{encoding:'utf8',timeout,maxBuffer:16*1024*1024});
@@ -70,6 +72,7 @@ function inspectFile(filename,caseInfo,duration,metadata){
  if(caseInfo.instagramReady){
   if(video.codec_name!=='h264'||audio?.codec_name!=='aac')throw Error('Instagram export needs H.264/AAC, got '+video.codec_name+'/'+audio?.codec_name);
   if(Number(audio.sample_rate)!==48000)throw Error('Instagram AAC track needs 48000 Hz');
+  if(!Number.isFinite(metadata.verifiedDuration)||Math.abs(metadata.verifiedDuration-duration)>Math.max(.8,duration*.025))throw Error('Browser MP4 timeline validator did not verify full duration');
   const file=fs.readFileSync(filename);
   const mov=file.indexOf(Buffer.from('moov'));
   const data=file.indexOf(Buffer.from('mdat'));
@@ -104,6 +107,7 @@ function inspectFile(filename,caseInfo,duration,metadata){
    checked++;if(peak>.0005)heard++;
   }
   if(checked<2||heard<Math.min(4,Math.floor(checked*.55)))throw Error('Recorded audio did not align with MIDI note onsets: '+heard+'/'+checked);
+  if(metadata.midiSync?.status==='check-audio')throw Error('Local MIDI PCM diagnostic detected missing note onsets');
   verifiedMidiOnsets=heard;
  }
  const bytes=fs.statSync(filename).size;
@@ -144,7 +148,7 @@ async function main(){
  const origin='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--autoplay-policy=no-user-gesture-required']});
  try{
-  for(const example of cases.filter(x=>!process.env.FULL_EXPORT_FILTER||x.id===process.env.FULL_EXPORT_FILTER)){
+  for(const example of cases.filter(x=>!process.env.FULL_EXPORT_FILTER||(process.env.FULL_EXPORT_FILTER.endsWith('-')?x.id.startsWith(process.env.FULL_EXPORT_FILTER):x.id===process.env.FULL_EXPORT_FILTER))){
    const item={id:example.id,game:example.game,status:'failed'};
    report.cases.push(item);
    let page;
@@ -249,7 +253,7 @@ async function main(){
         result=await cap.recordCanvas(adapter,track,{width:720,height:1280,watermark:false,onProgress});
        }else{
         const capture=new cap.CaptureController();
-        result=await capture.run(adapter,{mode:'record',watermark:false,onProgress});
+        result=await capture.run(adapter,{mode:'record',watermark:false,onProgress,...(example.instagramReady?{width:example.width,height:example.height}:{})});
        }
        if(!(result.blob instanceof Blob)||!result.blob.size)throw Error('Export did not return a video Blob');
        const extension=result.extension;
@@ -260,7 +264,7 @@ async function main(){
        download.textContent='Download exported video';
        download.style.cssText='position:fixed;top:80px;left:20px;z-index:2147483647;display:block;padding:16px;background:#fff;color:#000;pointer-events:auto';
        document.body.append(download);
-       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,warning:result.instagramWarning||null,progressCallbacks:window.__exportProgress||0,video:result.video,midiOnsets:example.midiBytes?adapter.level.audioNotes.map(n=>n.t).filter(Number.isFinite).slice(0,30):null};
+       window.__exportResult={done:true,success:true,size:result.blob.size,mime:result.mime,extension,duration:adapter.duration,warning:result.instagramWarning||null,progressCallbacks:window.__exportProgress||0,video:result.video,verifiedDuration:result.verifiedDuration||null,midiSync:result.midiSync||null,midiOnsets:example.midiBytes?adapter.level.audioNotes.map(n=>n.t).filter(Number.isFinite).slice(0,30):null};
        adapter.dispose();
       }catch(e){
        try{adapter?.dispose()}catch{}
