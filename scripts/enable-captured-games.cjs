@@ -160,7 +160,46 @@ for(const [game,route] of gameRoute){
    if(cap.split(controllerOptions).length!==2||cap.split(forwardOptions).length!==2)throw Error(game+': captured export quality options changed');
    cap=cap.replace(controllerOptions,'onRestart:d,onRetry:l,width:__vidirexaWidth,height:__vidirexaHeight}={}){');
    cap=cap.replace(forwardOptions,'const p={signal:f.signal,onProgress:n,watermark:i,adaptive:o,preferSmall:a,onRestart:d,onRetry:l,width:__vidirexaWidth,height:__vidirexaHeight};');
-  cap+='\nasync function recordLocalInstagramVideo(adapter,audio,options){window.__vidirexaIsExporting=true;try{const module=await import("./instagram-mp4.mjs");const sync=(await import("./midi-audio-sync.mjs")).inspectMidiAudioSync(adapter,audio);const support=await module.instagramMp4Support(options);if(support.supported){const result=await module.recordInstagramMp4(adapter,audio,options);result.midiSync=sync;return result}const raw=await recordCanvas(adapter,audio,options);raw.midiSync=sync;try{const converter=await import("./instagram-wasm-converter.mjs");const mp4=await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration});mp4.midiSync=sync;return mp4}catch(error){if(error?.name==="AbortError")throw error;raw.instagramCompatible=false;raw.instagramWarning="Instagram MP4 conversion was unavailable: "+String(error?.message||error).slice(0,190)+". The WebM download may be shortened or rejected by Instagram; convert it to H.264/AAC MP4 before uploading.";return raw}}finally{window.__vidirexaIsExporting=false}}\n';
+  // Android WebCodecs H.264 can claim support and then fail during encoder.flush().
+  // Prefer a native MediaRecorder WebM capture on Android instead of losing the recording.
+  // Keep the existing verified H.264/AAC MP4 path unchanged on desktop.
+  cap += '\n' + [
+    'async function recordLocalInstagramVideo(adapter,audio,options){',
+    '  window.__vidirexaIsExporting=true;',
+    '  try{',
+    '    const sync=(await import("./midi-audio-sync.mjs")).inspectMidiAudioSync(adapter,audio);',
+    '    const android=/Android/i.test(navigator.userAgent);',
+    '    const webmMime=["video/webm;codecs=vp8,opus","video/webm;codecs=vp9,opus","video/webm"].find(type=>globalThis.MediaRecorder?.isTypeSupported(type));',
+    '    // Native browser capture avoids Android VideoEncoder.flush() failures.',
+    '    if(android&&webmMime){',
+    '      const raw=await recordCanvas(adapter,audio,{...options,preferredMime:webmMime,width:720,height:1280});',
+    '      raw.midiSync=sync;',
+    '      raw.instagramCompatible=false;',
+    '      raw.instagramWarning="Android safe export: saved a local WebM video because MP4 encoding may fail on this device. Convert to H.264/AAC MP4 before uploading to Instagram.";',
+    '      return raw;',
+    '    }',
+    '    const module=await import("./instagram-mp4.mjs");',
+    '    const support=await module.instagramMp4Support(options);',
+    '    if(support.supported){',
+    '      try{const result=await module.recordInstagramMp4(adapter,audio,options);result.midiSync=sync;return result}',
+    '      catch(error){if(error?.name==="AbortError")throw error;if(!webmMime)throw error;console.warn("MP4 encoder failed; retrying native MediaRecorder",error)}',
+    '    }',
+    '    const raw=await recordCanvas(adapter,audio,webmMime?{...options,preferredMime:webmMime}:options);',
+    '    raw.midiSync=sync;',
+    '    if(android){raw.instagramCompatible=false;raw.instagramWarning="Android local recording saved; convert WebM to H.264/AAC MP4 for Instagram.";return raw}',
+    '    try{',
+    '      const converter=await import("./instagram-wasm-converter.mjs");',
+    '      const mp4=await converter.convertWebmToInstagramMp4(raw,{...options,duration:adapter.duration});',
+    '      mp4.midiSync=sync;return mp4;',
+    '    }catch(error){',
+    '      if(error?.name==="AbortError")throw error;',
+    '      raw.instagramCompatible=false;',
+    '      raw.instagramWarning="MP4 conversion unavailable: "+String(error?.message||error).slice(0,190)+". Convert the saved WebM to H.264/AAC MP4 before uploading to Instagram.";',
+    '      return raw;',
+    '    }',
+    '  }finally{window.__vidirexaIsExporting=false}',
+    '}'
+  ].join('\n')+'\n';
   fs.copyFileSync(path.join(root,'scripts/instagram-mp4.mjs'),path.join(target,'shared/instagram-mp4.mjs'));
   fs.copyFileSync(path.join(root,'scripts/instagram-wasm-converter.mjs'),path.join(target,'shared/instagram-wasm-converter.mjs'));
    fs.copyFileSync(path.join(root,'scripts/mp4-duration-validation.mjs'),path.join(target,'shared/mp4-duration-validation.mjs'));
